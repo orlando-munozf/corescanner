@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scanner CORE — Diagnóstico de Comunicación e Influencia</title>
+<title>Scanner CORE — Diagnóstico de Comunicación, Influencia y Liderazgo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -23,10 +23,9 @@
     --gold-deep: #C99A0A;
     --gold-glow: rgba(245, 197, 24, 0.15);
     --red-soft: #C4553D;
+    --green-soft: #6FA85C;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   html, body {
     background: var(--bg);
     color: var(--text);
@@ -35,13 +34,11 @@
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
   }
-
   body {
     background-image:
       radial-gradient(ellipse at 50% 0%, var(--gold-glow) 0%, transparent 55%),
       radial-gradient(circle at 15% 90%, rgba(245, 197, 24, 0.04) 0%, transparent 40%);
   }
-
   .container {
     max-width: 720px;
     margin: 0 auto;
@@ -50,7 +47,6 @@
     display: flex;
     flex-direction: column;
   }
-
   .header {
     display: flex;
     justify-content: space-between;
@@ -59,13 +55,7 @@
     border-bottom: 1px solid var(--border);
     margin-bottom: 48px;
   }
-  .brand {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 18px;
-    letter-spacing: -0.01em;
-  }
-  .brand span { color: var(--gold); }
+  .brand-logo { height: 22px; width: auto; display: block; }
   .brand-tag {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
@@ -74,12 +64,13 @@
     text-transform: uppercase;
   }
 
-  /* INTRO */
+  h1, h2, h3 { font-weight: 400; }
+
+  /* INTRO / BRANCH SELECT */
   .intro h1 {
     font-family: 'Fraunces', serif;
-    font-weight: 400;
-    font-size: clamp(38px, 7vw, 68px);
-    line-height: 1.02;
+    font-size: clamp(36px, 6.5vw, 60px);
+    line-height: 1.03;
     letter-spacing: -0.03em;
     margin-bottom: 24px;
   }
@@ -87,533 +78,331 @@
     font-style: italic;
     font-weight: 300;
     background: linear-gradient(135deg, var(--gold-bright), var(--gold), var(--gold-deep));
-    -webkit-background-clip: text;
-    background-clip: text;
+    -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   .intro .lede {
     font-size: 17px;
     color: var(--text-muted);
     max-width: 560px;
-    margin-bottom: 40px;
+    margin-bottom: 48px;
     line-height: 1.6;
   }
-  .intro .lede strong { color: var(--text); font-weight: 500; }
-
-  .pillars-preview {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    margin-bottom: 40px;
+  .branch-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
   }
-  .pillar-item { background: var(--bg-soft); padding: 20px 18px; position: relative; }
-  .pillar-item::before {
+  .branch-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .branch-card {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    padding: 32px 28px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 260px;
+  }
+  .branch-card::before {
     content: '';
     position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 2px;
+    top: 0; left: 0; right: 0;
+    height: 3px;
     background: var(--gold);
-    opacity: 0.6;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
   }
-  .pillar-num {
+  .branch-card:hover { border-color: var(--gold); transform: translateY(-3px); background: var(--bg-card); }
+  .branch-card:hover::before { transform: scaleX(1); }
+  .branch-num {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 11px;
     color: var(--gold);
-    letter-spacing: 0.15em;
-    margin-bottom: 8px;
+    letter-spacing: 0.14em;
+    margin-bottom: 20px;
   }
-  .pillar-name {
+  .branch-name {
     font-family: 'Fraunces', serif;
-    font-size: 17px;
-    font-weight: 500;
-    margin-bottom: 4px;
+    font-size: 27px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
   }
-  .pillar-desc { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
-
-  .start-btn {
-    background: var(--gold);
-    color: var(--bg);
-    border: none;
-    padding: 18px 32px;
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    letter-spacing: 0.02em;
-    transition: all 0.2s ease;
+  .branch-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    flex-grow: 1;
+  }
+  .branch-for {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    line-height: 1.4;
+  }
+  .branch-for strong { color: var(--gold); font-weight: 500; }
+  .branch-go {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
+    margin-top: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
   }
-  .start-btn:hover {
-    transform: translateX(2px);
-    box-shadow: 0 0 30px 0 var(--gold-glow);
-    background: var(--gold-bright);
+
+  /* SHARED BUTTONS */
+  .start-btn {
+    background: var(--gold); color: var(--bg); border: none;
+    padding: 18px 32px; font-family: inherit; font-size: 15px; font-weight: 700;
+    cursor: pointer; letter-spacing: 0.02em; transition: all 0.2s ease;
+    display: inline-flex; align-items: center; gap: 12px;
   }
+  .start-btn:hover { transform: translateX(2px); box-shadow: 0 0 30px 0 var(--gold-glow); background: var(--gold-bright); }
   .start-btn .arrow { transition: transform 0.2s ease; }
   .start-btn:hover .arrow { transform: translateX(4px); }
+  .continue-btn {
+    background: var(--gold); color: var(--bg); border: none;
+    padding: 14px 28px; font-family: inherit; font-size: 14px; font-weight: 700;
+    cursor: pointer; letter-spacing: 0.02em; transition: all 0.2s ease;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .continue-btn:hover { background: var(--gold-bright); transform: translateX(2px); }
+  .back-btn {
+    background: transparent; border: none; color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+    padding: 8px 0; transition: color 0.2s ease;
+  }
+  .back-btn:hover { color: var(--gold); }
+  .back-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
   .intro-meta {
-    margin-top: 40px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    gap: 32px;
-    font-size: 13px;
-    color: var(--text-dim);
-    flex-wrap: wrap;
+    margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border);
+    display: flex; gap: 32px; font-size: 13px; color: var(--text-dim); flex-wrap: wrap;
   }
   .intro-meta strong { color: var(--gold); font-weight: 600; }
 
   /* PROGRESS */
   .progress-wrap { margin-bottom: 48px; }
   .progress-info {
-    display: flex;
-    justify-content: space-between;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    margin-bottom: 12px;
+    display: flex; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.1em; color: var(--text-dim); text-transform: uppercase; margin-bottom: 12px;
   }
   .pillar-badge { color: var(--gold); }
   .progress-bar { height: 1px; background: var(--border); position: relative; overflow: hidden; }
   .progress-fill {
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
+    position: absolute; left: 0; top: 0; bottom: 0;
     background: linear-gradient(90deg, var(--gold-deep), var(--gold), var(--gold-bright));
     transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* OPEN QUESTION */
+  /* NAME + OPEN */
   .open-block { max-width: 620px; }
   .open-eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--gold);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gold);
+    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 20px;
   }
   .open-question {
-    font-family: 'Fraunces', serif;
-    font-weight: 400;
-    font-size: clamp(26px, 4vw, 34px);
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    margin-bottom: 16px;
+    font-family: 'Fraunces', serif; font-size: clamp(26px, 4vw, 34px);
+    line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px;
   }
   .open-hint { font-size: 15px; color: var(--text-muted); margin-bottom: 32px; }
   .open-input {
-    width: 100%;
-    background: var(--bg-soft);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 20px;
-    font-family: inherit;
-    font-size: 16px;
-    line-height: 1.6;
-    resize: vertical;
-    min-height: 140px;
-    transition: border-color 0.2s ease;
+    width: 100%; background: var(--bg-soft); border: 1px solid var(--border); color: var(--text);
+    padding: 20px; font-family: inherit; font-size: 16px; line-height: 1.6;
+    resize: vertical; min-height: 140px; transition: border-color 0.2s ease;
   }
   .open-input:focus { outline: none; border-color: var(--gold); }
   .open-input::placeholder { color: var(--text-dim); }
 
-  /* BINARY BLOCK */
-  .q-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: var(--gold);
-    letter-spacing: 0.08em;
-    margin-bottom: 20px;
-  }
+  /* SCENARIO / BINARY */
   .q-text {
-    font-family: 'Fraunces', serif;
-    font-weight: 400;
-    font-size: clamp(24px, 3.8vw, 32px);
-    line-height: 1.25;
-    letter-spacing: -0.02em;
-    margin-bottom: 12px;
-    max-width: 620px;
+    font-family: 'Fraunces', serif; font-size: clamp(24px, 3.8vw, 32px);
+    line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 12px; max-width: 620px;
   }
-  .q-context {
-    font-size: 15px;
-    color: var(--text-muted);
-    margin-bottom: 40px;
-    max-width: 560px;
-    line-height: 1.55;
-  }
-  .q-layer-tag {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    border: 1px solid var(--border);
-    padding: 4px 10px;
-    margin-bottom: 24px;
-  }
-
+  .q-context { font-size: 15px; color: var(--text-muted); margin-bottom: 40px; max-width: 560px; line-height: 1.55; }
   .binary-options { display: flex; gap: 12px; }
   .binary-btn {
-    flex: 1;
-    background: var(--bg-soft);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 28px 24px;
-    font-family: inherit;
-    font-size: 17px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-align: center;
+    flex: 1; background: var(--bg-soft); border: 1px solid var(--border); color: var(--text);
+    padding: 24px 22px; font-family: inherit; font-size: 16px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s ease; text-align: center; line-height: 1.35;
   }
-  .binary-btn:hover {
-    border-color: var(--gold);
-    background: var(--bg-card);
-    transform: translateY(-2px);
-  }
-  .binary-btn .sub {
-    display: block;
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--text-dim);
-    margin-top: 6px;
-  }
-  .binary-btn.selected {
-    border-color: var(--gold);
-    background: var(--gold-glow);
-    color: var(--gold);
-  }
+  .binary-btn:hover { border-color: var(--gold); background: var(--bg-card); transform: translateY(-2px); }
+  .binary-btn.selected { border-color: var(--gold); background: var(--gold-glow); color: var(--gold); }
 
-  /* LAYER 2 PROGRESSIVE DISCLOSURE */
-  .layer2-block {
-    margin-top: 32px;
-    padding-top: 4px;
+  .state-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 12px; margin-bottom: 22px;
   }
-  .layer2-connector {
-    width: 1px;
-    height: 28px;
-    background: linear-gradient(180deg, var(--gold), transparent);
-    margin: 0 auto 20px;
-  }
+  .state-tag.natural { color: var(--green-soft); border: 1px solid rgba(111, 168, 92, 0.3); }
+  .state-tag.pressure { color: var(--red-soft); border: 1px solid rgba(196, 85, 61, 0.3); }
+
+  /* LAYER 2 */
+  .layer2-block { margin-top: 32px; padding-top: 4px; }
+  .layer2-connector { width: 1px; height: 28px; background: linear-gradient(180deg, var(--gold), transparent); margin: 0 auto 20px; }
   .layer2-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold);
-    text-align: center;
-    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--gold); text-align: center; margin-bottom: 20px;
   }
   .q-subtext {
-    font-family: 'Fraunces', serif;
-    font-weight: 400;
-    font-size: clamp(21px, 3.2vw, 27px);
-    line-height: 1.3;
-    letter-spacing: -0.02em;
-    margin-bottom: 12px;
-    max-width: 620px;
+    font-family: 'Fraunces', serif; font-size: clamp(20px, 3.2vw, 26px);
+    line-height: 1.3; letter-spacing: -0.02em; margin-bottom: 12px; max-width: 620px;
   }
 
-  .nav-row {
-    margin-top: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .back-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-dim);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    cursor: pointer;
-    padding: 8px 0;
-    transition: color 0.2s ease;
-  }
-  .back-btn:hover { color: var(--gold); }
-  .back-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-
-  .continue-btn {
-    background: var(--gold);
-    color: var(--bg);
-    border: none;
-    padding: 14px 28px;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    letter-spacing: 0.02em;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .continue-btn:hover { background: var(--gold-bright); transform: translateX(2px); }
+  .nav-row { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; }
 
   /* SECTION INTRO */
-  .section-intro { max-width: 600px; padding: 40px 0; }
+  .section-intro { max-width: 600px; padding: 32px 0; }
   .section-intro .sec-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--gold);
-    letter-spacing: 0.15em;
-    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--gold);
+    letter-spacing: 0.15em; margin-bottom: 20px;
   }
   .section-intro h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 400;
-    font-size: clamp(32px, 5vw, 44px);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    margin-bottom: 20px;
+    font-family: 'Fraunces', serif; font-size: clamp(30px, 5vw, 42px);
+    line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 20px;
   }
-  .section-intro h2 em {
-    font-style: italic;
-    color: var(--gold);
-    font-weight: 300;
-  }
+  .section-intro h2 em { font-style: italic; color: var(--gold); font-weight: 300; }
   .section-intro p { font-size: 16px; color: var(--text-muted); line-height: 1.65; }
 
-  /* RESULTS */
+  /* RESULTS shared */
   .results-eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--gold);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    margin-bottom: 16px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gold);
+    letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px;
   }
   .results-title {
-    font-family: 'Fraunces', serif;
-    font-weight: 400;
-    font-size: clamp(32px, 5vw, 48px);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin-bottom: 16px;
+    font-family: 'Fraunces', serif; font-size: clamp(30px, 5vw, 46px);
+    line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 16px;
   }
   .results-title em {
-    font-style: italic;
+    font-style: italic; font-weight: 300;
     background: linear-gradient(135deg, var(--gold-bright), var(--gold-deep));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 300;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
   }
-  .results-intro-text {
-    font-size: 16px;
-    color: var(--text-muted);
-    line-height: 1.65;
-    margin-bottom: 48px;
-    max-width: 580px;
-  }
+  .results-intro-text { font-size: 16px; color: var(--text-muted); line-height: 1.65; margin-bottom: 48px; max-width: 580px; }
 
-  .pillar-result {
-    border: 1px solid var(--border);
-    margin-bottom: 20px;
-    overflow: hidden;
-  }
-  .pillar-result-head {
-    padding: 24px 28px 20px;
-    border-bottom: 1px solid var(--border);
-  }
-  .pillar-result-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 16px;
-  }
-  .pillar-result-name {
-    font-family: 'Fraunces', serif;
-    font-size: 26px;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-  }
-  .pillar-result-pct {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-    color: var(--gold);
-  }
-  .gap-track {
-    height: 8px;
-    background: var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-  .gap-fill {
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    background: linear-gradient(90deg, var(--gold-deep), var(--gold));
-    transition: width 1s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
+  /* PILLAR RESULT (base branch) */
+  .pillar-result { border: 1px solid var(--border); margin-bottom: 20px; overflow: hidden; }
+  .pillar-result-head { padding: 24px 28px 20px; border-bottom: 1px solid var(--border); }
+  .pillar-result-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+  .pillar-result-name { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500; letter-spacing: -0.01em; }
+  .pillar-result-pct { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--gold); }
+  .gap-track { height: 8px; background: var(--border); position: relative; overflow: hidden; }
+  .gap-fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--gold-deep), var(--gold)); transition: width 1s cubic-bezier(0.2,0.8,0.2,1); }
   .pillar-result-body { padding: 20px 28px 24px; }
-  .pillar-verdict {
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--text);
-    margin-bottom: 20px;
-  }
+  .pillar-verdict { font-size: 15px; line-height: 1.6; color: var(--text); margin-bottom: 20px; }
   .gap-items { display: flex; flex-direction: column; gap: 10px; }
-  .gap-line {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    font-size: 14px;
-    line-height: 1.5;
-  }
-  .gap-status {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
+  .gap-line { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; line-height: 1.5; }
+  .gap-status { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 8px; flex-shrink: 0; margin-top: 1px; }
   .gap-status.solid { background: var(--gold-glow); color: var(--gold); }
   .gap-status.partial { background: rgba(196, 85, 61, 0.15); color: var(--red-soft); }
   .gap-status.missing { background: rgba(140, 131, 122, 0.12); color: var(--text-muted); }
   .gap-label { color: var(--text-muted); }
 
-  /* IMPACT */
+  /* IMPACT (base branch) */
   .impact-block {
     border: 1px solid var(--gold-deep);
     background: linear-gradient(135deg, var(--bg-soft), var(--bg-card));
-    padding: 32px;
-    margin: 40px 0;
-    position: relative;
-    overflow: hidden;
+    padding: 32px; margin: 40px 0; position: relative; overflow: hidden;
   }
-  .impact-block::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-  .impact-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 16px;
-  }
-  .impact-headline {
-    font-family: 'Fraunces', serif;
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 1.3;
-    margin-bottom: 20px;
-  }
+  .impact-block::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .impact-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .impact-headline { font-family: 'Fraunces', serif; font-size: 24px; line-height: 1.3; margin-bottom: 20px; }
   .impact-text { font-size: 15px; color: var(--text-muted); line-height: 1.65; }
 
+  /* LEADING RESULT — competency with dual state */
+  .comp-result { border: 1px solid var(--border); margin-bottom: 20px; overflow: hidden; }
+  .comp-head { padding: 24px 28px 22px; border-bottom: 1px solid var(--border); }
+  .comp-name { font-family: 'Fraunces', serif; font-size: 25px; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 20px; }
+  .dual-bars { display: flex; flex-direction: column; gap: 14px; }
+  .dual-row { }
+  .dual-row-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
+  .dual-state-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .dual-state-label.natural { color: var(--green-soft); }
+  .dual-state-label.pressure { color: var(--red-soft); }
+  .dual-pct { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-muted); }
+  .dual-track { height: 7px; background: var(--border); position: relative; overflow: hidden; }
+  .dual-fill { position: absolute; left: 0; top: 0; bottom: 0; transition: width 1s cubic-bezier(0.2,0.8,0.2,1); }
+  .dual-fill.natural { background: linear-gradient(90deg, rgba(111,168,92,0.6), var(--green-soft)); }
+  .dual-fill.pressure { background: linear-gradient(90deg, rgba(196,85,61,0.6), var(--red-soft)); }
+  .comp-body { padding: 20px 28px 24px; }
+  .comp-gap-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; margin-bottom: 16px;
+  }
+  .comp-gap-tag.stable { background: var(--gold-glow); color: var(--gold); }
+  .comp-gap-tag.cracks { background: rgba(196, 85, 61, 0.15); color: var(--red-soft); }
+  .comp-gap-tag.collapse { background: rgba(196, 85, 61, 0.25); color: #E8896F; }
+  .comp-verdict { font-size: 15px; line-height: 1.6; color: var(--text); }
+
+  /* 4-ELEMENT REPORT BLOCKS */
+  .report-section { margin: 40px 0; }
+  .report-section-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--text-dim); margin-bottom: 20px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--border);
+  }
+  .report-block { border: 1px solid var(--border); padding: 26px 28px; margin-bottom: 16px; }
+  .report-block-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .report-block-title { font-family: 'Fraunces', serif; font-size: 22px; margin-bottom: 14px; letter-spacing: -0.01em; }
+  .report-block-text { font-size: 15px; color: var(--text-muted); line-height: 1.65; }
+  .report-block-text strong { color: var(--text); font-weight: 500; }
+
+  /* VERDICT */
+  .verdict-block { border: 2px solid var(--gold-deep); padding: 36px 32px; margin: 40px 0; position: relative; overflow: hidden; background: linear-gradient(135deg, var(--bg-soft), var(--bg-card)); }
+  .verdict-block::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--verdict-color, var(--gold)); }
+  .verdict-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--verdict-color, var(--gold)); margin-bottom: 16px; }
+  .verdict-headline { font-family: 'Fraunces', serif; font-size: clamp(26px, 4.5vw, 36px); line-height: 1.15; margin-bottom: 20px; letter-spacing: -0.02em; }
+  .verdict-text { font-size: 16px; color: var(--text-muted); line-height: 1.65; }
+
   /* CTA */
-  .cta-block {
-    text-align: center;
-    padding: 48px 32px;
-    border: 1px solid var(--border);
-    margin-top: 40px;
-    background: var(--bg-soft);
-  }
-  .cta-headline {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(24px, 4vw, 32px);
-    font-weight: 400;
-    line-height: 1.2;
-    margin-bottom: 16px;
-  }
+  .cta-block { text-align: center; padding: 48px 32px; border: 1px solid var(--border); margin-top: 40px; background: var(--bg-soft); }
+  .cta-headline { font-family: 'Fraunces', serif; font-size: clamp(24px, 4vw, 32px); line-height: 1.2; margin-bottom: 16px; }
   .cta-headline em { font-style: italic; color: var(--gold); }
-  .cta-sub {
-    font-size: 15px;
-    color: var(--text-muted);
-    line-height: 1.6;
-    margin-bottom: 32px;
-    max-width: 460px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+  .cta-sub { font-size: 15px; color: var(--text-muted); line-height: 1.6; margin-bottom: 32px; max-width: 460px; margin-left: auto; margin-right: auto; }
   .cta-buttons { display: flex; flex-direction: column; gap: 12px; max-width: 380px; margin: 0 auto; }
   .cta-btn {
-    padding: 18px 28px;
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    letter-spacing: 0.02em;
-    transition: all 0.2s ease;
-    border: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    text-decoration: none;
+    padding: 18px 28px; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer;
+    letter-spacing: 0.02em; transition: all 0.2s ease; border: none; display: inline-flex;
+    align-items: center; justify-content: center; gap: 10px; text-decoration: none;
   }
-  .cta-btn.pdf {
-    background: var(--gold);
-    color: var(--bg);
-  }
+  .cta-btn.pdf { background: var(--gold); color: var(--bg); }
   .cta-btn.pdf:hover { background: var(--gold-bright); box-shadow: 0 0 24px var(--gold-glow); }
   .cta-btn.pdf.done { background: var(--bg-card); color: var(--gold); border: 1px solid var(--gold); }
-  .cta-btn.wa {
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border-strong);
-  }
-  .cta-btn.wa:hover { border-color: var(--gold); color: var(--gold); }
-  .cta-btn.wa.highlight {
-    background: var(--gold);
-    color: var(--bg);
-    border-color: var(--gold);
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0 var(--gold-glow); }
-    50% { box-shadow: 0 0 24px 2px var(--gold-glow); }
-  }
-  .cta-note {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--text-dim);
-    margin-top: 20px;
-    letter-spacing: 0.03em;
-  }
+  .cta-btn.cal { background: transparent; color: var(--text); border: 1px solid var(--border-strong); }
+  .cta-btn.cal:hover { border-color: var(--gold); color: var(--gold); }
+  .cta-btn.cal.highlight { background: var(--gold); color: var(--bg); border-color: var(--gold); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 var(--gold-glow); } 50% { box-shadow: 0 0 24px 2px var(--gold-glow); } }
+  .cta-note { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); margin-top: 20px; letter-spacing: 0.03em; }
 
   .restart-row { text-align: center; margin-top: 32px; }
-  .restart-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-dim);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: color 0.2s ease;
-  }
+  .restart-btn { background: transparent; border: none; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: color 0.2s ease; }
   .restart-btn:hover { color: var(--gold); }
 
   .fade-in { animation: fadeIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
   @media (max-width: 640px) {
     .container { padding: 24px 20px 60px; }
     .header { margin-bottom: 32px; }
-    .pillars-preview { grid-template-columns: 1fr; }
+    .branch-cards { grid-template-columns: 1fr; }
+    .branch-card { min-height: auto; }
     .binary-options { flex-direction: column; }
-    .impact-block, .cta-block { padding: 24px 20px; }
-    .pillar-result-body, .pillar-result-head { padding-left: 20px; padding-right: 20px; }
+    .impact-block, .cta-block, .verdict-block { padding: 24px 20px; }
+    .pillar-result-body, .pillar-result-head, .comp-head, .comp-body, .report-block { padding-left: 20px; padding-right: 20px; }
     .intro-meta { gap: 16px; }
   }
 </style>
@@ -621,179 +410,218 @@
 <body>
 <div class="container">
   <header class="header">
-    <div class="brand">Scanner <span>CORE</span></div>
+    <img class="brand-logo" id="logo" alt="CORE" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAB4CAYAAADc36SXAAA+SUlEQVR42u1deZhcVZX/nXNfdXc2krCEzQVBAkgSNkFAwAAKA4ioQxBlxI0RcUAdRQecURgXBnXcddx1cAPJyOi4gIgQYDCC7EuUBAgwCIQlC1m76t1z5o86t3NTdne96qr3qrqr7vfVV1mq6r137rnnd/ZDGMdLVQkAAyAASkR+lM9NAbBDmqYvSZKkL01TBeDte/3OOU3TtJwkCQFI7DfvB/AIgHWj/Lazz4r9lqJLVgP0nwxgOoCZAHbx3u8MYKZzbpKIDACYxMyJiDAABZAC2MTMmwBsArAWwFMA/g/AEwDW3nfffWvnzJlTHuF6bPelACTPPbFrUYFkb/m1Fi1ahPnz59fSSO2FicDTNTzRWy0iK41TRggCS4YRaNsD2NN7vycR7crMcwHsAGCaiMxi5mlZryUimwCsYObnRGQlgGWqusw59yiAJQD+RESVYQAFIwnTiXQQa5/R6P9CAHsD2FVE9mDm/QFs672fSUTTmLl/rNcWEQWwzgBlNYAVInInET3knHt4cHDw/v7+/oeH2ZNwz1LLM72VTVFYuHAhL1iwgGrApasUpt4qQJvJScsFAK4VWGvXrp01derUuQD2B3CoiOwG4PnMPKOOEMq0mJnqCLRlzHwbgN8BuBnAvfGBUtVkIgitkQSwqk4CsA+Al3rvX0FEe6nqbs65gTr01zFoglxvP7z3KREtZ+YHAPzBXrcR0bPxsyxatIjnz5/vmxF+qkpEpOVy+dBSqfSCNE2fM8s100qSBEbTzCtNUzILudHF3vthv2eWtyRJkqZpmiZJsslAes3atWtXPvnkk8/Nnj17cBQ6BAs8d2uvmX1S1RcDmJOmaWWMNOytLa3TBMD91MFCiwA4Ikpr/n02gOMAvFpE9mPmbYYRUhIJKYqAkoiIGriHWNDFfyYicjU/5UXkXma+DsAVRHRjzSHT8QQkkXtKa0BjNwCHAzhWRA5i5l1HoL9ESsrQHjRC/1H2ZAstmJkhIszMwwnkpwDcAuBXAH5LRA+2Yl8MVNUUl0uYebeJJCFEpAJgPYCnAawA8CyAB5j5HgAPAXgMwCPDeAFc+IlOABNVZSIS7/3Pmfk1Pdnf0nU+dajQGnIBqWoJwPYi8k5mPk5E5sZukEhYDQmqZoVUg+Ciph67mo/8HsBCAP9FRI9FQgedDCTBRRhbewYaJxlwHwpgckR/oBpLQpH0z7AnalYLR/e6HsAiZr4MwK+IaFUzQBJpt1NE5KvM/BYTvHnGRVoulA2Ah+6XiLjeForIRgOSPwO4l5mvBnAfEa3pFDCJ9meyiPyJmXc2C5jRW02RlpmRpulx1EmCq0bT3QnAGSLyBgDPY+atIub1kVuLOuT+g9ASAC64W0RkDTP/FMA3iOiWTgWSWiGqqlsDeK2InMrMhwMYGIb+REQdfRhtX6QW5EXkMWb+EYDvENGysQJJzLdpmn7EOfex4KbrdNo0aOkhsuhHcic+LiLXqeqvnHO/JaJnavirUCAJe6OqLzbvQL+IaKfIjPHKF8xMIrKamedRhwguISK97rrrkvnz5x8kIqcBOIWZt62xNBp2Q7XxuQSAMHNi96/M/D8APkVEi9t1qEawOBABxzwAbwewAMBOnQzaLQKT9SLykzRNv9Df33/PWPYlWM5E5FX1LSLyHSJyqirjGUQatPZcDaisAHA1gB8DuJaIykXzvKo6IvKVSuV1SZJcISITdj+KlGvMzAbI+1ObBddQFoeqvkpEPsXM+0VCKw3ugPEutKKYiQD4IYBPEtHSmNHb6apS1SNE5BwAJzFzaaKARp198RHAb2Lm7wH4NBE9PJZ9UdWEiFJVfY2IXE5E/RMZRLJaewDu9d5/1zn3g2CVFAEk0X58AsA/i0hKRAl6qxmapnZmvkNEZ3AbboBsY8X8k29Q1d8DuJqZ9xMRFZHUTM3E/LHjVnhRdbkgkE1wny4if1TVj6jqJNNcXZRxljf9ndHfq+qhqvoLANcz88nMXIro7+w14Ux+25fE+M0z8wCAs0TkNlX9kKr2N7ovJqxKRPQ/zPx6IhpkZorcQRN6BV4nIhfoap6DOc65zwG4y3t/oarOIiJv59/lye72vke4xR4EtGZ57+8qnKCxRqeqewN4L4C/Dy4ejHO/cQN08JGGdnuaph8olUqL8rZGaui/h4j8CzOfBoCM/jIRrY2s2rOqinMu7MutAM4louuDxZY1NhI030qlclKSJP9lBZLUrb53VRVV1UBbEXlcVT/jnPsqEVXysEaiAPqAuVt267mwWqIkCABO0/TIUqm0iApioJCdI6o6A8D7ROSDzDw5uEmClt5NAgvVGIkDoCLyOWb+CBFtDMzfYvoHH/0k7/2HnHMfQLW4csjF1jsef7UvIiIXM/PHiGiwEXAPIJKm6Vucc/8JIBUR180B3OFAOk3TfyqVStc2CtIZrhUC6LuLyH1mWfcC6E3unwXQVzLzbCJ6lgu4qCMitc08WURuBXBBAI9g8nYhkpOZ+iIiYOYPiMiNqnqQaU7UYvp7izMtds5dCGCa997HLrbe2rwv3nsREWLmDwO4VlVnGw2TjL+TqmopSZJLvPf/jGrhle922jJzcG+lAF6aJMk13vvPq+oUkxGt4sVwfl5s4CE98GhenNj7gwBWqmp+5lwU6/Cq+gJVvRTAQjMlh3zsPYFV3QMRqTDzASLyS1XdulkQiWIdXlWne++/pKpXM/M+gf7D1K70lq1QP2KC7lARualSqRxvwOAy7m1FVZMkSS6yYsNEVX2P56vxJwNpMPP7THnatxGQzgIgIvIy+3uvhU3zK9DwVvOQuFwAxMxHDX5gVNt8nGratlhwvKcNRAcq0piuBvBcsBzGSn/7Xa+qR4nIzcx8jqpqj/6NCzoLsm+bJMkvVPXMBoPrvmr581kichszux6IbAZpIiIRSS378gZVXdAISNcTdsz8khqLpLeaBGVm/uPQHubkshJVHfDe/yszXwFgB0uh414QaxhOr1oDiRUdfsjat2gz9Lc//6uIXMPMexj9qUf/MQFJcDUSgK+nafphi4VwPRAxJYCIaCMzv8n2uGsyszLSN7FY6DQAl6dp+p5mMhMthihmyezZA5DWYb7JpSWB1C0VJpHLajcANzDzR1HN8JFe/vWINAuVz6tE5O1E9PhYg4kR/XcWkSsBfNQAqkf/5oVccGl559wnVfWiBkDE294sZeaz7SD2XCrDg7Q4576YpukFWek7kqYMYBcR6QFIa+SUWAD9sSeffPLeoPtyCy8Qinb2BbAIwIE9rTfTCim9nyiVSldYHcFYwMMZ/Q8D8L/MfKz573v0b52QC73aUgDne+8/2wCIpHZGfigiP+65skYEaTKQvtB7f/EYQaQXQM8BQwCAmR/Ycccd14dM0ZYIlgg8DgPwWwDP61V9ZqJbqIS+DcDXzOROGzXXzWLxaZqeYfTfxTKskt65aT2IiEhifvv3e+8/aUIui89eVJWY+X0Anui5skYGaaPvP6nqhQ3QdwsAEZGDA917lG0NgAC43d4d0IIYSAQerwZwJYBtLT23Bx6j0y1kQW0AcDoRbUSDxVRxfY33/uPOuW9Z4ZT0MqxyFXIA4EzIfThN07OJKL3uuuuSOt8LhZpPAzgPPVfWaCDizIK+IE3TdzQYWA80fVmNRdJbTWwLAKRp+nugOsWyacJGxVJvdc592za9V+2ZDTw8gLL3/qwkSb4/hr5LcXHm1wC8ywKR3DPXi9tHVIsOCcDfENFvs+xj6PorIouY+fBQD9Wj6LD0VQApMx9BRDc3ck689zcz80E9mdQyYFcA+xLR3SFO20ydQbA83gzg++OpFUk9t0HeAjg0JBORLzjn/jHQslHwsMP1PQBvGS8uwxra62jaThF70YLnCQDyNIADUZ3bTqPFsYIQLJfLhznnbkCXtPBpgr4sIkuZ+aWoDrkadZRu1MbkBgCHGYC4dsiSibCYWVB1Ky5j5nnWlYGIaGwFOxF4vEpEvmMXQKcdAmupXjuZ0OL6NNr3htqxBxqiRb2MzPpIROQBZr449AFqEDyYiLz3/hJmPr1TwaOW/kRU2/KbMvxG3BofndZXiojY6kRmGZi/CgCN1o4mpKgS0f/apLzX1ttDVU2LeJzovSNobPRNmXm2iHzKOfduOzOjWSEO1dYxN9osG83x/oiIoKqYqIa/FXsSgHtqW/qMJcc6VDfvg2q21YxOMRHjdtLDjJytFUopM3sbMxIDjBspftBse3MDDwWwEsA+lrJLDc6dCNlWXwdwZieBRxb6i8gmAGVV3UREGwCUmTm1/0sA9KE68XAAQJ91yW35XuRlVXrvz0uS5FP1XC1Rr6YDROQWZh4qAB1GSLVLcIT9VKMzt4m2QDVbkQHMJ6IbRqNvPEgKwD0A+kWk5dZsAI4usELEaP8mIrospn3S4EaGhnzPE5H/YeaOAI+g6Zrgj6fOPYhq0cvDqrpEVR9S1bWlUmljuVwe7O/vT02gxwASBNh07/1c59w8EdkbwL5hTob9djqGQ+UBJN77TyZJ8nijrqsAHt77j3UKeAwzAyKm/zKboX0fqnPJn2Dm1QDWAdgIoGw0Cd9n+37YgymVSmVGqVSahWpa+EsA7AVg75rpgh7tT1d2ADwRfVRVf0ZES0er5wl9n4joNlX9FYATVXWLWIiGirjq+NifMPN6cyXICFo1maD1NUBARmcfK40iQkmSlAD022uyiMwEsAOA5zPzzJr9VPuNQptCBkFt9/55VT0EQDqS8hXR9gHv/feY+SxUsxuTVvF8cFumaXpSqVRah81FdhNulctl6uvrk4ULFy4JFnRmF0KN9gtUO7j+jplf2s7gXyS4OBof+zSqBYxXlcvl2/r6+v5ERJtadL09vfdHEdHJzHwYgDB0Scwn6+p831sjuSuZ+QRjuEam3oWEhTOcc99qN3gMMygLIrIK1RqUKwH8YdmyZUtmz5492OLrkoHIISJyEjMfCWBqJwBJ1Kb/SiI6vl5BaNT2/ZVJklxt/eE4VozM/3+/c27Pgp9lewAv9N7vRUSHAziMmfeoAe1Crb+IvmcR0dczWiGzReQeIuoLgNyq+xCRa51zR6O3sgkwVWXv/RWqqt77inXVLPTlvRfvfapbrt+nafoOY/q/YiS798RaIzj7txFfl19+efhcMlzqoKrOUdWPquq94Qa8rZHu2T6zXFV3DvfViNvQ3o9Q1UFVTa0RXdvp7733qvo7o//OtfdutExq6E4ZX+Hzo+3Fbqp6vvd+WXRP7aRPoM3x8d6NBogXXHABe+9vC/SMfsvbv/1ZVQeMBqWIn1v5GjobI9xnn6oerqpf9d4/HdO6QNp6VRXv/aOqOj3wyWgeEwDw3l/Zynv13lfs975u/NlXT6ZMhFdT4GHvbzPCldt8OFVV16nqD1X1mFphG8CulRP+IiCi6N9KqrrAe3/TSMLLwCP13g+q6p5jAI8gcHfy3v+lVsi0i/7e+zWq+mVV3W8EOnEeExYjYEliOqrqlDRN3+29f8iaRraFToFGBgilensdna131wq5GgAp1XgC8lYYaSTgVtWdVPUi7/26NoBIqqqapuk/xvSrQ9uzWqn0BgBJ0/SsevfQszzsAKjqMd77p1S1UvTBNK3Xm+za4L3/iqruHrs9ixoJGwvJ+N/SND1VVe+p1cwCs6nqFxtltugQk6r+pujDGguyiP7PqepnVPWFw91nO/gzpqmqzlDVT6lquZ30MlqdnEHIkb3v6L1fFfi93QAyCi/GMZqXeO+vKZLOwQpJ03Spqg6MRpNIdu3uvR+MadvMy5paq8Vi0JR2PsHBI2h7M9ql/dZYHd9V1Tk11oZrM31cJASmpGl6vgGtmtWh3vvLVHVqo0I2cl39c7vchjVWx482bdo0u4b+3EG8GgPJ4d77+9pBN6OZeO9vrrWU6uzzZfH9dhKAjEJrUtWLIzeuFAXQNiqiLkCrqrO9aFp+Re7otWNxR3cbgDjzIX7WZEi54IMYfI0PVyqVYztRcNXSKjLxv2b3/hdV3WGscY9yuXyg977cjrhH5I55QFVPqo2HdbDSE1wXM7z3/9UOSySyQo6qFwuJrMzXxUKuUwGkxvoLWv55RYG1yQVR1Z/UO1eBF7z3/9aK+4v29Y5o37q288NohA/1HnMBnGOdlpMCmdNbwd1NzHx8qVT6TQAOIvKtmp3cqmW0ClMYHwfwbgBvZuYTiejJRlq0RxbNgHPuW9ZRtLCq7DC72jJNLmPmQ4jo5xH9006jf7QPGvomEdFq59zJIvKlNnS/FVTblZwZyDraZy0b73oReZaZeTzUFhgPqPH8xSLymYKmLjpUu/YeY9M7ZRQhrgBgo7SB5vtiif3enaFT8FgHv01oAIkI/2mrfyhkIL2l2qWWrvf9Bx988GgiWhJmXXSq4KoRXmR//iER3R7S+RvZF6s0/6CNoC0sXdqGW4WajPOdc28koqfHA/2HAXRWVXbOvVdEPmsgkhZ0C8FdeZyqPs+E3EiFgmrAvBLV4twhQTUO6KyoTl10zPxPAK7JG6ytNsYz8wwAR0WgMqLAHxwcvMmGeblWgLOq3t8iQJp4ABKm2lUqlROY+W9QLZDKXYBFzdMSAOcR0Vtmz54dSufT8ULUMM880tgb6bDrUG37vQcRnW91JoW4i1RVnQteS/93RHRxMNPHE/2H05Cdc+cC+F5Rc8mtGZNn5mkATgotaEY7i8Yz19hejCc6hz54CuCdIvKctarPEwSDgntElg9PmTLlaQCPZbAGRxeYVcUKqnpLs781IQHEGF1VNWHmj5s0KcTygJXMe+/PI6JPhVTQRrrUdpg1MiaNnYjU3AGTirT8rCpfALwhSZIf2XArP55N9EhDZgBnWdsQl7Nw24K0IvK3dh9Sz43lnLveej+5cUZnMSt1OTN/GvlXZgfZdYjtrR/OjRVZd56Z/9yM0DcZxSKyLkmS+3sAMrxG5Gy+xCnMvJ+ZilyE8GJm573/B+sllKBO182JtqK407HMfGLBlp8AYO/9O4goTEasTAS6RnPJByuVyukistZ6T2kB54uY+UBV3WU0N1YkiB4C8LDpDONtVkgQ4l/13j/ZKnfRSNtq73sC2DHscR05d2uTQj987y8AnuoBSA2A2OZ7Ve0jovOLII6Bh4iIeO/fmiTJfxh4+C4DjyHLT0QuMvO8sINv4H1ekiSXmCZZmUj0DXPJBwYG7lfVj6OAYU7BV49qq5VXjKK0BU3ZEdEggP8dj8LJzmtIXvhh4K0caatENBXAC2tAZaT1fxk/N6KVaO+3EFHF9qsHIDXWhwI4mZnn5NlHPxZeqAbAPhMJr7QLNya2/PYvKnAeusgC+Gyw/MZjvKMBDZmdc18UkT9ZtlMRKK3YHOzVelq1NaAcr9qtmjJ0WVBMcrRCvFlq+9YBBgWANE1X2A1ykw94V5NANPEAJLI+EhH5UPRveXKaWKrujcz80WB5dNsmRLQvAfgwNncHzvu6IVX6ciI6N8OchfFuhYS25GVV/QQ2D+XK9bKoppy+PMSU6qWcpml6R1AqxiGZQ0ryvSLyaBE0ti7N9QAcSZL8xcY9j3UWPQOAc64X/xjGAgnZQkdZ6qjkGfsILdhFZHW5XH6bab3SpSahIyL13i9wzu1dRIt8Cyo6EbmTmd9mWlk3xJy8qpJz7qc25S7vgHoAi+cB2KWO5iom6JaElNPxCNKRK+6WGtdPXrTdro5AD/++EsCaseSkmKudRWQtgNt7APLXABLWGUaYvE17ZWbHzB+bNGnSg+Y6kS7dB2+ZIu8tysdgMyLWViqV02ywE3UD/SM//SAzfztvQRDVLPQDOGyUcxevVaiOyB23ZAYAZr6vECHGvE1GoHoOwOox7nn4/CMAnuwBSMTI0aCoHUXkb4wBctN+wpwDANcC+GZIw+vGDQiBuDRNj2LmgwqKOwX6nzswMDBUpNlFZA+CZiGA9UTkcs7ICjULe2TQ3pmIytgc8B3P64k6FldLgEpEto6Ug9HWJgAbmtlDZr4/GljVA5DwHqpmmXmaBXDz9MGH6X/nENF6U9S6O5uB+cyczf0AWMF1dTURfXO8FWm2yCoQE9QPi8jivFNmI0/wnhn2mO07d45nvcjeV9Y8f15ratSQkkawOsN7uZln8t7flDMojksAEStee33eZpkJMAJwOYDl9WZHT3DrI1h+uzDz8Ub7PC0/ZWYSkY3M/J4uN8NZVYmZ/ydvOohIAIW9ly5d2l+ndxNMUD06AWg8aM+fdzLOAGxCaBb504ysdM4t6fJz81eHKIx+3BnAEYasnNNGh0BUCuBfiGhjD8ABAG9EdR513pZfaIvyZSK6P7Ss6VLah4SNG1BNHkjyLnoTke123333bbJ8wTm3ciIYewVZlLnJrBq5tQlALwOrRoAFwr+qAPeVGFPdAuChoIF3Mf1Di41TawAlj0MQ4h4rmPnToXCxi2kfnn2ZiITK77zpMRXAzDrCdQv3zzhfriBhWwGQyQ07RtkW7n8pgEftdwS9hQSb/bGvKUqgqOoloTIY469dQ6toENqWHCIic5k519Td0MfHe//lJEmeneAFg1kESQhYb/De3w3gRXnxf6iatrTcegBSlYiVyqpSqTRuyRsBZhFro4FIljUWoga+eGDhwoV077339u29994TQfFtumwiCRkFIrK3xSZysT7MDHQAVjnnfhZZJN2+TrS4hM8LQCLaP+uc+2YoXOyRfqidSdNdWjNa3y5N062zCCtVXW3pv268Etd7P8u6O+dF1/C7a2oC5bX8b82RNRGRgbFeh5mvPOWUU3zv7GxpgQDAPGbe1XrLcJ4HSEQWOeeeamTA0gTVgL1ljrw6Ema5nWUiSgD8wGZ7uC53HdYKmBWFHbgkmZHFAunr61svIhsATMM4dTUS0QsKutQzto/1ZMrUyCpqRFEOMw4GyuXyy4moVGA351xYvlQqJQD+TERPBIBtBkD2A5Coam79l0J8kpmvimYjdKv7KjD6XFRTO/MEbpgWWwbwvV7sY9iVd71CvCZn1Ko3MvOgAci4Mz5UlUTkwJzpGiyDlXWuE3h+K2x2ITYChKSqcM592SyqibI+AuATBpBjcmcnACAiezEz8qzFcM6x+YHvNHOym91XATxfASARkdQshDzAyhORE5HFzrm7u93yG04AOeeeLQpAvPd9GT9aMRfWeFOOgrtoOwBzCrCuYT23suzf9sw8yTwtNIbr6ARRvoJrtOluB0Fozc3zAKlqCBA/CmA8dxptGc8bQ77SBEQRjRMv7XbLb6SVpun6JEk67pBjfPragzb7SmaennNX6dAy5Y46MiWcr52izzV85gx0xn0BoT2HViqVW2N5NCZN2FKcZxVkai4noo3N+NzGvcpr89FVdRqAl+apoYXguYhscM5dlWEqXreuwgS1cy6rq2C8CqugHJ2e8zkKvO1RvzaDzPrbvtuVV/P8kIg8XiqV/twsPRjVArYZRbgKYMEuFDTju0MXA0ClUtmbmWeN1Zxu5DADuJmIHgng1cOLETXU/JHK+8EGNPlxdU5CYWq5XH4pgGOMt13OMuUJ82zUFYREtEfP+7F58iURrW9WmWcAswBsW9BBeqToA9upwoqZX2b093kzi6peGwml3qpZSZIUVnDhnNuQ0d3Sh7HVLLRfQ2L+mBWtSt68DWAxEa2r09wwnLG8g/rjBkCY+Q+tkAkJgGOtAj33GRQAHu6JqyFtaM8i5JUJrd/1NK9R19QC6fNcxs8NAOgfR9ZHQkSpqi4AcFwBXaWDcrR4NFCIgvoDIvKCHoAMPftdreB5BrB1AYcn+CCf6ckqhIl0B+TJzNa6hETkaWz2EffcV8MfppkFnAFuBEDK5fJUAJPGg8ALHZ1V9fkAvmLZSnkrYImIpM65K+vwNhk99wSwM3JOmR8H1mHwerSkKSSLSF9RN++c29jNmnDkb9wawG41giUvE/9uIlpp6bs9C2Q4RPd+Vs77HrogK4C1dc4AAUBfX98MHgc5vFFLnn4RuQxVl7jm3JZHiEit5f3SOrG90EX3MBvf3LUFtFEA/f8ANB1AD8SdUuAzdLsGHDTJWci/QCz4OpfkDFTjf1OIZhZ0qY3YPBFv1JWm6YxxIJCSAB4ALmPmQ/NsyVMjRwjApQYcrt45IKKDe5w+BBbLiWhTK7JhWUT6e3QtHEC2Z+ZSzhlYQbu+v0f2ugdqu4KutyGrBUJEW3ckwVRJVZ1ZtKmqvlBErgLw2pxrPmJrzonIOgBXjKaYmoD0qjoVwJHBYup2fo/qZpqmBY/nZm3jGEBC4Wae5rQDABG5uxWm6gQHkB1r9iev6zyV1QJxznWMBWKgwWZxKBF5q2V6s4gsZub5RYBHdGYIwM+J6OE6nRXCpNWDmXknVEc59wLowE2tkglJwW7W3hjIqlCfnSfdI597uVQqPdEDkBG1U1HVKSIyuwgAYeYHTCPO0k7mebVnx4Qh5Tu+fYgGoZBRrfGmAhDT4I8TkfcDOJKZUSB4hCCwMPOXs+wZEan3/nV2n9LNAfRojx5uGYCIiBQIIkmXA0kQJDPtHTkLg7UA1vQAZERBqQBegGp2ThEWyENBDmLkeGCo5J5Xcy7D7AYtgkdrwJYBzPPeHw9gAYB9g0CuyqViwCNq9vprIrp5tIF0kftqGqqzjgLdu1VhEpuq+CQzP9gyAAGwqUBXwfSeywSApY1WFSLK6zpke7u+hxWjatq7mE89d+3Ue/9YRqsoMWALWvdWAGao6ioTghqDTSN8McK8DDZZMAnV5I6t0jTdgYjmOecOFJE5AOY658JoXrHfcm3YMw/g4/UAf9GiRaEn17Fmzfk23G8nyp67iWhNq5qqJsy8rqgn8N7v1AMQQERmFmT1PYdq5k9vDSOMrOX4y20vJC8NNaTjqmrW4q2tRGQb0/IVwA4AFqPakj90MlDr1ptJixQRYmbx3v9Vh18RSZh5wFoaTQXQnySJi+4fqgoRSQFwO9xAqho6yF5CRH+oN9Nm/vz5wZJ7p9EROeerjBcAWZbBCs4OIJVKpVzU6Ezn3K5dbEKSBSCBzSm8efvcn7UqXOrVgPy1PmP+8UPy3AsjPnvv1yRJclcdyyG41Z4PYJvg3qTqevEwwNQIiI34nRH+T8zSCMKG8ho50ID75WlmPr/eTBuL04iqHiAiR+fck2tcWdzMfFsrfzQplUrLjVE575sXkR3GaHpPmCUik0RkakHXWlcjmHoLW7S3mCUi+0ZCMi8wJ+fcYwBW1pPzdjYOMIE5NCcmEua5CxkDLe6ggLOgOvDuvTZBr+5ETVMOzjU6eowhZVVV/QSTPRKl8LaEn5INGzZcPzAwsIqZZ+ZYlxB+c0fb3G4uKOyzV+7LJtr11jCksarclzHz1jnHPwTVequbnXM+4zjhFw8jELsyAKyqqVWQfy9JkktDz60M1sc8EXm9uQAbph0RYaJZLdbWqGUBdABIJk+evFZEVqEa2B3ToJUGAOTFqrozEf2liyfjJSgoGy3qSdRLnx5eQz3RYgi5xT8i18HvM+xF8NsfUNSgsQ4HD2/gcSszn23Bfp9xby9g5r6xpBgTEURkE4Cbmdmj2v5j/GpL1WcYYObfENHaVsreBNUsnTU5H1Yy82kqgHkA/tLFh8NFANJbxQulkN45WUSONT7Ma6BXCKBXyuXyH0dzHUQZWDNEZL9w9rscPByAx5j5ZCLaUK+fW9SX60gAr8UYMq+i6an3OefmT1DlqWVomBjT/gXAfsjXTx60vLkAruxiACly0lzP8hhGIVNVSdP06CRJXlCQ+2ppX1/fvXVcB2HM6O7OuW3R3VPzAnisBHCSDUMb1fVngXWoap/3/nPOOTbro+HLm9b+pP2mw8SI2WrQ5VvtTgGAuwG8GgW0dBeRowB8Gt0bSC9y1nV/HaHVlfLJXBxvLYA2oenfDaaojSYEGYCUSqXDzWWStivrqRPAQ0RWM/NriOj2enGPYNkTUZqm6Qedc/s2UR0fUu3/7JxTVZ1IMduW83rQvJYVoLGGa71UVbexA9WNGnIR1cRhTekByBbCiY3vdmXmvzG6cM48T8z8y4xgAwCHFHAWO3V/UgOPJ733xxLRTVnAI2rsONc591HLWBvrvoaY1c29E5NdqP+55u+tNz82x0G2ATA/Mg+7baUAKjkL9qGst9AAr0vBeiR+/wcAk01Lza3+w1JIn8Dm5nX14h/TReTl3QYgWl0h2+oeZp7f19d3SxhUVee7oT9YSUS+jWo1/ZizSWv7RS1cuLCnfGU4UHeIyHJmJktvzNuE+tuC+vp04tqI/KvDw+GZgV77mCEtFdVpkNuLyNuM9/JUYDwAZeZrrHXEaDO7wzmcy8w7Wjo9d8m+eGYmA4+frl27dj4R3Z8x3RmoxnG9iFzMzAc109jRij7hvX8awAMAsGDBgt4Uz9EAxDZqENVWCSNqSa0ELBE5wdJ5fbdoxlFFeBk5Z73ZYQgAsl23ukSGMYJVRM5i5pnee8l5FgsDoDRNL80K+CLy6gh8JjpwSBTv2AjgA865k2fMmLEyK3iYdV1J0/StzPx+AGmTtRtijHInEa3qTfHMyOQAwMxX5S1ozI2VWnO4E+yfu8mNFWj7dI1F1npJaTn03vsDarTcbrU+RFW3AXBWMy6OrMLR3FfLkyS5IYNi5u0eXznR9yoCjjCL6Hdpmh5CRJ+zmSPUAHiklUrlBCL6llRXs7IknMcHuv3MNAIggbFvB+ALGDAVNuVsVZ1hh6dbtOPwnCvyBJD4t4nosB6bD1kf5zLzrAI674YzdTkRrQ9xqBEEYXBt7cPM+yHneeLtBo8AHCKy1Hv/diJ6ZX9//11GB8mi8QfwUNWDkiS5LGSrtUApCMr0Lb0jk12Yhw1bKiL3h43O8SSH3jRzASwwhukWKyQw6LKC9hYAXqGqfV0G1MNZH7MBvAf5Vp0PjVwFUGbm72awPsKevBrVmpEJ6b4iIphVdg+AdzPzAUmSfC9MO8wY7xgCj8HBwTki8nMAU6Piv6b2jYicZXDdmmHfegvV1sxq6F8BcHWBhFMROfvWW28t2QHvBuEWwPqmvE1kO1BKRHuhWiTarSZ56ET8BWaeXMAc+tD64jdEtDRD2wivqiwiCybiHunmiWnrALyBmQ8goq8R0bpgfWWtswhZWZVK5ZgkSa5h5h1aaU0aWzyLaqeMvD0EE8YC2fwX5oX2R5fziXYiosw8b999932jMVA3WCGBIR8UkY3MzJrjSMJQiSsif9eNwUDTVr2qnonqGNYihgqxnaUv1lgYwwpE68V1KDPvjerUwQkH8sZ7fQD+SEQVVe3LGuswOg1ZKar67iRJfs3M27fYFSm2b0ssgN4bgdAAgISK2dsB3F9AOu8QbzjnPqaq07vECgkMuaIgLScIyzesWbNmmy6y9Ia0VVWdIyKfbbK4LCtgh+D5YgDXZnHNmP7wJlTdVxPOZRLqvwD0icinx+jhICIS7/2/AfiqiHAOcaxQgX5HEUr0hAIQItLrrrvOEdEmEfn1GDe5YReLMdYLReSibrBColTeQQAbCjq8npm322qrrd7RLfEmi3uoqk4TkR8z85RAjzyv65wLQujTRmseTas2jXprACePJrRCoV3OL58jHzrjw5NV9V1WHOgy7qWzIsvXMfN5qBbi5tHePvTSurcHCw0SLdooXy6XX1YqlRbbCEjK+aADmzO/XkNEv8jY92Y8a8XeZhX8kZlLedM5uMiYeQWAOQBW2QGUCUpjQjW251V1IYCTi3BdRQ0Ab4G1IxmNxlEm0ZkAvj7aPRY1ijXP+JAlF6iIlJn5ZUR0d5a24uHMeO+/xcxvM8ujlMO9BaX5QCK6o4vHTTS04mZtwb1xm4jczczz8k53NP8829yK76rqy4jooQaqUKGqJVQbqW3qdK040jgvsVkFufu8Q00IgB1E5KPOufeqaoIJmGES2uMQUeq9/5KBR1FNCQkA0jS9sFQqiQ02GlVeq2oiIu8aafaHCTYSkdUALjHtu9XTJZmZvYi8hJmPz4sno1ZGAyLyXVU9FJYZmCXWwMx3mdWSW/sfEXmGmR+KXVq91dgBTOz9faqq3vuKiGjeL++9t+vdrqrTQtAs4z1PU9WZqupUNbEAHXcYXTm619/bs/oiaGv0FXNTVMrl8mFBs5to4BGeSVU/UTD/pna9q7LQNrrP40bjhehcLC2AfjO89ytUVfLkzYhWF8cyp86+kqpO8d7fad9Nc7qnG1Dtq9XrG5dV+6j5e6gVuExEHmNml2eWUKSdsPfeM/N+InJZ8I9m2UgiWktEq8xiCckAfQYobWeGyIc7SUSuAHCIacWFgZxpfwQgcc5915IWtNOAtkmADjGFTwL4Z3MJJQVcW5kZIpKmaXpeRu01xEo+kOXzzJyY8pGoasneW/nqJ6LVzPx2VSVmzrWdkdW6fEhVjzQ3nhuFd9VckuuZ+U0i8pwl+bRSLgU3783Iv0faxAWQaLOeZOaPmDAuxNVh1akpMx8P4D/N/5jJEgkgYZWsg0S0KXaBhRYJbQKPMP3up8z8ynbNeQgFnMy8O4DvRvQd19pWVMEs3vuvAPiwCSguiG+9CZz/6O/vvzPcTwaF4nAiOhrV1N1RBZaBv7fYYEpErX4N2n39iog+ByDJK6huMRay929lUWbsDCVEtISZ3xXcbq12P3rv/9SDhOYskOCbJQBXmk+wqJReEFEiIimA07z3Xw+CYazuFitS0rhFQlECM6pB2ElErmTm49o9JMgEVQrg9d77zxnIuvEKIhGNp6vqFcz8D/Z8jgqIPNu5cAAeZeYLQ/ZXRuvjIxYDzKJJF7E/4Zx9GMBt5n3IC0RYVVMAu4nIFwxwuc53UtvvS0Xk660EOUu9FudcSOHtBc/HCiCRFbICwLexZbuTwkCEmc/03i9U1RkmJEYDkcyadN7FQeY2S4goLZfLh4rITcx8RKdMmLPAbcrM/+i9/zfTamk8ubPMomRrabG/iNwI4HUiEoRMYbdiwv19RLQKdUaGRtbHUWaNSsbssNzmttecCyWiwXK5/A4Am5gZebmwo3P+1jRN3xgAos7XvI1ZOVdE/mQgJ03yUrDEnwCwNKMLsrdGsUCMrkrM/BURebRIKyRiLs/MJ4vIYlU92kCk1MmCLmrNkKrqaaVS6Rpm3qUof3wDK9D3PFX9fLOWXoH0DeAc7vfMvr6+G5h5btE0jqbn/ZCI/ruBmd0kIh9HY9lUXIQVYjRN+vv77/Lenw/AtdhV9FfPZanDX1bVF2BzV+LRQI4sHvIOAyBtEuRC09GHrfFlrwK9WQAJJiUR/UVE3lW0FRLcLSbk9gTwW1X9eyKqBCavsTjaOt0w0oi9qvar6sUAfghgUkHtMxqlbTi8HsD7VHWhqk4LvuZOc2lFwBHAebb3/mcAvg5gSgOafMtcVzYAaTkzvyej6yrUM5zKzIeiGtOod89UJIBEWr5LkuQLInI18o2HMIAwpfQbASDqfCfEQxYz8yfs3Ddzf7X96XoB9Eb2sI7GRKjO1b4ZwF5F1C0Mcx+eiJxpfF8B8DUiWho0/siNMJWI1hQp1AKwBreFqi4AcAGAvYNvmwr0p4yVvqZJ38XM5xDRjTFt21lMFWdX2d9nADgbwAcAzAjB8iJpbNquACDv/VF9fX3XZ7Q+wlm6E8CLskwdjOpAnmDmvWyyIRXghg2A+HwRuYOZZ3jviZkpTx4E8I9E9IV6xcTR2YOI3MDMh3rvha2gZizX9t7/nXPuxy0ApPEj/FvAR5TBJeNV9XARuc7SFblooRhVU5OIPKmqX3PO/YCIlkcMPwXAujwPV8y4NVle8wFcKCKHWnV5x1kdGQ9wCuCrAD5HRI/GQrwoMLHrsWnoIfFhG+/9W4joHGbexQRHW2gcZncDOI+IPpWlc0JUTX0RM5+f9d4jAFlhAFJYk79wz2ma/p1z7gd5xvDsOQVABUCoUq8HymzeiD1E5FYAk7E5u6vRaxOAQ4locc+F1UIAqQGRfwfwgXYGg6PDCwCrAXwXwDdthvLWAJ5rdRuUSKBJLEBtut2JAE4D8HIAk1QVrZhN0CbaChGxZQatZOb/BPAdIlpSA6DB6gtBV23imkEzDy8f/56qzgNwuoi8kZl3CsBRtNUxDP/9hIhOtaCvH40GkaCbB+AWESllFXQRgDxlALKySAEXwNF7/yOrwcgNtCNL+A5mPsSUGalD2yCb3gHg243Kpmhy5Apmnotqm59WV/p3suyXrB0/mgGQcLgnm5tj13a4smqsER+AREQ2MfNiAP8N4D/qMV2jwq0GNLYFcACqLTKOD0Kt3YKt1e6ZMJVSRCoAFjHz5QCuJaKHRrHKGn1uGc6iUdU9ABwvIq9Htc05R/SlNvJdAI/bARwBYGM9AK1xtVzPzC9vRAhHAPK0AcizBQNIoPVMEbmdmZ+fxfXWLI1F5HPOuQ9ktO5CT7Ex9z1T1Y0AHkZxcaa2LrP2+gC8k4iua6R1VMMAMowWdY2IbGNuHG63sANApkX8xDl3ajPEGOZ5twMwz3t/gHPuCAAvA7BtDWhgvANHPSCxtdFcBbcw8/UA7gWwgog2NHGdKQB2ArCviBwK4EBmPtCYu2OAOXLx/R+Aw4nokYyNAINwOxfAZxoVbhGAPGMA8kzRLpZIyz8WwFUAsqTbNsV3ROSI6DgiuiqLKwuArlu3brvJkyffzsw7NQpyE+joNrTK5fKc/v7++5ppHEkNbG5CRGmapu90zn2jg+oavMVm7mDmgw1UxhwgisDDicjVzHzUFmpztQW9TjTQqAPSqAETiMgGAM8AeISZl4rIM6q6HsAmVH3ZQ8s5B+994pwroeqrnglgTxHZA8AsZu6r+e2OAebg5gCwBsBRRHR7FiUlErz7iMjNplk39DwRgDxrAPJ0O3z0ERB+AcB7c3ZlicUkHgOwP4CVGSy9QOsTAPxyjFZItxQPBrfdY8z8kmZTl2ksjOS9/wYzv7MTQCQ6ZJvskD08VkSNwKNfRL7PzKeYMAuZXhMeNDKAiVbxhFtmfXYqjU2TBarzzU8got9ldKsEt28/gN+bhdWw2zfwtvd+pXNuLyJ6qk0AElxxfSJyCzPPGWvWUyMWn4hc7px7QyOuLO/9l5j5nE5RcDvwHAcA+aNz7qCm3WENft7bGM6zzaebWEuCtq24TTSAuWMBxkiLEVUdAPBTZj4F1b5DjogSe+/aLp1UXYEWbJ1MRUS8iKRjeHn7vnYijS2poBp0YX5TVvAIRpex5ecNPJpqnhn6R7Vx70NK+kYr4Ks45zTHKnVnzVVPUdU3N1Cl7pj5PBFZYhZfryXJMHqRvd8W5F5hABK1O6gw88kAlhiI+A4hyuFjtKyCCbyViPwCwAmhLUaP30YFFI6Ef6MvZ9/vOFCOM+mI6E1EdEVW8IjcPW9n5jNNCWmWj9oKIEaHUMB3CzP/KwqoUq8agfJFVd3FaFqvSh1EtIGZ3w4gzRPkxusKRiMz3zpWZbsZCyS0O3BE9AyAE63ViWsz2gci7F0DKFndcl5Vny8i17azY25vdQR4eGZm61B7KhFd2gB4hDnsB4rIVwB4EXEt4u9OANrQk+7fANyIHKvUzS2tzDxTRL4V3IKjdUmIQO5mABeii4oCM2vaVX5UAPcFti0UQKKNckT0EDOfKCKrnHPcRkuEjDjzVHWqgVyWFOXEGvLNBXA9Mx/QieChqr4DrLxuAI/UkgWeBXBCkiSXNwIeqHa03QbAZcw8qRr2aImFFadJt9uVFQpKzwDwnAn13FxZ1u/qlQDODd2jM4LcRSKyqEM8JB1jWVtM7XEA9zSqbLcMQGrQ/m4R+VsR2ZhnC+g698KqCmbeGcDuWQ5aBB77JUnyWwAvapG7oZUbrhZIda3oPNpbI9I5rkH4E4AjG4l5hD5oRKQicgmAXS0TqFVB5k6xQGIPxFLv/QctkJ7nmQ9WxMdVdf+MriwlImXmt1tRLPXOzmZrwzm3rFWNI7lJZkpVNSmVSteJyIkAnjVBl7ZBCHhU+xPtUQ9AIj/1/kmS/IaZtxcR30kxj6AtmCn/XzZThHvaVOvpDECtSPCX69evP4KI7mkAPMiE6kxVvZSZT8ghzbVjACRWHpMk+aaI/HeeWn5kwfXbLPX+DK6sAHLLVfVs2MiPHrcPzaK5IwLnpk3jZjc4gMjvyuXy/JAB0QYQCeh62GgAEoHHfgCuZObtOq13lWnDDGAdgNOccwuSJDleRH5rAF3pnYXW0dnqDj5GRCdutdVWz4RYRkbLQ1V1T1TTdU/NiZeK7MabdYmNfDjLmj1yXlq+1WSlzLwPgE9mcWVFIHepiPwncozXjKMVuiLc2NIfbBGIuP7+/nuZ+XAAvw4gUmAWRIiDzLG/+1HAY18RuQrArE4CD/NYhZYZywAcTUQ/VtVSNVOZT7ZAf8niIr0MkzFaHRYsTwAsB3A8EV1gbeMpSycD04BVVQdE5CeoFkZWcuKljrJAgpYPGzwnImci/x5SzuqF3q+qr6w3Sz3IABtA9T4AD3azG9hc4QxAkyR5MCgBHQEgEeI7IloJ4DUi8g1mTgr0P4YDtodNMdTYzK2xPH7NzJ0GHt5cVomI/AzAYUR0i913xWj8HDMfb7R1RtueS6txgGYLlv8AwMFEdGU0bySrEHT22ZOZeZ6BR6mb6Bm0/FKp9AsR+Rozu1Y3M61xZREAsqysGag/Sz0MoFoD4IzQRaJLFa/gvlpuyilaAficA0MxAHHOvct7/08ANph5m6s1EorbmHkHAPvEzxeNmD3YhuTs2CngEWnDDsB6AO9xzr3Oqo6HDmTILCOiQefcuwC8GcDKEHPqWSPZARrAgwBOJaLTa+k8hvVybK6iz1M56tQi1i3GzJqrSHI8496mfH4x4yz1kOyzCMDn7Zx1o9IVRmLcRUQbg/u1owAkMm2hqpwkyacHBwcPEJF7QvfcPK2RUNjkvQ9urKH55JVK5bXOuauZeVvvvbQbPEwb9pE2fE25XD7ExnsO60oJVpUJvB8COFhEfsfMCVX/s2eNDAMcIZNNRAZF5PNr1qw5iIh+oqouq8tqFI1uegECXtGhLcYjLX9DGDObp5Zv5zZl5tNV9ZQGXFmOmf/Fe3+3ude7zZUV9mNJK2U/58VUYfTswMDAn9etW3ckgK8wM0ImUR4MJiIEAM65IyM3Q5qm6enMfAUzT7O2J+3sIiyRNuwAPOS9fycRvaq/v/+eeq4U+7+gVS1j5mMA/AsRlUMadS9lcUvgsEy2/2bmg51z758xY8bK0H2gBVpYf0GHv2MtzMh9vZiZP563li8ioUr9q6r6fFQD+lmq1Dc55/4eQLkLXVmBPje1yn2VG4BEG5eqKk+fPv1ZIjoHwJEi8sfIf5+2WNiFQPpBqjqJiAbTND2NmS+xf2/rHJPQyMwO2GMAPgjggCRJvmWWBWd1pUT58EpEnwRwmIj8r9GWu9GtFaw6s0YDcPw2TdOjnXOvJ6I7m7Q6hltFpH6n48DtIlEB3+KcU3uDu3pbEQmz1LO6sm6xyZAOLQgij5dzYQ0UBwHcP24AJLi0IrfL9cx8mPf+fACrLMjeMoskMBaA51UqlXmq+hrn3PfDb7cDPMziSM3iYADLvfcfBrAvEf07Ea022jQ8MpaIxNxaCRH90Tl3OIAzReThKIFhwlsktVadCZSfAzjGOXdMqVS6VlU5LvjLQbPLc1UMRFp28HNyZSkRpcx8hohsRP5V6p6Zj0vT9H2NNFx0zl0EYHG7Cp/b6L5abopry/io6NnmQ3MUVHVXAO8SkQXRnOsU1dRAbsG1ngKwjfm+tcimfVHr81BjABFZA+BrzHwREa21z9UdidrANYda2K9evXrr6dOnnyUiZ1l1/oSbYxIKAGMao9pa46cAvmH9kIZakbfQ4tiCl733Pw/Fg2hBYVbtZaKRtnOKHmk7RrqEuUHnOOe+ZFMtkxYKLa2hj1iNyKFEdFcDs9T3BnCnnY2gCHQEXZlZW9lakJlTAEmappeVSqU3t2LoXlsAZLgDbWNi/x3A6wFMsw1teqBQ+FpR4DHK8KXbAPwIwEIieqzVwFEHpLdGdab4223mM1pF33aY4XbAAzBz9Dz3MPNlAH5MRA8HQVFlA/I53U8AkGuY+ehcfUMiq5j5hUS0dhwAyND5LoI2EY0eYeYDUB1AhYwDqD4F4EPokuW9/2CSJP/ewFiCzgOQWBOID7iqvsh7f5pz7i0AXtyssIvcVpSnQDMNiGLQEJEVzPxLAN8HcGNg5ihmoUUd4gBYaZq+KkmStwA4BtWJgIgsk5AOSR00jyMARnCNJPGtmcD4DYBLjcbhWR02N/zLlX9Nk/04gEOC9dxquWja++PMfAYRlTsdQGI+B7AjgEsAzPHeUxBaWn0Ib8/nI8Wg9n2Ll521+NyFz1WYeSBN04+au7KeFRKy5th7fzYRnQBgik02DTzn7TpD8jeyCnxkAXk7/2rfDVq/RBZN/H8SLIyovYrYZ6j2u9H9wJ556B6YOXwmjayWNHqO1J5TmNlv2rTpK5MmTXq4mRG2HQMgowi7qQBOQrUtxBHMvFUNmGg7hF2tQAtpydF6BsD1AH4G4DdE9HRs1udlcTRCW/u3nQAcKyKvAXAoM8+q0eTCgUURdI585Bpdl4YZoavMvMQ6rP7aQGNtDY0lb+Dorey8FylOW5msqUR77ePzVOua6nSQ7K0OAZCRLBL7txcAOBbAySJyGDNPHkXYhbGbTVkdtUAxikATVCs6b2Tmq0ygPRWbyeGj7T4M0UjSLTRzaz3+cgBHADhcRGYz84xhvh+aVeowfDPSn3WYP2vNZ2mklGobUbxcRO5Q1Rudc4sB3FvDH22ncaTN5nqZ8ShQQyeIVt/7SI0UG71OfC6CJ6FguUkFf7flSix1KNMNJ+xeBOAwAC8RkaMAzGXmSSP8Ri0QZKUFRQHZWoGmAB4HcL2q/sE5dyOA+0KbkUigUTusjQbp64bT1lV1BwD7A9hHRPYCcDCA7WMrsNXLMmnWiMhTAG5FtWfRkk2bNt0+MDDwSEzfTgPm3mpO4Gc6lL097lkgzVolwwkLVd0lTdNdkyTZX0R2BzAbwB4Atiai/rEaISKyHtVqzccAPMHMTwG4G9X86UeJaN1EEWgRWNNwQTVzC80ql8vb9fX17QZgLwDbiMg2ALZGNZYyDcBkACXr4wVzT1QAbLLXcwDWMvMqEVnDzGu894+JyP2lUmkFqoHPZ4ZzP0WgLD3XRm/1Vg9AmgGT4KJKR/jMtgB2MOE2y3u/NYCZRDSdmacCmCQifSLimFmYuQxgvfd+pXPucQCPDw4OPjQwMPCnUe5jwgq0Cy64gC+88MLgktGMXWkZwKTVq1eXZsyYEcDUoxrAG6y1IOr8lot4sgcYvdVbHb7+H8u03UsNXMg3AAAAAElFTkSuQmCC" />
     <div class="brand-tag" id="phase-tag">Inicio</div>
   </header>
   <main id="app"></main>
 </div>
-
 <script>
-// ============================================
-// CONFIG
-// ============================================
-const WHATSAPP_URL = "https://api.whatsapp.com/message/ACCBSIABCBTXA1?autoload=1&app_absent=0";
+// Logo injected as data URI
+const LOGO_SRC = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAB4CAYAAADc36SXAAA+SUlEQVR42u1deZhcVZX/nXNfdXc2krCEzQVBAkgSNkFAwAAKA4ioQxBlxI0RcUAdRQecURgXBnXcddx1cAPJyOi4gIgQYDCC7EuUBAgwCIQlC1m76t1z5o86t3NTdne96qr3qrqr7vfVV1mq6r137rnnd/ZDGMdLVQkAAyAASkR+lM9NAbBDmqYvSZKkL01TBeDte/3OOU3TtJwkCQFI7DfvB/AIgHWj/Lazz4r9lqJLVgP0nwxgOoCZAHbx3u8MYKZzbpKIDACYxMyJiDAABZAC2MTMmwBsArAWwFMA/g/AEwDW3nfffWvnzJlTHuF6bPelACTPPbFrUYFkb/m1Fi1ahPnz59fSSO2FicDTNTzRWy0iK41TRggCS4YRaNsD2NN7vycR7crMcwHsAGCaiMxi5mlZryUimwCsYObnRGQlgGWqusw59yiAJQD+RESVYQAFIwnTiXQQa5/R6P9CAHsD2FVE9mDm/QFs672fSUTTmLl/rNcWEQWwzgBlNYAVInInET3knHt4cHDw/v7+/oeH2ZNwz1LLM72VTVFYuHAhL1iwgGrApasUpt4qQJvJScsFAK4VWGvXrp01derUuQD2B3CoiOwG4PnMPKOOEMq0mJnqCLRlzHwbgN8BuBnAvfGBUtVkIgitkQSwqk4CsA+Al3rvX0FEe6nqbs65gTr01zFoglxvP7z3KREtZ+YHAPzBXrcR0bPxsyxatIjnz5/vmxF+qkpEpOVy+dBSqfSCNE2fM8s100qSBEbTzCtNUzILudHF3vthv2eWtyRJkqZpmiZJsslAes3atWtXPvnkk8/Nnj17cBQ6BAs8d2uvmX1S1RcDmJOmaWWMNOytLa3TBMD91MFCiwA4Ikpr/n02gOMAvFpE9mPmbYYRUhIJKYqAkoiIGriHWNDFfyYicjU/5UXkXma+DsAVRHRjzSHT8QQkkXtKa0BjNwCHAzhWRA5i5l1HoL9ESsrQHjRC/1H2ZAstmJkhIszMwwnkpwDcAuBXAH5LRA+2Yl8MVNUUl0uYebeJJCFEpAJgPYCnAawA8CyAB5j5HgAPAXgMwCPDeAFc+IlOABNVZSIS7/3Pmfk1Pdnf0nU+dajQGnIBqWoJwPYi8k5mPk5E5sZukEhYDQmqZoVUg+Ciph67mo/8HsBCAP9FRI9FQgedDCTBRRhbewYaJxlwHwpgckR/oBpLQpH0z7AnalYLR/e6HsAiZr4MwK+IaFUzQBJpt1NE5KvM/BYTvHnGRVoulA2Ah+6XiLjeForIRgOSPwO4l5mvBnAfEa3pFDCJ9meyiPyJmXc2C5jRW02RlpmRpulx1EmCq0bT3QnAGSLyBgDPY+atIub1kVuLOuT+g9ASAC64W0RkDTP/FMA3iOiWTgWSWiGqqlsDeK2InMrMhwMYGIb+REQdfRhtX6QW5EXkMWb+EYDvENGysQJJzLdpmn7EOfex4KbrdNo0aOkhsuhHcic+LiLXqeqvnHO/JaJnavirUCAJe6OqLzbvQL+IaKfIjPHKF8xMIrKamedRhwguISK97rrrkvnz5x8kIqcBOIWZt62xNBp2Q7XxuQSAMHNi96/M/D8APkVEi9t1qEawOBABxzwAbwewAMBOnQzaLQKT9SLykzRNv9Df33/PWPYlWM5E5FX1LSLyHSJyqirjGUQatPZcDaisAHA1gB8DuJaIykXzvKo6IvKVSuV1SZJcISITdj+KlGvMzAbI+1ObBddQFoeqvkpEPsXM+0VCKw3ugPEutKKYiQD4IYBPEtHSmNHb6apS1SNE5BwAJzFzaaKARp198RHAb2Lm7wH4NBE9PJZ9UdWEiFJVfY2IXE5E/RMZRLJaewDu9d5/1zn3g2CVFAEk0X58AsA/i0hKRAl6qxmapnZmvkNEZ3AbboBsY8X8k29Q1d8DuJqZ9xMRFZHUTM3E/LHjVnhRdbkgkE1wny4if1TVj6jqJNNcXZRxljf9ndHfq+qhqvoLANcz88nMXIro7+w14Ux+25fE+M0z8wCAs0TkNlX9kKr2N7ovJqxKRPQ/zPx6IhpkZorcQRN6BV4nIhfoap6DOc65zwG4y3t/oarOIiJv59/lye72vke4xR4EtGZ57+8qnKCxRqeqewN4L4C/Dy4ejHO/cQN08JGGdnuaph8olUqL8rZGaui/h4j8CzOfBoCM/jIRrY2s2rOqinMu7MutAM4louuDxZY1NhI030qlclKSJP9lBZLUrb53VRVV1UBbEXlcVT/jnPsqEVXysEaiAPqAuVt267mwWqIkCABO0/TIUqm0iApioJCdI6o6A8D7ROSDzDw5uEmClt5NAgvVGIkDoCLyOWb+CBFtDMzfYvoHH/0k7/2HnHMfQLW4csjF1jsef7UvIiIXM/PHiGiwEXAPIJKm6Vucc/8JIBUR180B3OFAOk3TfyqVStc2CtIZrhUC6LuLyH1mWfcC6E3unwXQVzLzbCJ6lgu4qCMitc08WURuBXBBAI9g8nYhkpOZ+iIiYOYPiMiNqnqQaU7UYvp7izMtds5dCGCa997HLrbe2rwv3nsREWLmDwO4VlVnGw2TjL+TqmopSZJLvPf/jGrhle922jJzcG+lAF6aJMk13vvPq+oUkxGt4sVwfl5s4CE98GhenNj7gwBWqmp+5lwU6/Cq+gJVvRTAQjMlh3zsPYFV3QMRqTDzASLyS1XdulkQiWIdXlWne++/pKpXM/M+gf7D1K70lq1QP2KC7lARualSqRxvwOAy7m1FVZMkSS6yYsNEVX2P56vxJwNpMPP7THnatxGQzgIgIvIy+3uvhU3zK9DwVvOQuFwAxMxHDX5gVNt8nGratlhwvKcNRAcq0piuBvBcsBzGSn/7Xa+qR4nIzcx8jqpqj/6NCzoLsm+bJMkvVPXMBoPrvmr581kichszux6IbAZpIiIRSS378gZVXdAISNcTdsz8khqLpLeaBGVm/uPQHubkshJVHfDe/yszXwFgB0uh414QaxhOr1oDiRUdfsjat2gz9Lc//6uIXMPMexj9qUf/MQFJcDUSgK+nafphi4VwPRAxJYCIaCMzv8n2uGsyszLSN7FY6DQAl6dp+p5mMhMthihmyezZA5DWYb7JpSWB1C0VJpHLajcANzDzR1HN8JFe/vWINAuVz6tE5O1E9PhYg4kR/XcWkSsBfNQAqkf/5oVccGl559wnVfWiBkDE294sZeaz7SD2XCrDg7Q4576YpukFWek7kqYMYBcR6QFIa+SUWAD9sSeffPLeoPtyCy8Qinb2BbAIwIE9rTfTCim9nyiVSldYHcFYwMMZ/Q8D8L/MfKz573v0b52QC73aUgDne+8/2wCIpHZGfigiP+65skYEaTKQvtB7f/EYQaQXQM8BQwCAmR/Ycccd14dM0ZYIlgg8DgPwWwDP61V9ZqJbqIS+DcDXzOROGzXXzWLxaZqeYfTfxTKskt65aT2IiEhifvv3e+8/aUIui89eVJWY+X0Anui5skYGaaPvP6nqhQ3QdwsAEZGDA917lG0NgAC43d4d0IIYSAQerwZwJYBtLT23Bx6j0y1kQW0AcDoRbUSDxVRxfY33/uPOuW9Z4ZT0MqxyFXIA4EzIfThN07OJKL3uuuuSOt8LhZpPAzgPPVfWaCDizIK+IE3TdzQYWA80fVmNRdJbTWwLAKRp+nugOsWyacJGxVJvdc592za9V+2ZDTw8gLL3/qwkSb4/hr5LcXHm1wC8ywKR3DPXi9tHVIsOCcDfENFvs+xj6PorIouY+fBQD9Wj6LD0VQApMx9BRDc3ck689zcz80E9mdQyYFcA+xLR3SFO20ydQbA83gzg++OpFUk9t0HeAjg0JBORLzjn/jHQslHwsMP1PQBvGS8uwxra62jaThF70YLnCQDyNIADUZ3bTqPFsYIQLJfLhznnbkCXtPBpgr4sIkuZ+aWoDrkadZRu1MbkBgCHGYC4dsiSibCYWVB1Ky5j5nnWlYGIaGwFOxF4vEpEvmMXQKcdAmupXjuZ0OL6NNr3htqxBxqiRb2MzPpIROQBZr449AFqEDyYiLz3/hJmPr1TwaOW/kRU2/KbMvxG3BofndZXiojY6kRmGZi/CgCN1o4mpKgS0f/apLzX1ttDVU2LeJzovSNobPRNmXm2iHzKOfduOzOjWSEO1dYxN9osG83x/oiIoKqYqIa/FXsSgHtqW/qMJcc6VDfvg2q21YxOMRHjdtLDjJytFUopM3sbMxIDjBspftBse3MDDwWwEsA+lrJLDc6dCNlWXwdwZieBRxb6i8gmAGVV3UREGwCUmTm1/0sA9KE68XAAQJ91yW35XuRlVXrvz0uS5FP1XC1Rr6YDROQWZh4qAB1GSLVLcIT9VKMzt4m2QDVbkQHMJ6IbRqNvPEgKwD0A+kWk5dZsAI4usELEaP8mIrospn3S4EaGhnzPE5H/YeaOAI+g6Zrgj6fOPYhq0cvDqrpEVR9S1bWlUmljuVwe7O/vT02gxwASBNh07/1c59w8EdkbwL5hTob9djqGQ+UBJN77TyZJ8nijrqsAHt77j3UKeAwzAyKm/zKboX0fqnPJn2Dm1QDWAdgIoGw0Cd9n+37YgymVSmVGqVSahWpa+EsA7AVg75rpgh7tT1d2ADwRfVRVf0ZES0er5wl9n4joNlX9FYATVXWLWIiGirjq+NifMPN6cyXICFo1maD1NUBARmcfK40iQkmSlAD022uyiMwEsAOA5zPzzJr9VPuNQptCBkFt9/55VT0EQDqS8hXR9gHv/feY+SxUsxuTVvF8cFumaXpSqVRah81FdhNulctl6uvrk4ULFy4JFnRmF0KN9gtUO7j+jplf2s7gXyS4OBof+zSqBYxXlcvl2/r6+v5ERJtadL09vfdHEdHJzHwYgDB0Scwn6+p831sjuSuZ+QRjuEam3oWEhTOcc99qN3gMMygLIrIK1RqUKwH8YdmyZUtmz5492OLrkoHIISJyEjMfCWBqJwBJ1Kb/SiI6vl5BaNT2/ZVJklxt/eE4VozM/3+/c27Pgp9lewAv9N7vRUSHAziMmfeoAe1Crb+IvmcR0dczWiGzReQeIuoLgNyq+xCRa51zR6O3sgkwVWXv/RWqqt77inXVLPTlvRfvfapbrt+nafoOY/q/YiS798RaIzj7txFfl19+efhcMlzqoKrOUdWPquq94Qa8rZHu2T6zXFV3DvfViNvQ3o9Q1UFVTa0RXdvp7733qvo7o//OtfdutExq6E4ZX+Hzo+3Fbqp6vvd+WXRP7aRPoM3x8d6NBogXXHABe+9vC/SMfsvbv/1ZVQeMBqWIn1v5GjobI9xnn6oerqpf9d4/HdO6QNp6VRXv/aOqOj3wyWgeEwDw3l/Zynv13lfs975u/NlXT6ZMhFdT4GHvbzPCldt8OFVV16nqD1X1mFphG8CulRP+IiCi6N9KqrrAe3/TSMLLwCP13g+q6p5jAI8gcHfy3v+lVsi0i/7e+zWq+mVV3W8EOnEeExYjYEliOqrqlDRN3+29f8iaRraFToFGBgilensdna131wq5GgAp1XgC8lYYaSTgVtWdVPUi7/26NoBIqqqapuk/xvSrQ9uzWqn0BgBJ0/SsevfQszzsAKjqMd77p1S1UvTBNK3Xm+za4L3/iqruHrs9ixoJGwvJ+N/SND1VVe+p1cwCs6nqFxtltugQk6r+pujDGguyiP7PqepnVPWFw91nO/gzpqmqzlDVT6lquZ30MlqdnEHIkb3v6L1fFfi93QAyCi/GMZqXeO+vKZLOwQpJ03Spqg6MRpNIdu3uvR+MadvMy5paq8Vi0JR2PsHBI2h7M9ql/dZYHd9V1Tk11oZrM31cJASmpGl6vgGtmtWh3vvLVHVqo0I2cl39c7vchjVWx482bdo0u4b+3EG8GgPJ4d77+9pBN6OZeO9vrrWU6uzzZfH9dhKAjEJrUtWLIzeuFAXQNiqiLkCrqrO9aFp+Re7otWNxR3cbgDjzIX7WZEi54IMYfI0PVyqVYztRcNXSKjLxv2b3/hdV3WGscY9yuXyg977cjrhH5I55QFVPqo2HdbDSE1wXM7z3/9UOSySyQo6qFwuJrMzXxUKuUwGkxvoLWv55RYG1yQVR1Z/UO1eBF7z3/9aK+4v29Y5o37q288NohA/1HnMBnGOdlpMCmdNbwd1NzHx8qVT6TQAOIvKtmp3cqmW0ClMYHwfwbgBvZuYTiejJRlq0RxbNgHPuW9ZRtLCq7DC72jJNLmPmQ4jo5xH9006jf7QPGvomEdFq59zJIvKlNnS/FVTblZwZyDraZy0b73oReZaZeTzUFhgPqPH8xSLymYKmLjpUu/YeY9M7ZRQhrgBgo7SB5vtiif3enaFT8FgHv01oAIkI/2mrfyhkIL2l2qWWrvf9Bx988GgiWhJmXXSq4KoRXmR//iER3R7S+RvZF6s0/6CNoC0sXdqGW4WajPOdc28koqfHA/2HAXRWVXbOvVdEPmsgkhZ0C8FdeZyqPs+E3EiFgmrAvBLV4twhQTUO6KyoTl10zPxPAK7JG6ytNsYz8wwAR0WgMqLAHxwcvMmGeblWgLOq3t8iQJp4ABKm2lUqlROY+W9QLZDKXYBFzdMSAOcR0Vtmz54dSufT8ULUMM880tgb6bDrUG37vQcRnW91JoW4i1RVnQteS/93RHRxMNPHE/2H05Cdc+cC+F5Rc8mtGZNn5mkATgotaEY7i8Yz19hejCc6hz54CuCdIvKctarPEwSDgntElg9PmTLlaQCPZbAGRxeYVcUKqnpLs781IQHEGF1VNWHmj5s0KcTygJXMe+/PI6JPhVTQRrrUdpg1MiaNnYjU3AGTirT8rCpfALwhSZIf2XArP55N9EhDZgBnWdsQl7Nw24K0IvK3dh9Sz43lnLveej+5cUZnMSt1OTN/GvlXZgfZdYjtrR/OjRVZd56Z/9yM0DcZxSKyLkmS+3sAMrxG5Gy+xCnMvJ+ZilyE8GJm573/B+sllKBO182JtqK407HMfGLBlp8AYO/9O4goTEasTAS6RnPJByuVyukistZ6T2kB54uY+UBV3WU0N1YkiB4C8LDpDONtVkgQ4l/13j/ZKnfRSNtq73sC2DHscR05d2uTQj987y8AnuoBSA2A2OZ7Ve0jovOLII6Bh4iIeO/fmiTJfxh4+C4DjyHLT0QuMvO8sINv4H1ekiSXmCZZmUj0DXPJBwYG7lfVj6OAYU7BV49qq5VXjKK0BU3ZEdEggP8dj8LJzmtIXvhh4K0caatENBXAC2tAZaT1fxk/N6KVaO+3EFHF9qsHIDXWhwI4mZnn5NlHPxZeqAbAPhMJr7QLNya2/PYvKnAeusgC+Gyw/MZjvKMBDZmdc18UkT9ZtlMRKK3YHOzVelq1NaAcr9qtmjJ0WVBMcrRCvFlq+9YBBgWANE1X2A1ykw94V5NANPEAJLI+EhH5UPRveXKaWKrujcz80WB5dNsmRLQvAfgwNncHzvu6IVX6ciI6N8OchfFuhYS25GVV/QQ2D+XK9bKoppy+PMSU6qWcpml6R1AqxiGZQ0ryvSLyaBE0ti7N9QAcSZL8xcY9j3UWPQOAc64X/xjGAgnZQkdZ6qjkGfsILdhFZHW5XH6bab3SpSahIyL13i9wzu1dRIt8Cyo6EbmTmd9mWlk3xJy8qpJz7qc25S7vgHoAi+cB2KWO5iom6JaElNPxCNKRK+6WGtdPXrTdro5AD/++EsCaseSkmKudRWQtgNt7APLXABLWGUaYvE17ZWbHzB+bNGnSg+Y6kS7dB2+ZIu8tysdgMyLWViqV02ywE3UD/SM//SAzfztvQRDVLPQDOGyUcxevVaiOyB23ZAYAZr6vECHGvE1GoHoOwOox7nn4/CMAnuwBSMTI0aCoHUXkb4wBctN+wpwDANcC+GZIw+vGDQiBuDRNj2LmgwqKOwX6nzswMDBUpNlFZA+CZiGA9UTkcs7ICjULe2TQ3pmIytgc8B3P64k6FldLgEpEto6Ug9HWJgAbmtlDZr4/GljVA5DwHqpmmXmaBXDz9MGH6X/nENF6U9S6O5uB+cyczf0AWMF1dTURfXO8FWm2yCoQE9QPi8jivFNmI0/wnhn2mO07d45nvcjeV9Y8f15ratSQkkawOsN7uZln8t7flDMojksAEStee33eZpkJMAJwOYDl9WZHT3DrI1h+uzDz8Ub7PC0/ZWYSkY3M/J4uN8NZVYmZ/ydvOohIAIW9ly5d2l+ndxNMUD06AWg8aM+fdzLOAGxCaBb504ysdM4t6fJz81eHKIx+3BnAEYasnNNGh0BUCuBfiGhjD8ABAG9EdR513pZfaIvyZSK6P7Ss6VLah4SNG1BNHkjyLnoTke123333bbJ8wTm3ciIYewVZlLnJrBq5tQlALwOrRoAFwr+qAPeVGFPdAuChoIF3Mf1Di41TawAlj0MQ4h4rmPnToXCxi2kfnn2ZiITK77zpMRXAzDrCdQv3zzhfriBhWwGQyQ07RtkW7n8pgEftdwS9hQSb/bGvKUqgqOoloTIY469dQ6toENqWHCIic5k519Td0MfHe//lJEmeneAFg1kESQhYb/De3w3gRXnxf6iatrTcegBSlYiVyqpSqTRuyRsBZhFro4FIljUWoga+eGDhwoV077339u29994TQfFtumwiCRkFIrK3xSZysT7MDHQAVjnnfhZZJN2+TrS4hM8LQCLaP+uc+2YoXOyRfqidSdNdWjNa3y5N062zCCtVXW3pv268Etd7P8u6O+dF1/C7a2oC5bX8b82RNRGRgbFeh5mvPOWUU3zv7GxpgQDAPGbe1XrLcJ4HSEQWOeeeamTA0gTVgL1ljrw6Ema5nWUiSgD8wGZ7uC53HdYKmBWFHbgkmZHFAunr61svIhsATMM4dTUS0QsKutQzto/1ZMrUyCpqRFEOMw4GyuXyy4moVGA351xYvlQqJQD+TERPBIBtBkD2A5Coam79l0J8kpmvimYjdKv7KjD6XFRTO/MEbpgWWwbwvV7sY9iVd71CvCZn1Ko3MvOgAci4Mz5UlUTkwJzpGiyDlXWuE3h+K2x2ITYChKSqcM592SyqibI+AuATBpBjcmcnACAiezEz8qzFcM6x+YHvNHOym91XATxfASARkdQshDzAyhORE5HFzrm7u93yG04AOeeeLQpAvPd9GT9aMRfWeFOOgrtoOwBzCrCuYT23suzf9sw8yTwtNIbr6ARRvoJrtOluB0Fozc3zAKlqCBA/CmA8dxptGc8bQ77SBEQRjRMv7XbLb6SVpun6JEk67pBjfPragzb7SmaennNX6dAy5Y46MiWcr52izzV85gx0xn0BoT2HViqVW2N5NCZN2FKcZxVkai4noo3N+NzGvcpr89FVdRqAl+apoYXguYhscM5dlWEqXreuwgS1cy6rq2C8CqugHJ2e8zkKvO1RvzaDzPrbvtuVV/P8kIg8XiqV/twsPRjVArYZRbgKYMEuFDTju0MXA0ClUtmbmWeN1Zxu5DADuJmIHgng1cOLETXU/JHK+8EGNPlxdU5CYWq5XH4pgGOMt13OMuUJ82zUFYREtEfP+7F58iURrW9WmWcAswBsW9BBeqToA9upwoqZX2b093kzi6peGwml3qpZSZIUVnDhnNuQ0d3Sh7HVLLRfQ2L+mBWtSt68DWAxEa2r09wwnLG8g/rjBkCY+Q+tkAkJgGOtAj33GRQAHu6JqyFtaM8i5JUJrd/1NK9R19QC6fNcxs8NAOgfR9ZHQkSpqi4AcFwBXaWDcrR4NFCIgvoDIvKCHoAMPftdreB5BrB1AYcn+CCf6ckqhIl0B+TJzNa6hETkaWz2EffcV8MfppkFnAFuBEDK5fJUAJPGg8ALHZ1V9fkAvmLZSnkrYImIpM65K+vwNhk99wSwM3JOmR8H1mHwerSkKSSLSF9RN++c29jNmnDkb9wawG41giUvE/9uIlpp6bs9C2Q4RPd+Vs77HrogK4C1dc4AAUBfX98MHgc5vFFLnn4RuQxVl7jm3JZHiEit5f3SOrG90EX3MBvf3LUFtFEA/f8ANB1AD8SdUuAzdLsGHDTJWci/QCz4OpfkDFTjf1OIZhZ0qY3YPBFv1JWm6YxxIJCSAB4ALmPmQ/NsyVMjRwjApQYcrt45IKKDe5w+BBbLiWhTK7JhWUT6e3QtHEC2Z+ZSzhlYQbu+v0f2ugdqu4KutyGrBUJEW3ckwVRJVZ1ZtKmqvlBErgLw2pxrPmJrzonIOgBXjKaYmoD0qjoVwJHBYup2fo/qZpqmBY/nZm3jGEBC4Wae5rQDABG5uxWm6gQHkB1r9iev6zyV1QJxznWMBWKgwWZxKBF5q2V6s4gsZub5RYBHdGYIwM+J6OE6nRXCpNWDmXknVEc59wLowE2tkglJwW7W3hjIqlCfnSfdI597uVQqPdEDkBG1U1HVKSIyuwgAYeYHTCPO0k7mebVnx4Qh5Tu+fYgGoZBRrfGmAhDT4I8TkfcDOJKZUSB4hCCwMPOXs+wZEan3/nV2n9LNAfRojx5uGYCIiBQIIkmXA0kQJDPtHTkLg7UA1vQAZERBqQBegGp2ThEWyENBDmLkeGCo5J5Xcy7D7AYtgkdrwJYBzPPeHw9gAYB9g0CuyqViwCNq9vprIrp5tIF0kftqGqqzjgLdu1VhEpuq+CQzP9gyAAGwqUBXwfSeywSApY1WFSLK6zpke7u+hxWjatq7mE89d+3Ue/9YRqsoMWALWvdWAGao6ioTghqDTSN8McK8DDZZMAnV5I6t0jTdgYjmOecOFJE5AOY658JoXrHfcm3YMw/g4/UAf9GiRaEn17Fmzfk23G8nyp67iWhNq5qqJsy8rqgn8N7v1AMQQERmFmT1PYdq5k9vDSOMrOX4y20vJC8NNaTjqmrW4q2tRGQb0/IVwA4AFqPakj90MlDr1ptJixQRYmbx3v9Vh18RSZh5wFoaTQXQnySJi+4fqgoRSQFwO9xAqho6yF5CRH+oN9Nm/vz5wZJ7p9EROeerjBcAWZbBCs4OIJVKpVzU6Ezn3K5dbEKSBSCBzSm8efvcn7UqXOrVgPy1PmP+8UPy3AsjPnvv1yRJclcdyyG41Z4PYJvg3qTqevEwwNQIiI34nRH+T8zSCMKG8ho50ID75WlmPr/eTBuL04iqHiAiR+fck2tcWdzMfFsrfzQplUrLjVE575sXkR3GaHpPmCUik0RkakHXWlcjmHoLW7S3mCUi+0ZCMi8wJ+fcYwBW1pPzdjYOMIE5NCcmEua5CxkDLe6ggLOgOvDuvTZBr+5ETVMOzjU6eowhZVVV/QSTPRKl8LaEn5INGzZcPzAwsIqZZ+ZYlxB+c0fb3G4uKOyzV+7LJtr11jCksarclzHz1jnHPwTVequbnXM+4zjhFw8jELsyAKyqqVWQfy9JkktDz60M1sc8EXm9uQAbph0RYaJZLdbWqGUBdABIJk+evFZEVqEa2B3ToJUGAOTFqrozEf2liyfjJSgoGy3qSdRLnx5eQz3RYgi5xT8i18HvM+xF8NsfUNSgsQ4HD2/gcSszn23Bfp9xby9g5r6xpBgTEURkE4Cbmdmj2v5j/GpL1WcYYObfENHaVsreBNUsnTU5H1Yy82kqgHkA/tLFh8NFANJbxQulkN45WUSONT7Ma6BXCKBXyuXyH0dzHUQZWDNEZL9w9rscPByAx5j5ZCLaUK+fW9SX60gAr8UYMq+i6an3OefmT1DlqWVomBjT/gXAfsjXTx60vLkAruxiACly0lzP8hhGIVNVSdP06CRJXlCQ+2ppX1/fvXVcB2HM6O7OuW3R3VPzAnisBHCSDUMb1fVngXWoap/3/nPOOTbro+HLm9b+pP2mw8SI2WrQ5VvtTgGAuwG8GgW0dBeRowB8Gt0bSC9y1nV/HaHVlfLJXBxvLYA2oenfDaaojSYEGYCUSqXDzWWStivrqRPAQ0RWM/NriOj2enGPYNkTUZqm6Qedc/s2UR0fUu3/7JxTVZ1IMduW83rQvJYVoLGGa71UVbexA9WNGnIR1cRhTekByBbCiY3vdmXmvzG6cM48T8z8y4xgAwCHFHAWO3V/UgOPJ733xxLRTVnAI2rsONc591HLWBvrvoaY1c29E5NdqP+55u+tNz82x0G2ATA/Mg+7baUAKjkL9qGst9AAr0vBeiR+/wcAk01Lza3+w1JIn8Dm5nX14h/TReTl3QYgWl0h2+oeZp7f19d3SxhUVee7oT9YSUS+jWo1/ZizSWv7RS1cuLCnfGU4UHeIyHJmJktvzNuE+tuC+vp04tqI/KvDw+GZgV77mCEtFdVpkNuLyNuM9/JUYDwAZeZrrHXEaDO7wzmcy8w7Wjo9d8m+eGYmA4+frl27dj4R3Z8x3RmoxnG9iFzMzAc109jRij7hvX8awAMAsGDBgt4Uz9EAxDZqENVWCSNqSa0ELBE5wdJ5fbdoxlFFeBk5Z73ZYQgAsl23ukSGMYJVRM5i5pnee8l5FgsDoDRNL80K+CLy6gh8JjpwSBTv2AjgA865k2fMmLEyK3iYdV1J0/StzPx+AGmTtRtijHInEa3qTfHMyOQAwMxX5S1ozI2VWnO4E+yfu8mNFWj7dI1F1npJaTn03vsDarTcbrU+RFW3AXBWMy6OrMLR3FfLkyS5IYNi5u0eXznR9yoCjjCL6Hdpmh5CRJ+zmSPUAHiklUrlBCL6llRXs7IknMcHuv3MNAIggbFvB+ALGDAVNuVsVZ1hh6dbtOPwnCvyBJD4t4nosB6bD1kf5zLzrAI674YzdTkRrQ9xqBEEYXBt7cPM+yHneeLtBo8AHCKy1Hv/diJ6ZX9//11GB8mi8QfwUNWDkiS5LGSrtUApCMr0Lb0jk12Yhw1bKiL3h43O8SSH3jRzASwwhukWKyQw6LKC9hYAXqGqfV0G1MNZH7MBvAf5Vp0PjVwFUGbm72awPsKevBrVmpEJ6b4iIphVdg+AdzPzAUmSfC9MO8wY7xgCj8HBwTki8nMAU6Piv6b2jYicZXDdmmHfegvV1sxq6F8BcHWBhFMROfvWW28t2QHvBuEWwPqmvE1kO1BKRHuhWiTarSZ56ET8BWaeXMAc+tD64jdEtDRD2wivqiwiCybiHunmiWnrALyBmQ8goq8R0bpgfWWtswhZWZVK5ZgkSa5h5h1aaU0aWzyLaqeMvD0EE8YC2fwX5oX2R5fziXYiosw8b999932jMVA3WCGBIR8UkY3MzJrjSMJQiSsif9eNwUDTVr2qnonqGNYihgqxnaUv1lgYwwpE68V1KDPvjerUwQkH8sZ7fQD+SEQVVe3LGuswOg1ZKar67iRJfs3M27fYFSm2b0ssgN4bgdAAgISK2dsB3F9AOu8QbzjnPqaq07vECgkMuaIgLScIyzesWbNmmy6y9Ia0VVWdIyKfbbK4LCtgh+D5YgDXZnHNmP7wJlTdVxPOZRLqvwD0icinx+jhICIS7/2/AfiqiHAOcaxQgX5HEUr0hAIQItLrrrvOEdEmEfn1GDe5YReLMdYLReSibrBColTeQQAbCjq8npm322qrrd7RLfEmi3uoqk4TkR8z85RAjzyv65wLQujTRmseTas2jXprACePJrRCoV3OL58jHzrjw5NV9V1WHOgy7qWzIsvXMfN5qBbi5tHePvTSurcHCw0SLdooXy6XX1YqlRbbCEjK+aADmzO/XkNEv8jY92Y8a8XeZhX8kZlLedM5uMiYeQWAOQBW2QGUCUpjQjW251V1IYCTi3BdRQ0Ab4G1IxmNxlEm0ZkAvj7aPRY1ijXP+JAlF6iIlJn5ZUR0d5a24uHMeO+/xcxvM8ujlMO9BaX5QCK6o4vHTTS04mZtwb1xm4jczczz8k53NP8829yK76rqy4jooQaqUKGqJVQbqW3qdK040jgvsVkFufu8Q00IgB1E5KPOufeqaoIJmGES2uMQUeq9/5KBR1FNCQkA0jS9sFQqiQ02GlVeq2oiIu8aafaHCTYSkdUALjHtu9XTJZmZvYi8hJmPz4sno1ZGAyLyXVU9FJYZmCXWwMx3mdWSW/sfEXmGmR+KXVq91dgBTOz9faqq3vuKiGjeL++9t+vdrqrTQtAs4z1PU9WZqupUNbEAHXcYXTm619/bs/oiaGv0FXNTVMrl8mFBs5to4BGeSVU/UTD/pna9q7LQNrrP40bjhehcLC2AfjO89ytUVfLkzYhWF8cyp86+kqpO8d7fad9Nc7qnG1Dtq9XrG5dV+6j5e6gVuExEHmNml2eWUKSdsPfeM/N+InJZ8I9m2UgiWktEq8xiCckAfQYobWeGyIc7SUSuAHCIacWFgZxpfwQgcc5915IWtNOAtkmADjGFTwL4Z3MJJQVcW5kZIpKmaXpeRu01xEo+kOXzzJyY8pGoasneW/nqJ6LVzPx2VSVmzrWdkdW6fEhVjzQ3nhuFd9VckuuZ+U0i8pwl+bRSLgU3783Iv0faxAWQaLOeZOaPmDAuxNVh1akpMx8P4D/N/5jJEgkgYZWsg0S0KXaBhRYJbQKPMP3up8z8ynbNeQgFnMy8O4DvRvQd19pWVMEs3vuvAPiwCSguiG+9CZz/6O/vvzPcTwaF4nAiOhrV1N1RBZaBv7fYYEpErX4N2n39iog+ByDJK6huMRay929lUWbsDCVEtISZ3xXcbq12P3rv/9SDhOYskOCbJQBXmk+wqJReEFEiIimA07z3Xw+CYazuFitS0rhFQlECM6pB2ElErmTm49o9JMgEVQrg9d77zxnIuvEKIhGNp6vqFcz8D/Z8jgqIPNu5cAAeZeYLQ/ZXRuvjIxYDzKJJF7E/4Zx9GMBt5n3IC0RYVVMAu4nIFwxwuc53UtvvS0Xk660EOUu9FudcSOHtBc/HCiCRFbICwLexZbuTwkCEmc/03i9U1RkmJEYDkcyadN7FQeY2S4goLZfLh4rITcx8RKdMmLPAbcrM/+i9/zfTamk8ubPMomRrabG/iNwI4HUiEoRMYbdiwv19RLQKdUaGRtbHUWaNSsbssNzmttecCyWiwXK5/A4Am5gZebmwo3P+1jRN3xgAos7XvI1ZOVdE/mQgJ03yUrDEnwCwNKMLsrdGsUCMrkrM/BURebRIKyRiLs/MJ4vIYlU92kCk1MmCLmrNkKrqaaVS6Rpm3qUof3wDK9D3PFX9fLOWXoH0DeAc7vfMvr6+G5h5btE0jqbn/ZCI/ruBmd0kIh9HY9lUXIQVYjRN+vv77/Lenw/AtdhV9FfPZanDX1bVF2BzV+LRQI4sHvIOAyBtEuRC09GHrfFlrwK9WQAJJiUR/UVE3lW0FRLcLSbk9gTwW1X9eyKqBCavsTjaOt0w0oi9qvar6sUAfghgUkHtMxqlbTi8HsD7VHWhqk4LvuZOc2lFwBHAebb3/mcAvg5gSgOafMtcVzYAaTkzvyej6yrUM5zKzIeiGtOod89UJIBEWr5LkuQLInI18o2HMIAwpfQbASDqfCfEQxYz8yfs3Ddzf7X96XoB9Eb2sI7GRKjO1b4ZwF5F1C0Mcx+eiJxpfF8B8DUiWho0/siNMJWI1hQp1AKwBreFqi4AcAGAvYNvmwr0p4yVvqZJ38XM5xDRjTFt21lMFWdX2d9nADgbwAcAzAjB8iJpbNquACDv/VF9fX3XZ7Q+wlm6E8CLskwdjOpAnmDmvWyyIRXghg2A+HwRuYOZZ3jviZkpTx4E8I9E9IV6xcTR2YOI3MDMh3rvha2gZizX9t7/nXPuxy0ApPEj/FvAR5TBJeNV9XARuc7SFblooRhVU5OIPKmqX3PO/YCIlkcMPwXAujwPV8y4NVle8wFcKCKHWnV5x1kdGQ9wCuCrAD5HRI/GQrwoMLHrsWnoIfFhG+/9W4joHGbexQRHW2gcZncDOI+IPpWlc0JUTX0RM5+f9d4jAFlhAFJYk79wz2ma/p1z7gd5xvDsOQVABUCoUq8HymzeiD1E5FYAk7E5u6vRaxOAQ4locc+F1UIAqQGRfwfwgXYGg6PDCwCrAXwXwDdthvLWAJ5rdRuUSKBJLEBtut2JAE4D8HIAk1QVrZhN0CbaChGxZQatZOb/BPAdIlpSA6DB6gtBV23imkEzDy8f/56qzgNwuoi8kZl3CsBRtNUxDP/9hIhOtaCvH40GkaCbB+AWESllFXQRgDxlALKySAEXwNF7/yOrwcgNtCNL+A5mPsSUGalD2yCb3gHg243Kpmhy5Apmnotqm59WV/p3suyXrB0/mgGQcLgnm5tj13a4smqsER+AREQ2MfNiAP8N4D/qMV2jwq0GNLYFcACqLTKOD0Kt3YKt1e6ZMJVSRCoAFjHz5QCuJaKHRrHKGn1uGc6iUdU9ABwvIq9Htc05R/SlNvJdAI/bARwBYGM9AK1xtVzPzC9vRAhHAPK0AcizBQNIoPVMEbmdmZ+fxfXWLI1F5HPOuQ9ktO5CT7Ex9z1T1Y0AHkZxcaa2LrP2+gC8k4iua6R1VMMAMowWdY2IbGNuHG63sANApkX8xDl3ajPEGOZ5twMwz3t/gHPuCAAvA7BtDWhgvANHPSCxtdFcBbcw8/UA7gWwgog2NHGdKQB2ArCviBwK4EBmPtCYu2OAOXLx/R+Aw4nokYyNAINwOxfAZxoVbhGAPGMA8kzRLpZIyz8WwFUAsqTbNsV3ROSI6DgiuiqLKwuArlu3brvJkyffzsw7NQpyE+joNrTK5fKc/v7++5ppHEkNbG5CRGmapu90zn2jg+oavMVm7mDmgw1UxhwgisDDicjVzHzUFmpztQW9TjTQqAPSqAETiMgGAM8AeISZl4rIM6q6HsAmVH3ZQ8s5B+994pwroeqrnglgTxHZA8AsZu6r+e2OAebg5gCwBsBRRHR7FiUlErz7iMjNplk39DwRgDxrAPJ0O3z0ERB+AcB7c3ZlicUkHgOwP4CVGSy9QOsTAPxyjFZItxQPBrfdY8z8kmZTl2ksjOS9/wYzv7MTQCQ6ZJvskD08VkSNwKNfRL7PzKeYMAuZXhMeNDKAiVbxhFtmfXYqjU2TBarzzU8got9ldKsEt28/gN+bhdWw2zfwtvd+pXNuLyJ6qk0AElxxfSJyCzPPGWvWUyMWn4hc7px7QyOuLO/9l5j5nE5RcDvwHAcA+aNz7qCm3WENft7bGM6zzaebWEuCtq24TTSAuWMBxkiLEVUdAPBTZj4F1b5DjogSe+/aLp1UXYEWbJ1MRUS8iKRjeHn7vnYijS2poBp0YX5TVvAIRpex5ecNPJpqnhn6R7Vx70NK+kYr4Ks45zTHKnVnzVVPUdU3N1Cl7pj5PBFZYhZfryXJMHqRvd8W5F5hABK1O6gw88kAlhiI+A4hyuFjtKyCCbyViPwCwAmhLUaP30YFFI6Ef6MvZ9/vOFCOM+mI6E1EdEVW8IjcPW9n5jNNCWmWj9oKIEaHUMB3CzP/KwqoUq8agfJFVd3FaFqvSh1EtIGZ3w4gzRPkxusKRiMz3zpWZbsZCyS0O3BE9AyAE63ViWsz2gci7F0DKFndcl5Vny8i17azY25vdQR4eGZm61B7KhFd2gB4hDnsB4rIVwB4EXEt4u9OANrQk+7fANyIHKvUzS2tzDxTRL4V3IKjdUmIQO5mABeii4oCM2vaVX5UAPcFti0UQKKNckT0EDOfKCKrnHPcRkuEjDjzVHWqgVyWFOXEGvLNBXA9Mx/QieChqr4DrLxuAI/UkgWeBXBCkiSXNwIeqHa03QbAZcw8qRr2aImFFadJt9uVFQpKzwDwnAn13FxZ1u/qlQDODd2jM4LcRSKyqEM8JB1jWVtM7XEA9zSqbLcMQGrQ/m4R+VsR2ZhnC+g698KqCmbeGcDuWQ5aBB77JUnyWwAvapG7oZUbrhZIda3oPNpbI9I5rkH4E4AjG4l5hD5oRKQicgmAXS0TqFVB5k6xQGIPxFLv/QctkJ7nmQ9WxMdVdf+MriwlImXmt1tRLPXOzmZrwzm3rFWNI7lJZkpVNSmVSteJyIkAnjVBl7ZBCHhU+xPtUQ9AIj/1/kmS/IaZtxcR30kxj6AtmCn/XzZThHvaVOvpDECtSPCX69evP4KI7mkAPMiE6kxVvZSZT8ghzbVjACRWHpMk+aaI/HeeWn5kwfXbLPX+DK6sAHLLVfVs2MiPHrcPzaK5IwLnpk3jZjc4gMjvyuXy/JAB0QYQCeh62GgAEoHHfgCuZObtOq13lWnDDGAdgNOccwuSJDleRH5rAF3pnYXW0dnqDj5GRCdutdVWz4RYRkbLQ1V1T1TTdU/NiZeK7MabdYmNfDjLmj1yXlq+1WSlzLwPgE9mcWVFIHepiPwncozXjKMVuiLc2NIfbBGIuP7+/nuZ+XAAvw4gUmAWRIiDzLG/+1HAY18RuQrArE4CD/NYhZYZywAcTUQ/VtVSNVOZT7ZAf8niIr0MkzFaHRYsTwAsB3A8EV1gbeMpSycD04BVVQdE5CeoFkZWcuKljrJAgpYPGzwnImci/x5SzuqF3q+qr6w3Sz3IABtA9T4AD3azG9hc4QxAkyR5MCgBHQEgEeI7IloJ4DUi8g1mTgr0P4YDtodNMdTYzK2xPH7NzJ0GHt5cVomI/AzAYUR0i913xWj8HDMfb7R1RtueS6txgGYLlv8AwMFEdGU0bySrEHT22ZOZeZ6BR6mb6Bm0/FKp9AsR+Rozu1Y3M61xZREAsqysGag/Sz0MoFoD4IzQRaJLFa/gvlpuyilaAficA0MxAHHOvct7/08ANph5m6s1EorbmHkHAPvEzxeNmD3YhuTs2CngEWnDDsB6AO9xzr3Oqo6HDmTILCOiQefcuwC8GcDKEHPqWSPZARrAgwBOJaLTa+k8hvVybK6iz1M56tQi1i3GzJqrSHI8496mfH4x4yz1kOyzCMDn7Zx1o9IVRmLcRUQbg/u1owAkMm2hqpwkyacHBwcPEJF7QvfcPK2RUNjkvQ9urKH55JVK5bXOuauZeVvvvbQbPEwb9pE2fE25XD7ExnsO60oJVpUJvB8COFhEfsfMCVX/s2eNDAMcIZNNRAZF5PNr1qw5iIh+oqouq8tqFI1uegECXtGhLcYjLX9DGDObp5Zv5zZl5tNV9ZQGXFmOmf/Fe3+3ude7zZUV9mNJK2U/58VUYfTswMDAn9etW3ckgK8wM0ImUR4MJiIEAM65IyM3Q5qm6enMfAUzT7O2J+3sIiyRNuwAPOS9fycRvaq/v/+eeq4U+7+gVS1j5mMA/AsRlUMadS9lcUvgsEy2/2bmg51z758xY8bK0H2gBVpYf0GHv2MtzMh9vZiZP563li8ioUr9q6r6fFQD+lmq1Dc55/4eQLkLXVmBPje1yn2VG4BEG5eqKk+fPv1ZIjoHwJEi8sfIf5+2WNiFQPpBqjqJiAbTND2NmS+xf2/rHJPQyMwO2GMAPgjggCRJvmWWBWd1pUT58EpEnwRwmIj8r9GWu9GtFaw6s0YDcPw2TdOjnXOvJ6I7m7Q6hltFpH6n48DtIlEB3+KcU3uDu3pbEQmz1LO6sm6xyZAOLQgij5dzYQ0UBwHcP24AJLi0IrfL9cx8mPf+fACrLMjeMoskMBaA51UqlXmq+hrn3PfDb7cDPMziSM3iYADLvfcfBrAvEf07Ea022jQ8MpaIxNxaCRH90Tl3OIAzReThKIFhwlsktVadCZSfAzjGOXdMqVS6VlU5LvjLQbPLc1UMRFp28HNyZSkRpcx8hohsRP5V6p6Zj0vT9H2NNFx0zl0EYHG7Cp/b6L5abopry/io6NnmQ3MUVHVXAO8SkQXRnOsU1dRAbsG1ngKwjfm+tcimfVHr81BjABFZA+BrzHwREa21z9UdidrANYda2K9evXrr6dOnnyUiZ1l1/oSbYxIKAGMao9pa46cAvmH9kIZakbfQ4tiCl733Pw/Fg2hBYVbtZaKRtnOKHmk7RrqEuUHnOOe+ZFMtkxYKLa2hj1iNyKFEdFcDs9T3BnCnnY2gCHQEXZlZW9lakJlTAEmappeVSqU3t2LoXlsAZLgDbWNi/x3A6wFMsw1teqBQ+FpR4DHK8KXbAPwIwEIieqzVwFEHpLdGdab4223mM1pF33aY4XbAAzBz9Dz3MPNlAH5MRA8HQVFlA/I53U8AkGuY+ehcfUMiq5j5hUS0dhwAyND5LoI2EY0eYeYDUB1AhYwDqD4F4EPokuW9/2CSJP/ewFiCzgOQWBOID7iqvsh7f5pz7i0AXtyssIvcVpSnQDMNiGLQEJEVzPxLAN8HcGNg5ihmoUUd4gBYaZq+KkmStwA4BtWJgIgsk5AOSR00jyMARnCNJPGtmcD4DYBLjcbhWR02N/zLlX9Nk/04gEOC9dxquWja++PMfAYRlTsdQGI+B7AjgEsAzPHeUxBaWn0Ib8/nI8Wg9n2Ll521+NyFz1WYeSBN04+au7KeFRKy5th7fzYRnQBgik02DTzn7TpD8jeyCnxkAXk7/2rfDVq/RBZN/H8SLIyovYrYZ6j2u9H9wJ556B6YOXwmjayWNHqO1J5TmNlv2rTpK5MmTXq4mRG2HQMgowi7qQBOQrUtxBHMvFUNmGg7hF2tQAtpydF6BsD1AH4G4DdE9HRs1udlcTRCW/u3nQAcKyKvAXAoM8+q0eTCgUURdI585Bpdl4YZoavMvMQ6rP7aQGNtDY0lb+Dorey8FylOW5msqUR77ePzVOua6nSQ7K0OAZCRLBL7txcAOBbAySJyGDNPHkXYhbGbTVkdtUAxikATVCs6b2Tmq0ygPRWbyeGj7T4M0UjSLTRzaz3+cgBHADhcRGYz84xhvh+aVeowfDPSn3WYP2vNZ2mklGobUbxcRO5Q1Rudc4sB3FvDH22ncaTN5nqZ8ShQQyeIVt/7SI0UG71OfC6CJ6FguUkFf7flSix1KNMNJ+xeBOAwAC8RkaMAzGXmSSP8Ri0QZKUFRQHZWoGmAB4HcL2q/sE5dyOA+0KbkUigUTusjQbp64bT1lV1BwD7A9hHRPYCcDCA7WMrsNXLMmnWiMhTAG5FtWfRkk2bNt0+MDDwSEzfTgPm3mpO4Gc6lL097lkgzVolwwkLVd0lTdNdkyTZX0R2BzAbwB4Atiai/rEaISKyHtVqzccAPMHMTwG4G9X86UeJaN1EEWgRWNNwQTVzC80ql8vb9fX17QZgLwDbiMg2ALZGNZYyDcBkACXr4wVzT1QAbLLXcwDWMvMqEVnDzGu894+JyP2lUmkFqoHPZ4ZzP0WgLD3XRm/1Vg9AmgGT4KJKR/jMtgB2MOE2y3u/NYCZRDSdmacCmCQifSLimFmYuQxgvfd+pXPucQCPDw4OPjQwMPCnUe5jwgq0Cy64gC+88MLgktGMXWkZwKTVq1eXZsyYEcDUoxrAG6y1IOr8lot4sgcYvdVbHb7+H8u03UsNXMg3AAAAAElFTkSuQmCC";
+document.getElementById('logo').src = LOGO_SRC;
 
-// ============================================
-// STRUCTURE
-// Each binary item: layer1 (¿lo tienes/haces?) + layer2 (¿con método/consciencia?)
-// Scoring: both yes = solid (2), only layer1 = partial (1), layer1 no = missing (0)
-// ============================================
-const PILLARS = {
+const CALENDAR_URL = "https://calendar.app.google/5RAjHCyf2kee6PY6A";
+</script>
+<script>
+// ============================================================
+// SCANNER CORE — dual branch engine
+// ============================================================
+
+// ---------- BASE BRANCH DATA (Comunicación / Influencia autoevaluación) ----------
+const BASE_PILLARS = {
   AUTO: { name: 'Autoconciencia', num: '01', desc: 'Lo que sabes de ti cuando comunicas.' },
   EST:  { name: 'Estructura', num: '02', desc: 'Cómo conviertes una idea en mensaje.' },
   INF:  { name: 'Influencia', num: '03', desc: 'Cómo mueves a otros con tu presencia.' }
 };
 
-const ITEMS = [
-  // AUTOCONCIENCIA (4)
-  {
-    pillar: 'AUTO',
-    label: 'Emociones en escenario',
-    l1: { text: '¿Sabes qué emoción te domina cuando estás frente a tu público?', context: 'No la que te gustaría sentir. La que realmente aparece — nervio, urgencia, euforia, bloqueo — cuando todas las miradas están en ti.',
-      yes: 'Sí, la tengo identificada', no: 'No, nunca me he detenido a verlo' },
-    l2: { text: '¿La reconoces en el momento, mientras estás hablando?', context: 'Saber cuál es tu emoción en frío es una cosa. Notarla en vivo, en pleno escenario, y manejarla a tu favor en lugar de que te maneje a ti, es otra.',
-      yes: 'Sí, la noto y la manejo', no: 'No, me doy cuenta hasta después' }
-  },
-  {
-    pillar: 'AUTO',
-    label: 'Canal dominante',
-    l1: { text: '¿Sabes cuál es tu canal de comunicación dominante?', context: 'Visual, auditivo o kinestésico. La forma en que tu mente procesa y transmite antes de que pienses en ello.',
-      yes: 'Sí, sé cuál es', no: 'No, no lo tengo claro' },
-    l2: { text: '¿Adaptas tu mensaje al canal de quien te escucha?', context: 'Comunicar desde tu propio canal es lo cómodo. Traducir al canal del otro — que el visual vea, que el auditivo escuche, que el kinestésico sienta — es lo que hace que te entiendan de verdad.',
-      yes: 'Sí, lo adapto a mi público', no: 'No, comunico solo desde el mío' }
-  },
-  {
-    pillar: 'AUTO',
-    label: 'Formato dominante',
-    l1: { text: '¿Tienes claro en qué formato comunicas mejor?', context: 'Uno a uno, escenario, cámara, panel, escrito. Cada quien tiene un terreno donde brilla y otros donde se apaga.',
-      yes: 'Sí, sé cuál es mi terreno', no: 'No lo tengo identificado' },
-    l2: { text: '¿Sabes qué te frena en los formatos que no dominas?', context: 'Saber que eres bueno en la cercanía del uno a uno no es lo mismo que saber exactamente qué se te traba frente a una cámara o en un escenario grande.',
-      yes: 'Sí, sé qué me falta', no: 'No, solo sé que me cuesta' }
-  },
-  {
-    pillar: 'AUTO',
-    label: 'Temores',
-    l1: { text: '¿Tienes identificados tus temores reales al comunicar?', context: 'Al ridículo, al silencio, a la pregunta que no sabes responder, a que te descubran. El que sea tuyo.',
-      yes: 'Sí, sé cuáles son', no: 'No, no los he nombrado' },
-    l2: { text: '¿Trabajas sobre ellos de forma deliberada?', context: 'Evitar el escenario que te da miedo no es manejarlo — es dejar que el miedo decida por ti. Trabajarlos es enfrentarlos con método, no solo esquivarlos.',
-      yes: 'Sí, los trabajo a propósito', no: 'No, solo los evito' }
-  },
-  // ESTRUCTURA (3)
-  {
-    pillar: 'EST',
-    label: 'Proceso creativo',
-    l1: { text: '¿Tienes un proceso para definir la idea central de lo que vas a comunicar?', context: 'Un método, no un "se me ocurre en el momento". Algo que te lleve de "tengo que hablar de esto" a "esta es LA idea".',
-      yes: 'Sí, tengo un proceso', no: 'No, lo resuelvo sobre la marcha' },
-    l2: { text: '¿Ese proceso te funciona aunque no estés inspirado?', context: 'Si tu buen mensaje depende de tener un buen día, no tienes un proceso — tienes suerte intermitente. Un proceso real te da consistencia sin depender del ánimo.',
-      yes: 'Sí, me da consistencia', no: 'No, depende de mi inspiración' }
-  },
-  {
-    pillar: 'EST',
-    label: 'Estructuras',
-    l1: { text: '¿Aplicas estructuras concretas para ordenar tus ideas al comunicar?', context: 'Marcos definidos de apertura, desarrollo y cierre. No "más o menos ordeno lo que digo".',
-      yes: 'Sí, uso estructuras', no: 'No, ordeno como se dé' },
-    l2: { text: '¿Podrías nombrar ahorita la estructura que usas?', context: 'Aquí se cae mucha gente. Si no puedes nombrarla ni explicar por qué la eliges, no estás usando una estructura — estás improvisando con más pasos.',
-      yes: 'Sí, sé cuál es y por qué', no: 'No, es más bien intuitivo' }
-  },
-  {
-    pillar: 'EST',
-    label: 'Diseño de participación',
-    l1: { text: '¿Diseñas tus presentaciones antes de darlas?', context: 'Diseñar, no solo juntar el contenido. Pensar el arco, los momentos, qué va dónde y para qué.',
-      yes: 'Sí, las diseño', no: 'No, solo preparo el contenido' },
-    l2: { text: '¿Diseñas el impacto que quieres provocar, no solo la información?', context: 'La mayoría prepara qué va a decir. Pocos diseñan qué va a sentir y qué va a hacer el que escucha al terminar.',
-      yes: 'Sí, diseño el impacto', no: 'No, me enfoco en la información' }
-  },
-  // INFLUENCIA (3)
-  {
-    pillar: 'INF',
-    label: 'Influencia corporal',
-    l1: { text: '¿Usas tu cuerpo de forma consciente cuando comunicas?', context: 'Postura, movimiento, manos, mirada, uso del espacio. Con intención, no en automático.',
-      yes: 'Sí, lo uso con intención', no: 'No, mi cuerpo va por su cuenta' },
-    l2: { text: '¿Cada movimiento tuyo comunica algo específico?', context: 'Moverse por nervio y moverse con propósito se ven distinto. Si te mueves solo para no quedarte quieto, el público lo nota aunque no sepa por qué.',
-      yes: 'Sí, cada movimiento tiene razón', no: 'No, me muevo por inercia' }
-  },
-  {
-    pillar: 'INF',
-    label: 'Influencia verbal y sonora',
-    l1: { text: '¿Manejas tu voz de forma consciente — tono, ritmo, volumen?', context: 'Tu voz como instrumento, no solo como el medio para soltar palabras.',
-      yes: 'Sí, la manejo con intención', no: 'No, hablo como me sale' },
-    l2: { text: '¿Usas el silencio y las pausas como herramienta?', context: 'La pausa bien puesta pesa más que la frase. Pero requiere aguantar el silencio sin correr a llenarlo. Si hablas parejo de principio a fin, esa herramienta no está en tu caja.',
-      yes: 'Sí, la pausa es parte de mi arma', no: 'No, hablo bastante parejo' }
-  },
-  {
-    pillar: 'INF',
-    label: 'Propósito como influyente',
-    l1: { text: '¿Tienes definido tu propósito personal como persona influyente?', context: 'Para qué quieres influir. Qué cambio buscas provocar en quien te escucha, más allá de que te aplaudan.',
-      yes: 'Sí, lo tengo claro', no: 'No, no lo he definido' },
-    l2: { text: '¿Ese propósito guía lo que decides comunicar?', context: 'Un propósito claro filtra qué dices y qué callas antes de abrir la boca. Si comunicas primero y le buscas sentido después, ese propósito todavía no está operando.',
-      yes: 'Sí, filtra lo que comunico', no: 'No, comunico y luego le busco sentido' }
-  }
+const BASE_ITEMS = [
+  { pillar: 'AUTO', label: 'Emociones en escenario',
+    l1: { text: '¿Sabes qué emoción te domina cuando estás frente a tu público?', context: 'No la que te gustaría sentir. La que realmente aparece — nervio, urgencia, euforia, bloqueo — cuando todas las miradas están en ti.', yes: 'Sí, la tengo identificada', no: 'No, nunca me he detenido a verlo' },
+    l2: { text: '¿La reconoces en el momento, mientras estás hablando?', context: 'Saber cuál es tu emoción en frío es una cosa. Notarla en vivo, en pleno escenario, y manejarla a tu favor en lugar de que te maneje a ti, es otra.', yes: 'Sí, la noto y la manejo', no: 'No, me doy cuenta hasta después' } },
+  { pillar: 'AUTO', label: 'Canal dominante',
+    l1: { text: '¿Sabes cuál es tu canal de comunicación dominante?', context: 'Visual, auditivo o kinestésico. La forma en que tu mente procesa y transmite antes de que pienses en ello.', yes: 'Sí, sé cuál es', no: 'No, no lo tengo claro' },
+    l2: { text: '¿Adaptas tu mensaje al canal de quien te escucha?', context: 'Comunicar desde tu propio canal es lo cómodo. Traducir al canal del otro es lo que hace que te entiendan de verdad.', yes: 'Sí, lo adapto a mi público', no: 'No, comunico solo desde el mío' } },
+  { pillar: 'AUTO', label: 'Formato dominante',
+    l1: { text: '¿Tienes claro en qué formato comunicas mejor?', context: 'Uno a uno, escenario, cámara, panel, escrito. Cada quien tiene un terreno donde brilla y otros donde se apaga.', yes: 'Sí, sé cuál es mi terreno', no: 'No lo tengo identificado' },
+    l2: { text: '¿Sabes qué te frena en los formatos que no dominas?', context: 'Saber que eres bueno en la cercanía del uno a uno no es lo mismo que saber exactamente qué se te traba frente a una cámara o en un escenario grande.', yes: 'Sí, sé qué me falta', no: 'No, solo sé que me cuesta' } },
+  { pillar: 'AUTO', label: 'Temores',
+    l1: { text: '¿Tienes identificados tus temores reales al comunicar?', context: 'Al ridículo, al silencio, a la pregunta que no sabes responder, a que te descubran. El que sea tuyo.', yes: 'Sí, sé cuáles son', no: 'No, no los he nombrado' },
+    l2: { text: '¿Trabajas sobre ellos de forma deliberada?', context: 'Evitar el escenario que te da miedo no es manejarlo — es dejar que el miedo decida por ti. Trabajarlos es enfrentarlos con método, no solo esquivarlos.', yes: 'Sí, los trabajo a propósito', no: 'No, solo los evito' } },
+  { pillar: 'EST', label: 'Proceso creativo',
+    l1: { text: '¿Tienes un proceso para definir la idea central de lo que vas a comunicar?', context: 'Un método, no un "se me ocurre en el momento". Algo que te lleve de "tengo que hablar de esto" a "esta es LA idea".', yes: 'Sí, tengo un proceso', no: 'No, lo resuelvo sobre la marcha' },
+    l2: { text: '¿Ese proceso te funciona aunque no estés inspirado?', context: 'Si tu buen mensaje depende de tener un buen día, no tienes un proceso — tienes suerte intermitente. Un proceso real te da consistencia sin depender del ánimo.', yes: 'Sí, me da consistencia', no: 'No, depende de mi inspiración' } },
+  { pillar: 'EST', label: 'Estructuras',
+    l1: { text: '¿Aplicas estructuras concretas para ordenar tus ideas al comunicar?', context: 'Marcos definidos de apertura, desarrollo y cierre. No "más o menos ordeno lo que digo".', yes: 'Sí, uso estructuras', no: 'No, ordeno como se dé' },
+    l2: { text: '¿Podrías nombrar ahorita la estructura que usas?', context: 'Aquí se cae mucha gente. Si no puedes nombrarla ni explicar por qué la eliges, no estás usando una estructura — estás improvisando con más pasos.', yes: 'Sí, sé cuál es y por qué', no: 'No, es más bien intuitivo' } },
+  { pillar: 'EST', label: 'Diseño de participación',
+    l1: { text: '¿Diseñas tus presentaciones antes de darlas?', context: 'Diseñar, no solo juntar el contenido. Pensar el arco, los momentos, qué va dónde y para qué.', yes: 'Sí, las diseño', no: 'No, solo preparo el contenido' },
+    l2: { text: '¿Diseñas el impacto que quieres provocar, no solo la información?', context: 'La mayoría prepara qué va a decir. Pocos diseñan qué va a sentir y qué va a hacer el que escucha al terminar.', yes: 'Sí, diseño el impacto', no: 'No, me enfoco en la información' } },
+  { pillar: 'INF', label: 'Influencia corporal',
+    l1: { text: '¿Usas tu cuerpo de forma consciente cuando comunicas?', context: 'Postura, movimiento, manos, mirada, uso del espacio. Con intención, no en automático.', yes: 'Sí, lo uso con intención', no: 'No, mi cuerpo va por su cuenta' },
+    l2: { text: '¿Cada movimiento tuyo comunica algo específico?', context: 'Moverse por nervio y moverse con propósito se ven distinto. Si te mueves solo para no quedarte quieto, el público lo nota aunque no sepa por qué.', yes: 'Sí, cada movimiento tiene razón', no: 'No, me muevo por inercia' } },
+  { pillar: 'INF', label: 'Influencia verbal y sonora',
+    l1: { text: '¿Manejas tu voz de forma consciente — tono, ritmo, volumen?', context: 'Tu voz como instrumento, no solo como el medio para soltar palabras.', yes: 'Sí, la manejo con intención', no: 'No, hablo como me sale' },
+    l2: { text: '¿Usas el silencio y las pausas como herramienta?', context: 'La pausa bien puesta pesa más que la frase. Pero requiere aguantar el silencio sin correr a llenarlo. Si hablas parejo de principio a fin, esa herramienta no está en tu caja.', yes: 'Sí, la pausa es parte de mi arma', no: 'No, hablo bastante parejo' } },
+  { pillar: 'INF', label: 'Propósito como influyente',
+    l1: { text: '¿Tienes definido tu propósito personal como persona influyente?', context: 'Para qué quieres influir. Qué cambio buscas provocar en quien te escucha, más allá de que te aplaudan.', yes: 'Sí, lo tengo claro', no: 'No, no lo he definido' },
+    l2: { text: '¿Ese propósito guía lo que decides comunicar?', context: 'Un propósito claro filtra qué dices y qué callas antes de abrir la boca. Si comunicas primero y le buscas sentido después, ese propósito todavía no está operando.', yes: 'Sí, filtra lo que comunico', no: 'No, comunico y luego le busco sentido' } }
 ];
 
-// IMPACT SECTION (transversal, 3 items — single binary each, more reflective)
-const IMPACT_ITEMS = [
-  { text: '¿Sientes que tus mensajes generan un impacto real en tu público?', context: 'Real: que se queden pensando, que actúen, que cambien algo. No solo que asientan con la cabeza.',
-    yes: 'Sí, genero impacto real', no: 'No estoy seguro de que llegue' },
-  { text: '¿Lo que piensas es lo que logras expresar y lo que tu público comprende?', context: 'El triángulo completo: lo que quieres decir, lo que dices, y lo que el otro entendió. ¿Coinciden los tres?',
-    yes: 'Sí, coinciden los tres', no: 'No, algo se pierde en el camino' },
-  { text: '¿Te expresas de forma auténtica, sin incomodarte con la forma en que comunicas?', context: 'Sin sentir que actúas un personaje, sin traicionarte para encajar en el formato. Tú, pero afilado.',
-    yes: 'Sí, soy yo cuando comunico', no: 'No, a veces siento que actúo' }
+const BASE_IMPACT = [
+  { text: '¿Sientes que tus mensajes generan un impacto real en tu público?', context: 'Real: que se queden pensando, que actúen, que cambien algo. No solo que asientan con la cabeza.', yes: 'Sí, genero impacto real', no: 'No estoy seguro de que llegue' },
+  { text: '¿Lo que piensas es lo que logras expresar y lo que tu público comprende?', context: 'El triángulo completo: lo que quieres decir, lo que dices, y lo que el otro entendió. ¿Coinciden los tres?', yes: 'Sí, coinciden los tres', no: 'No, algo se pierde en el camino' },
+  { text: '¿Te expresas de forma auténtica, sin incomodarte con la forma en que comunicas?', context: 'Sin sentir que actúas un personaje, sin traicionarte para encajar en el formato. Tú, pero afilado.', yes: 'Sí, soy yo cuando comunico', no: 'No, a veces siento que actúo' }
 ];
 
-// OPEN QUESTIONS
-const OPEN = {
-  context: {
-    eyebrow: 'Antes de empezar',
-    question: '¿A qué te dedicas y dónde necesitas comunicar mejor?',
-    hint: 'Tu profesión o proyecto, y el escenario donde la comunicación te está frenando: ventas, contenido, liderazgo, conferencias, lo que sea tuyo.',
-    placeholder: 'Ej. Soy consultor financiero y quiero empezar a dar charlas y crear contenido, pero cuando explico lo que sé suena acartonado...'
-  },
-  struggle: {
-    eyebrow: 'Un momento de honestidad',
-    question: '¿Con qué batallas más cuando tienes que comunicar algo importante?',
-    hint: 'Ya viste algunos de tus huecos. Ponlo en tus palabras: qué es lo que más se te complica cuando de verdad importa que te entiendan.',
-    placeholder: 'Ej. Me sé el tema perfecto pero me enredo, hablo de más, y siento que pierdo a la gente a la mitad...'
-  },
-  tried: {
-    eyebrow: 'Lo último',
-    question: '¿Qué has intentado antes para mejorar esto, y por qué crees que no terminó de funcionar?',
-    hint: 'Cursos, libros, práctica, terapia, imitar a alguien. Lo que sea que hayas probado — y tu teoría honesta de por qué no te llevó a donde querías.',
-    placeholder: 'Ej. Tomé un curso de oratoria pero era pura técnica de escenario, nada sobre cómo ordenar lo que quiero decir...'
-  }
+const BASE_OPEN = {
+  context: { eyebrow: 'Antes de empezar', question: '¿A qué te dedicas y dónde necesitas comunicar mejor?', hint: 'Tu profesión o proyecto, y el escenario donde la comunicación te está frenando: ventas, contenido, liderazgo, conferencias, lo que sea tuyo.', placeholder: 'Ej. Soy consultor financiero y quiero empezar a dar charlas y crear contenido, pero cuando explico lo que sé suena acartonado...' },
+  struggle: { eyebrow: 'Un momento de honestidad', question: '¿Con qué batallas más cuando tienes que comunicar algo importante?', hint: 'Ya viste algunos de tus huecos. Ponlo en tus palabras: qué es lo que más se te complica cuando de verdad importa que te entiendan.', placeholder: 'Ej. Me sé el tema perfecto pero me enredo, hablo de más, y siento que pierdo a la gente a la mitad...' },
+  tried: { eyebrow: 'Lo último', question: '¿Qué has intentado antes para mejorar esto, y por qué crees que no terminó de funcionar?', hint: 'Cursos, libros, práctica, terapia, imitar a alguien. Lo que sea que hayas probado — y tu teoría honesta de por qué no te llevó a donde querías.', placeholder: 'Ej. Tomé un curso de oratoria pero era pura técnica de escenario, nada sobre cómo ordenar lo que quiero decir...' }
 };
 
-// ============================================
-// FLOW: build ordered step list
-// ============================================
-const STEPS = [];
-STEPS.push({ type: 'name' });
-STEPS.push({ type: 'open', key: 'context' });
-STEPS.push({ type: 'section', pillar: 'AUTO' });
-ITEMS.filter(i => i.pillar === 'AUTO').forEach((it, idx) => STEPS.push({ type: 'binary', item: it, globalIdx: ITEMS.indexOf(it) }));
-STEPS.push({ type: 'section', pillar: 'EST' });
-ITEMS.filter(i => i.pillar === 'EST').forEach((it, idx) => STEPS.push({ type: 'binary', item: it, globalIdx: ITEMS.indexOf(it) }));
-STEPS.push({ type: 'open', key: 'struggle' });
-STEPS.push({ type: 'section', pillar: 'INF' });
-ITEMS.filter(i => i.pillar === 'INF').forEach((it, idx) => STEPS.push({ type: 'binary', item: it, globalIdx: ITEMS.indexOf(it) }));
-STEPS.push({ type: 'impact' });
-STEPS.push({ type: 'open', key: 'tried' });
+// ---------- LEADING BRANCH DATA (autoevaluación de liderazgo, doble estado) ----------
+const LEAD_COMPS = {
+  COM: { name: 'Comunicación', weight: 2, desc: 'Qué tan claro logras que te entiendan y te sigan.' },
+  EMO: { name: 'Manejo emocional', weight: 1, desc: 'Qué haces con lo que sientes cuando lideras.' },
+  DEC: { name: 'Toma de decisiones', weight: 1, desc: 'Cómo decides, con y sin tiempo de por medio.' },
+  AUT: { name: 'Autoconciencia', weight: 1, desc: 'Qué tanto sabes cómo te ven y dónde están tus límites.' },
+  ADA: { name: 'Adaptación', weight: 1, desc: 'Cómo respondes cuando el plan o el contexto cambian.' }
+};
 
-// ============================================
-// STATE
-// ============================================
+// Each scenario: comp, state ('nat'|'pre'), l1{text,context,yes,no}, l2{...}
+// Comunicación: 6 (3 nat, 3 pre). Others: 4 each (2 nat, 2 pre). Total = 22.
+const LEAD_ITEMS = [
+  // ---- COMUNICACIÓN (6) ----
+  { comp: 'COM', state: 'nat',
+    l1: { text: 'Cuando le explicas algo a tu equipo, ¿lo entienden a la primera?', context: 'En el día a día, sin tema espinoso de por medio. Les dices lo que necesitas y queda claro sin que tengas que repetirlo tres veces.', yes: 'Sí, casi siempre queda claro', no: 'No, seguido tengo que repetir' },
+    l2: { text: '¿Preparas cómo lo vas a decir, o lo sueltas como sale?', context: 'Que te entiendan puede ser suerte o puede ser diseño. Si piensas antes cómo ordenar la idea para esa persona, es método. Si solo hablas y a veces pega, es azar.', yes: 'Sí, pienso cómo decirlo', no: 'No, lo digo como me sale' } },
+  { comp: 'COM', state: 'nat',
+    l1: { text: 'Cuando tienes que dar una instrucción, ¿la gente sabe exactamente qué hacer después?', context: 'No "más o menos entendieron la vibra". Salen sabiendo qué les toca, para cuándo y cómo se ve terminado.', yes: 'Sí, quedan con claridad total', no: 'No, luego hay malentendidos' },
+    l2: { text: '¿Confirmas que entendieron, o asumes que sí?', context: 'Cerrar el círculo — preguntar, hacer que te repitan, validar — es lo que separa al que comunica del que solo habla y cruza los dedos.', yes: 'Sí, me aseguro de que quedó', no: 'No, doy por hecho que entendieron' } },
+  { comp: 'COM', state: 'nat',
+    l1: { text: 'Cuando quieres convencer a alguien de una idea, ¿logras que te compren?', context: 'Un cliente, tu jefe, tu equipo. Presentas tu punto y la gente termina viéndolo como tú lo ves.', yes: 'Sí, suelo lograr que me sigan', no: 'No, me cuesta que me compren' },
+    l2: { text: '¿Ajustas tu argumento a lo que le importa al otro, o dices lo que a ti te convence?', context: 'Persuadir no es repetir más fuerte lo que a ti te mueve. Es encontrar qué mueve al otro y hablarle desde ahí.', yes: 'Sí, hablo desde lo que le importa', no: 'No, expongo mis razones y ya' } },
+  { comp: 'COM', state: 'pre',
+    l1: { text: 'Cuando el tema es incómodo — un despido, una mala noticia, un reclamo — ¿sigues comunicando claro?', context: 'Aquí es donde muchos se enredan, suavizan de más o se van por las ramas para no incomodar. ¿Tú mantienes la claridad aunque duela?', yes: 'Sí, digo las cosas claras', no: 'No, me enredo o lo suavizo de más' },
+    l2: { text: '¿Dices lo que realmente piensas, o te guardas parte para no generar conflicto?', context: 'Comunicar bajo presión no es solo ser claro — es no autocensurarte. El que se guarda la mitad para evitar el roce, no está comunicando, está administrando su propia comodidad.', yes: 'Sí, digo lo que pienso completo', no: 'No, me guardo parte' } },
+  { comp: 'COM', state: 'pre',
+    l1: { text: 'Cuando alguien te interrumpe o te lleva la contraria enfrente de otros, ¿mantienes el hilo?', context: 'Te cuestionan a media junta, te cortan, te retan el punto. ¿Sigues comunicando con orden o se te desarma el mensaje?', yes: 'Sí, mantengo el hilo', no: 'No, se me desarma el mensaje' },
+    l2: { text: '¿Usas esa interrupción a tu favor, o solo tratas de sobrevivirla?', context: 'El que domina la comunicación toma el cuestionamiento y lo convierte en punto de apoyo. El que no, solo aguanta el momento y retoma como puede.', yes: 'Sí, la aprovecho', no: 'No, solo la aguanto' } },
+  { comp: 'COM', state: 'pre',
+    l1: { text: 'Cuando tienes que hablar sin haberte preparado — te ponen en el spot — ¿sales bien librado?', context: '"Danos tu opinión", "explícanos esto ahorita". Sin tiempo de armar nada. ¿Comunicas ordenado o te trabas?', yes: 'Sí, me sé acomodar al momento', no: 'No, me trabo o divago' },
+    l2: { text: '¿Tienes una forma de ordenar rápido lo que vas a decir, o rezas por que salga?', context: 'Improvisar bien no es suerte. Los que lo hacen tienen estructuras mentales rápidas para ordenar en segundos. Si tú solo esperas que fluya, dependes de tu buen día.', yes: 'Sí, ordeno rápido con método', no: 'No, dependo de que fluya' } },
+  // ---- MANEJO EMOCIONAL (4) ----
+  { comp: 'EMO', state: 'nat',
+    l1: { text: 'En el día a día, ¿reconoces lo que estás sintiendo antes de que te gane?', context: 'Notas cuando empiezas a fastidiarte, a estresarte o a frustrarte — antes de que se te salga en cómo tratas a la gente.', yes: 'Sí, me doy cuenta a tiempo', no: 'No, me cae el veinte tarde' },
+    l2: { text: '¿Haces algo con esa emoción, o solo la aguantas hasta que se pasa?', context: 'Reconocerla es el primer paso. Manejarla es tener con qué — una forma de bajarla, canalizarla o usarla. Aguantarse no es manejar, es contener hasta que explota o se filtra.', yes: 'Sí, la sé gestionar', no: 'No, solo me aguanto' } },
+  { comp: 'EMO', state: 'nat',
+    l1: { text: 'Cuando alguien de tu equipo comete un error que te cuesta a ti, ¿respondes sin que se te note el enojo?', context: 'El error ya está hecho, te afecta, y tienes que hablar con esa persona. ¿Llegas entero o con el enojo por delante?', yes: 'Sí, respondo con la cabeza fría', no: 'No, se me nota la molestia' },
+    l2: { text: '¿Separas el error de la persona, o terminas haciéndolo personal?', context: 'Manejar la emoción aquí es poder señalar la falla sin machacar al humano. El que no puede, convierte cada error en un ataque y va quemando a su gente.', yes: 'Sí, separo el hecho de la persona', no: 'No, a veces lo hago personal' } },
+  { comp: 'EMO', state: 'pre',
+    l1: { text: 'Cuando te cuestionan fuerte enfrente de todos, ¿mantienes la compostura?', context: 'En caliente, en público, alguien te reta o te exhibe. ¿Te quedas entero o reaccionas en el momento?', yes: 'Sí, me mantengo entero', no: 'No, reacciono en caliente' },
+    l2: { text: '¿Respondes desde la calma, o solo te tragas la reacción por fuera mientras hierves por dentro?', context: 'Hay diferencia entre regular de verdad y solo aparentar. El que se traga todo sin procesarlo lo paga después — en su cuerpo, en su equipo, o estallando por algo menor.', yes: 'Sí, respondo desde la calma real', no: 'No, por fuera aguanto pero hiervo' } },
+  { comp: 'EMO', state: 'pre',
+    l1: { text: 'Cuando algo se sale de control y todos te voltean a ver, ¿transmites calma?', context: 'Crisis, urgencia, todo saliendo mal. El equipo lee tu cara. ¿Les das tranquilidad o les contagias el nervio?', yes: 'Sí, transmito calma', no: 'No, se me nota la angustia' },
+    l2: { text: '¿Esa calma es real o es puro control de imagen que te desgasta?', context: 'Aparentar calma que no sientes funciona un rato, pero tiene costo. Los líderes que sostienen crisis largas regulan de verdad, no solo actúan.', yes: 'Sí, es calma real', no: 'No, es imagen que me cuesta' } },
+  // ---- TOMA DE DECISIONES (4) ----
+  { comp: 'DEC', state: 'nat',
+    l1: { text: 'Cuando tienes tiempo e información, ¿decides con claridad?', context: 'Las condiciones ideales: datos sobre la mesa, tiempo para pensar. ¿Llegas a una decisión firme o le das mil vueltas?', yes: 'Sí, decido con claridad', no: 'No, le doy demasiadas vueltas' },
+    l2: { text: '¿Te sostienes en la decisión, o la reabres cada vez que alguien opina?', context: 'Decidir es también cerrar. El que reabre la decisión con cada comentario nuevo no decidió — solo hizo una pausa. Y su equipo lo siente inseguro.', yes: 'Sí, me sostengo', no: 'No, la reabro seguido' } },
+  { comp: 'DEC', state: 'nat',
+    l1: { text: 'Cuando decides algo, ¿asumes las consecuencias sin echar culpas después?', context: 'La decisión sale, bien o mal. ¿Cargas con el resultado o buscas a quién responsabilizar cuando no sale como esperabas?', yes: 'Sí, cargo con lo que decido', no: 'No, busco culpables si sale mal' },
+    l2: { text: '¿Aprendes de la decisión que salió mal, o solo la olvidas?', context: 'Dueño de la decisión no es solo aguantar el golpe — es sacar el aprendizaje para la próxima. Sin eso, repites el mismo error con otra cara.', yes: 'Sí, saco aprendizaje', no: 'No, solo paso la página' } },
+  { comp: 'DEC', state: 'pre',
+    l1: { text: 'Cuando hay que decidir rápido, con información incompleta, ¿te lanzas?', context: 'No hay tiempo ni todos los datos, pero hay que moverse ya. ¿Decides o te congelas esperando más certeza?', yes: 'Sí, decido y avanzo', no: 'No, me congelo o lo pateo' },
+    l2: { text: '¿Decides con un criterio claro, o solo por salir del paso?', context: 'Decidir rápido bien no es decidir a lo loco. Es tener un criterio — qué priorizas cuando no hay tiempo — que te guía. Sin criterio, es puro reflejo para quitarte la presión de encima.', yes: 'Sí, tengo un criterio que me guía', no: 'No, decido por salir del paso' } },
+  { comp: 'DEC', state: 'pre',
+    l1: { text: 'Cuando una decisión tuya ya en marcha empieza a salir mal, ¿la corriges a tiempo?', context: 'Ya decidiste, ya arrancó, y se ve que no va bien. ¿Ajustas el rumbo rápido o te aferras a que funcione para no admitir el error?', yes: 'Sí, corrijo el rumbo', no: 'No, me aferro a mi decisión' },
+    l2: { text: '¿Cambias de rumbo por lectura de la realidad, o solo cuando ya no queda de otra?', context: 'Corregir a tiempo es leer las señales temprano. El que solo cambia cuando ya explotó todo, no está ajustando — está reaccionando al desastre.', yes: 'Sí, leo las señales temprano', no: 'No, hasta que ya no hay opción' } },
+  // ---- AUTOCONCIENCIA (4) ----
+  { comp: 'AUT', state: 'nat',
+    l1: { text: '¿Sabes cómo te percibe tu equipo realmente?', context: 'No cómo crees que te ven. Cómo te ven de verdad — si te sienten cercano o distante, claro o confuso, justo o volado.', yes: 'Sí, sé cómo me perciben', no: 'No, no estoy seguro' },
+    l2: { text: '¿Esa lectura la confirmaste, o es lo que tú supones?', context: 'Creer que sabes cómo te ven suele ser un espejo de cómo te quieres ver. Confirmarlo — preguntando, leyendo señales reales — es otra cosa. Muchos líderes viven en su versión, no en la real.', yes: 'Sí, la he confirmado', no: 'No, es lo que yo asumo' } },
+  { comp: 'AUT', state: 'nat',
+    l1: { text: '¿Reconoces tus propios límites — lo que no se te da bien?', context: 'Todos tienen puntos flojos. ¿Tienes claros los tuyos, o crees que la haces más o menos en todo?', yes: 'Sí, sé dónde soy flojo', no: 'No, siento que la hago en casi todo' },
+    l2: { text: '¿Haces algo con esos límites — delegas, te apoyas, aprendes — o los tapas?', context: 'Conocer tu límite sirve si actúas: rodearte de quien lo cubre o trabajarlo. El que lo conoce pero lo esconde por orgullo, tropieza siempre en el mismo lugar.', yes: 'Sí, me apoyo o los trabajo', no: 'No, prefiero taparlos' } },
+  { comp: 'AUT', state: 'pre',
+    l1: { text: 'Cuando te dan una crítica directa, ¿la recibes sin ponerte a la defensiva?', context: 'Alguien te dice en la cara algo que hiciste mal. ¿La escuchas de verdad o ya estás armando tu defensa antes de que termine?', yes: 'Sí, la recibo abierto', no: 'No, me defiendo de inmediato' },
+    l2: { text: '¿Usas esa crítica para cambiar algo, o la escuchas y sigues igual?', context: 'Recibirla bien es solo la mitad. La otra mitad es que mueva algo en cómo actúas. Asentir y seguir idéntico es una forma elegante de rechazarla.', yes: 'Sí, la convierto en cambio', no: 'No, la oigo pero sigo igual' } },
+  { comp: 'AUT', state: 'pre',
+    l1: { text: 'Cuando algo sale mal por tu culpa, ¿lo reconoces frente a tu equipo?', context: 'La regaste tú, y todos lo saben. ¿Lo pones sobre la mesa o buscas la forma de que no se note que fuiste tú?', yes: 'Sí, lo reconozco abierto', no: 'No, trato de diluir mi parte' },
+    l2: { text: '¿Reconocerlo te sale natural, o te cuesta tragarte el orgullo cada vez?', context: 'El líder seguro admite el error sin que se le caiga el mundo. Si cada vez es una batalla interna con tu ego, esa inseguridad se filtra y tu equipo la percibe.', yes: 'Sí, me sale natural', no: 'No, me cuesta el orgullo' } },
+  // ---- ADAPTACIÓN (4) ----
+  { comp: 'ADA', state: 'nat',
+    l1: { text: '¿Ajustas tu forma de tratar a cada quien según cómo es?', context: 'No le hablas igual al que necesita mano firme que al que necesita ánimo. ¿Lees a cada persona y te ajustas, o tratas a todos igual?', yes: 'Sí, me ajusto a cada quien', no: 'No, soy igual con todos' },
+    l2: { text: '¿Ese ajuste es lectura intencional, o solo te cae bien más gente que otra?', context: 'Adaptarse es leer qué necesita cada quien y darlo a propósito. No es tener favoritos. El que solo conecta con los que se le parecen, no se adapta — solo tiene química con algunos.', yes: 'Sí, leo y ajusto a propósito', no: 'No, solo fluyo con quien conecto' } },
+  { comp: 'ADA', state: 'nat',
+    l1: { text: 'Cuando llega una forma nueva de hacer las cosas, ¿te subes o te resistes?', context: 'Cambian una herramienta, un proceso, una manera de trabajar. ¿Lo pruebas con apertura o defiendes cómo lo hacías antes?', yes: 'Sí, me abro a lo nuevo', no: 'No, defiendo lo de siempre' },
+    l2: { text: '¿Evalúas si el cambio suma, o te resistes por default y luego ves?', context: 'Adaptarse no es tragarse todo lo nuevo sin filtro, pero tampoco cerrarse por reflejo. Es evaluar con apertura real. El que se resiste por costumbre y cede solo cuando lo obligan, no se adapta — lo adaptan.', yes: 'Sí, lo evalúo con apertura', no: 'No, me resisto por default' } },
+  { comp: 'ADA', state: 'pre',
+    l1: { text: 'Cuando el plan se cae de golpe, ¿te reacomodas rápido?', context: 'Todo estaba listo y cambió de un día para otro. ¿Te reorganizas y sigues, o te quedas atorado en que ya tenías todo pensado?', yes: 'Sí, me reacomodo rápido', no: 'No, me cuesta soltar el plan' },
+    l2: { text: '¿Buscas el nuevo camino de inmediato, o gastas energía peleándote con que cambió?', context: 'Adaptarse bajo presión es aceptar rápido la nueva realidad y moverte en ella. El que se queda lamentando que el plan se cayó, pierde tiempo y arrastra a su equipo en la queja.', yes: 'Sí, busco el nuevo camino ya', no: 'No, me atoro en que cambió' } },
+  { comp: 'ADA', state: 'pre',
+    l1: { text: 'Cuando algo que dominabas deja de funcionar, ¿aprendes lo nuevo o te aferras?', context: 'Lo que te hizo bueno ya no alcanza — el mercado, el equipo, la tecnología cambiaron. ¿Te reinventas o insistes en lo que antes servía?', yes: 'Sí, me reinvento', no: 'No, insisto en lo que sé' },
+    l2: { text: '¿Te reinventas antes de que te obligue el golpe, o después de estrellarte?', context: 'Los que se adaptan de verdad huelen el cambio y se mueven antes. Los que solo reaccionan después del golpe, se adaptan tarde y caro — cuando ya perdieron terreno.', yes: 'Sí, me muevo antes del golpe', no: 'No, hasta que ya me estrellé' } }
+];
+
+const LEAD_OPEN = {
+  context: { eyebrow: 'Antes de empezar', question: '¿Qué lideras y a cuánta gente?', hint: 'Tu rol, tu equipo o proyecto, y qué tan grande es la responsabilidad que traes sobre otras personas.', placeholder: 'Ej. Dirijo el área comercial de una empresa de logística, tengo 8 personas a cargo y acabo de subir a un puesto donde ahora lidero a quienes eran mis pares...' },
+  challenge: { eyebrow: 'Un momento de honestidad', question: '¿Cuál es tu mayor reto liderando gente hoy?', hint: 'Lo que más se te complica de tener personas a cargo. En tus palabras, sin adornar.', placeholder: 'Ej. Me cuesta poner límites sin sentir que me van a dejar de querer, y termino cargando con lo que debería delegar...' },
+  tried: { eyebrow: 'Lo último', question: '¿Qué has hecho para desarrollarte como líder, y qué te ha faltado?', hint: 'Cursos, libros, un mentor, prueba y error. Lo que has intentado — y qué sientes que todavía no terminas de resolver.', placeholder: 'Ej. He leído bastante y tomé un diplomado de liderazgo, pero era muy teórico y en el momento de la presión se me olvida todo...' }
+};
+
+// ============================================================
+// ENGINE — shared state + both branch flows
+// ============================================================
 let state = {
-  phase: 'intro',
+  phase: 'intro',      // intro | flow | results
+  branch: null,        // 'base' | 'lead'
   stepIdx: 0,
-  binaryLayer: 1,
   userName: '',
-  answers: {},      // globalIdx -> { l1: bool, l2: bool|null }
-  impact: {},       // idx -> bool
-  open: {},         // key -> string
+  answers: {},         // globalIdx -> {l1, l2}
+  impact: {},          // base branch only
+  open: {},
   pdfDone: false
 };
 
-const totalBinarySteps = ITEMS.length;
+let STEPS = [];
 
+function buildSteps(branch) {
+  const steps = [];
+  steps.push({ type: 'name' });
+  if (branch === 'base') {
+    steps.push({ type: 'open', key: 'context', set: 'base' });
+    steps.push({ type: 'section', pillar: 'AUTO' });
+    BASE_ITEMS.forEach((it, i) => { if (it.pillar === 'AUTO') steps.push({ type: 'binary', gi: i }); });
+    steps.push({ type: 'section', pillar: 'EST' });
+    BASE_ITEMS.forEach((it, i) => { if (it.pillar === 'EST') steps.push({ type: 'binary', gi: i }); });
+    steps.push({ type: 'open', key: 'struggle', set: 'base' });
+    steps.push({ type: 'section', pillar: 'INF' });
+    BASE_ITEMS.forEach((it, i) => { if (it.pillar === 'INF') steps.push({ type: 'binary', gi: i }); });
+    steps.push({ type: 'impact' });
+    steps.push({ type: 'open', key: 'tried', set: 'base' });
+  } else {
+    steps.push({ type: 'open', key: 'context', set: 'lead' });
+    // order competencies; within each, natural then pressure
+    const order = ['COM', 'EMO', 'DEC', 'AUT', 'ADA'];
+    let insertedChallenge = false;
+    order.forEach((ck, ci) => {
+      steps.push({ type: 'lead-section', comp: ck });
+      LEAD_ITEMS.forEach((it, i) => { if (it.comp === ck) steps.push({ type: 'lead-binary', gi: i }); });
+      // drop the mid open question after the 2nd competency (EMO)
+      if (ck === 'EMO' && !insertedChallenge) {
+        steps.push({ type: 'open', key: 'challenge', set: 'lead' });
+        insertedChallenge = true;
+      }
+    });
+    steps.push({ type: 'open', key: 'tried', set: 'lead' });
+  }
+  return steps;
+}
+
+// ============================================================
+// RENDER ROUTER
+// ============================================================
 function render() {
   const app = document.getElementById('app');
   const tag = document.getElementById('phase-tag');
@@ -801,72 +629,75 @@ function render() {
   if (state.phase === 'intro') {
     tag.textContent = 'Inicio';
     app.innerHTML = renderIntro();
-    document.getElementById('start').onclick = () => {
-      state.phase = 'flow';
-      state.stepIdx = 0;
-      render();
-    };
+    document.getElementById('branch-base').onclick = () => startBranch('base');
+    document.getElementById('branch-lead').onclick = () => startBranch('lead');
     return;
   }
-
   if (state.phase === 'flow') {
     const step = STEPS[state.stepIdx];
-    if (step.type === 'name') { renderNameStep(step); }
-    else if (step.type === 'open') { renderOpenStep(step); }
-    else if (step.type === 'section') { renderSectionStep(step); }
-    else if (step.type === 'binary') { renderBinaryStep(step); }
-    else if (step.type === 'impact') { renderImpactStep(step); }
+    if (step.type === 'name') renderNameStep();
+    else if (step.type === 'open') renderOpenStep(step);
+    else if (step.type === 'section') renderSectionStep(step);
+    else if (step.type === 'lead-section') renderLeadSectionStep(step);
+    else if (step.type === 'binary') renderBinaryStep(step, false);
+    else if (step.type === 'lead-binary') renderBinaryStep(step, true);
+    else if (step.type === 'impact') renderImpactStep();
     return;
   }
-
   if (state.phase === 'results') {
     tag.textContent = 'Resultado';
-    app.innerHTML = renderResults();
+    app.innerHTML = state.branch === 'base' ? renderBaseResults() : renderLeadResults();
     wireResults();
   }
 }
 
+function startBranch(branch) {
+  state.branch = branch;
+  STEPS = buildSteps(branch);
+  state.phase = 'flow';
+  state.stepIdx = 0;
+  state.answers = {}; state.impact = {}; state.open = {};
+  render();
+}
+
+// ============================================================
+// INTRO with branch selection
+// ============================================================
 function renderIntro() {
   return `
     <section class="intro fade-in">
       <h1>Scanner <em>CORE</em></h1>
-      <p class="lede">
-        Un diagnóstico de tu comunicación en tres capas: lo que sabes de ti, cómo estructuras tus ideas y cómo influyes en otros. No mide lo que crees que haces — <strong>revela la distancia entre eso y lo que realmente pasa cuando comunicas</strong>.
-      </p>
-
-      <div class="pillars-preview">
-        <div class="pillar-item">
-          <div class="pillar-num">01</div>
-          <div class="pillar-name">Autoconciencia</div>
-          <div class="pillar-desc">Lo que sabes de ti cuando comunicas.</div>
-        </div>
-        <div class="pillar-item">
-          <div class="pillar-num">02</div>
-          <div class="pillar-name">Estructura</div>
-          <div class="pillar-desc">Cómo conviertes una idea en mensaje.</div>
-        </div>
-        <div class="pillar-item">
-          <div class="pillar-num">03</div>
-          <div class="pillar-name">Influencia</div>
-          <div class="pillar-desc">Cómo mueves a otros con tu presencia.</div>
-        </div>
+      <p class="lede">Un diagnóstico honesto de cómo comunicas e influyes. Elige el que va contigo — según lo que necesitas ver de ti hoy.</p>
+      <div class="branch-label">¿Qué quieres diagnosticar?</div>
+      <div class="branch-cards">
+        <button class="branch-card" id="branch-base">
+          <div class="branch-num">Ruta 01</div>
+          <div class="branch-name">Comunicación e Influencia</div>
+          <div class="branch-desc">Mide cómo comunicas: qué sabes de ti, cómo estructuras tus ideas y cómo mueves a otros. Para quien quiere llegar a un escenario, crear contenido o cobrar por su conocimiento.</div>
+          <div class="branch-for"><strong>Para ti</strong>, que ya eres experto en lo tuyo y quieres que se note al hablar.</div>
+          <div class="branch-go">Empezar →</div>
+        </button>
+        <button class="branch-card" id="branch-lead">
+          <div class="branch-num">Ruta 02</div>
+          <div class="branch-name">CORE Leading</div>
+          <div class="branch-desc">Mide tu liderazgo en cinco competencias, en calma y bajo presión. Revela el gap entre dónde estás y lo que tu rol exige — y qué tan entrenable es cerrarlo.</div>
+          <div class="branch-for"><strong>Para líderes</strong> que dirigen gente y quieren saber dónde están parados de verdad.</div>
+          <div class="branch-go">Empezar →</div>
+        </button>
       </div>
-
-      <button class="start-btn" id="start">
-        Iniciar mi scanner
-        <span class="arrow">→</span>
-      </button>
-
       <div class="intro-meta">
-        <div><strong>10</strong> competencias</div>
-        <div><strong>6–8</strong> minutos</div>
-        <div><strong>Responde</strong> con honestidad brutal, es para ti</div>
+        <div><strong>6–9</strong> minutos</div>
+        <div><strong>Sin</strong> respuestas correctas</div>
+        <div><strong>Honestidad</strong> brutal, es para ti</div>
       </div>
     </section>
   `;
 }
 
-function renderNameStep(step) {
+// ============================================================
+// NAME
+// ============================================================
+function renderNameStep() {
   const app = document.getElementById('app');
   document.getElementById('phase-tag').textContent = 'Empecemos';
   const saved = state.userName || '';
@@ -875,27 +706,30 @@ function renderNameStep(step) {
       <div class="open-eyebrow">Empecemos por lo básico</div>
       <h2 class="open-question">¿Cómo te llamas?</h2>
       <p class="open-hint">Tu diagnóstico va a ser personal. Con tu nombre, no un reporte genérico.</p>
-      <input type="text" class="open-input" id="name-input" placeholder="Tu nombre" value="${saved.replace(/"/g, '&quot;')}" style="min-height: auto; padding: 20px;" autocomplete="given-name" />
+      <input type="text" class="open-input" id="name-input" placeholder="Tu nombre" value="${saved.replace(/"/g,'&quot;')}" style="min-height:auto;padding:20px;" autocomplete="given-name" />
       <div class="nav-row">
-        <button class="back-btn" id="back" disabled>← Volver</button>
+        <button class="back-btn" id="back">← Volver</button>
         <button class="continue-btn" id="continue">Continuar <span>→</span></button>
       </div>
-    </section>
-  `;
+    </section>`;
   const input = document.getElementById('name-input');
   const submit = () => {
     const val = input.value.trim();
     if (!val) { input.focus(); input.style.borderColor = 'var(--gold)'; return; }
-    state.userName = val;
-    advance();
+    state.userName = val; advance();
   };
   document.getElementById('continue').onclick = submit;
-  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') submit(); });
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
+  document.getElementById('back').onclick = () => { state.phase = 'intro'; state.branch = null; render(); };
   setTimeout(() => input.focus(), 100);
 }
 
+// ============================================================
+// OPEN
+// ============================================================
 function renderOpenStep(step) {
-  const o = OPEN[step.key];
+  const src = step.set === 'lead' ? LEAD_OPEN : BASE_OPEN;
+  const o = src[step.key];
   const app = document.getElementById('app');
   document.getElementById('phase-tag').textContent = 'Reflexión';
   const saved = state.open[step.key] || '';
@@ -904,23 +738,24 @@ function renderOpenStep(step) {
       <div class="open-eyebrow">${o.eyebrow}</div>
       <h2 class="open-question">${o.question}</h2>
       <p class="open-hint">${o.hint}</p>
-      <textarea class="open-input" id="open-input" placeholder="${o.placeholder}">${saved}</textarea>
+      <textarea class="open-input" id="open-input" placeholder="${o.placeholder.replace(/"/g,'&quot;')}">${saved}</textarea>
       <div class="nav-row">
-        <button class="back-btn" id="back" ${state.stepIdx === 0 ? 'disabled' : ''}>← Volver</button>
+        <button class="back-btn" id="back">← Volver</button>
         <button class="continue-btn" id="continue">Continuar <span>→</span></button>
       </div>
-    </section>
-  `;
+    </section>`;
   document.getElementById('continue').onclick = () => {
     state.open[step.key] = document.getElementById('open-input').value.trim();
     advance();
   };
-  const back = document.getElementById('back');
-  if (back) back.onclick = () => goBack();
+  document.getElementById('back').onclick = () => goBack();
 }
 
+// ============================================================
+// SECTION intros
+// ============================================================
 function renderSectionStep(step) {
-  const p = PILLARS[step.pillar];
+  const p = BASE_PILLARS[step.pillar];
   const app = document.getElementById('app');
   document.getElementById('phase-tag').textContent = p.name;
   const intros = {
@@ -937,77 +772,92 @@ function renderSectionStep(step) {
         <button class="back-btn" id="back">← Volver</button>
         <button class="continue-btn" id="continue">Empezar <span>→</span></button>
       </div>
-    </section>
-  `;
+    </section>`;
   document.getElementById('continue').onclick = () => advance();
   document.getElementById('back').onclick = () => goBack();
 }
 
-function renderBinaryStep(step) {
+function renderLeadSectionStep(step) {
+  const c = LEAD_COMPS[step.comp];
   const app = document.getElementById('app');
-  const item = step.item;
-  const p = PILLARS[item.pillar];
-  document.getElementById('phase-tag').textContent = p.name;
+  document.getElementById('phase-tag').textContent = c.name;
+  const intros = {
+    COM: 'La competencia que más pesa en el liderazgo. Vamos a verla en calma y bajo presión — porque comunicar cuando todo fluye es fácil; el liderazgo se prueba cuando el tema arde.',
+    EMO: 'Lo que haces con lo que sientes cuando lideras. No se trata de no sentir — se trata de que tu emoción no decida por ti frente a tu equipo.',
+    DEC: 'Cómo decides define el ritmo de todo lo que diriges. Vamos a ver cómo decides con tiempo, y cómo decides cuando el tiempo se acaba.',
+    AUT: 'Qué tanto te ves de verdad. Un líder que no sabe cómo lo perciben ni dónde están sus límites, lidera a ciegas.',
+    ADA: 'Cómo respondes cuando lo que funcionaba deja de funcionar. El plan siempre cambia; la pregunta es si te mueves con él o te quedas atrás.'
+  };
+  app.innerHTML = `
+    <section class="section-intro fade-in">
+      <div class="sec-num">Competencia · ${c.name}${c.weight > 1 ? ' · Mayor peso' : ''}</div>
+      <h2>${c.name}</h2>
+      <p>${intros[step.comp]}</p>
+      <div class="nav-row">
+        <button class="back-btn" id="back">← Volver</button>
+        <button class="continue-btn" id="continue">Empezar <span>→</span></button>
+      </div>
+    </section>`;
+  document.getElementById('continue').onclick = () => advance();
+  document.getElementById('back').onclick = () => goBack();
+}
 
-  const a = state.answers[step.globalIdx] || { l1: null, l2: null };
+// ============================================================
+// BINARY (shared, progressive disclosure)
+// ============================================================
+function renderBinaryStep(step, isLead) {
+  const app = document.getElementById('app');
+  const items = isLead ? LEAD_ITEMS : BASE_ITEMS;
+  const item = items[step.gi];
+  let badgeName, stateTag = '';
+  if (isLead) {
+    badgeName = LEAD_COMPS[item.comp].name;
+    stateTag = item.state === 'nat'
+      ? '<div class="state-tag natural">En el día a día</div>'
+      : '<div class="state-tag pressure">Bajo presión</div>';
+  } else {
+    badgeName = BASE_PILLARS[item.pillar].name;
+  }
+  document.getElementById('phase-tag').textContent = badgeName;
 
-  // progress across all binary items
-  const binaryDone = countBinaryDone();
-  const progress = (binaryDone / totalBinarySteps) * 100;
-
-  // Layer 1 selected state
-  const l1Yes = a.l1 === true;
-  const l1No = a.l1 === false;
-  // Layer 2 shows only when l1 answered yes
-  const showL2 = l1Yes;
+  const a = state.answers[keyOf(isLead, step.gi)] || { l1: null, l2: null };
+  const progress = flowProgress();
+  const l1Yes = a.l1 === true, l1No = a.l1 === false, showL2 = l1Yes;
 
   app.innerHTML = `
-    <section class="fade-in" key="b${step.globalIdx}">
+    <section class="fade-in">
       <div class="progress-wrap">
         <div class="progress-info">
-          <span>${item.label}</span>
-          <span class="pillar-badge">${p.name}</span>
+          <span>${isLead ? LEAD_COMPS[item.comp].name : item.label}</span>
+          <span class="pillar-badge">${badgeName}</span>
         </div>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width: ${progress}%"></div>
-        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
       </div>
-
+      ${stateTag}
       <h2 class="q-text">${item.l1.text}</h2>
       <p class="q-context">${item.l1.context}</p>
-
       <div class="binary-options">
-        <button class="binary-btn ${l1No ? 'selected' : ''}" id="l1-no">
-          ${item.l1.no}
-        </button>
-        <button class="binary-btn ${l1Yes ? 'selected' : ''}" id="l1-yes">
-          ${item.l1.yes}
-        </button>
+        <button class="binary-btn ${l1No?'selected':''}" id="l1-no">${item.l1.no}</button>
+        <button class="binary-btn ${l1Yes?'selected':''}" id="l1-yes">${item.l1.yes}</button>
       </div>
-
-      <div id="layer2-zone">
-        ${showL2 ? renderLayer2(item, a) : ''}
-      </div>
-
+      <div id="layer2-zone">${showL2 ? renderLayer2(item, a) : ''}</div>
       <div class="nav-row">
         <button class="back-btn" id="back">← Volver</button>
         <div class="brand-tag">CORE</div>
       </div>
-    </section>
-  `;
+    </section>`;
 
-  document.getElementById('l1-yes').onclick = () => setLayer1(step, true);
-  document.getElementById('l1-no').onclick = () => setLayer1(step, false);
+  document.getElementById('l1-yes').onclick = () => setLayer1(step, isLead, true);
+  document.getElementById('l1-no').onclick = () => setLayer1(step, isLead, false);
   if (showL2) {
-    document.getElementById('l2-yes').onclick = () => setLayer2(step, true);
-    document.getElementById('l2-no').onclick = () => setLayer2(step, false);
+    document.getElementById('l2-yes').onclick = () => setLayer2(step, isLead, true);
+    document.getElementById('l2-no').onclick = () => setLayer2(step, isLead, false);
   }
   document.getElementById('back').onclick = () => goBack();
 }
 
 function renderLayer2(item, a) {
-  const l2Yes = a.l2 === true;
-  const l2No = a.l2 === false;
+  const l2Yes = a.l2 === true, l2No = a.l2 === false;
   return `
     <div class="layer2-block fade-in">
       <div class="layer2-connector"></div>
@@ -1015,58 +865,47 @@ function renderLayer2(item, a) {
       <h3 class="q-subtext">${item.l2.text}</h3>
       <p class="q-context">${item.l2.context}</p>
       <div class="binary-options">
-        <button class="binary-btn ${l2No ? 'selected' : ''}" id="l2-no">
-          ${item.l2.no}
-        </button>
-        <button class="binary-btn ${l2Yes ? 'selected' : ''}" id="l2-yes">
-          ${item.l2.yes}
-        </button>
+        <button class="binary-btn ${l2No?'selected':''}" id="l2-no">${item.l2.no}</button>
+        <button class="binary-btn ${l2Yes?'selected':''}" id="l2-yes">${item.l2.yes}</button>
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
-function setLayer1(step, val) {
-  if (!state.answers[step.globalIdx]) state.answers[step.globalIdx] = { l1: null, l2: null };
-  state.answers[step.globalIdx].l1 = val;
+function keyOf(isLead, gi) { return (isLead ? 'L' : 'B') + gi; }
 
-  if (val === false) {
-    // No layer 2 — if you don't have it, mastering it is moot. Advance after a short beat.
-    state.answers[step.globalIdx].l2 = false;
-    advance();
-  } else {
-    // Reset l2 (in case they had answered no before and switched) and unfold layer 2
-    state.answers[step.globalIdx].l2 = null;
-    render();
-  }
+function setLayer1(step, isLead, val) {
+  const k = keyOf(isLead, step.gi);
+  if (!state.answers[k]) state.answers[k] = { l1: null, l2: null };
+  state.answers[k].l1 = val;
+  if (val === false) { state.answers[k].l2 = false; advance(); }
+  else { state.answers[k].l2 = null; render(); }
+}
+function setLayer2(step, isLead, val) {
+  const k = keyOf(isLead, step.gi);
+  state.answers[k].l2 = val; advance();
 }
 
-function setLayer2(step, val) {
-  state.answers[step.globalIdx].l2 = val;
-  advance();
-}
-
-function renderImpactStep(step) {
+// ============================================================
+// IMPACT (base only)
+// ============================================================
+function renderImpactStep() {
   const app = document.getElementById('app');
   document.getElementById('phase-tag').textContent = 'Impacto';
-
-  const rows = IMPACT_ITEMS.map((it, idx) => {
+  const rows = BASE_IMPACT.map((it, idx) => {
     const val = state.impact[idx];
     return `
-      <div style="margin-bottom: 32px;">
-        <h3 style="font-family: 'Fraunces', serif; font-weight: 400; font-size: 21px; line-height: 1.3; margin-bottom: 10px;">${it.text}</h3>
-        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.55;">${it.context}</p>
+      <div style="margin-bottom:32px;">
+        <h3 style="font-family:'Fraunces',serif;font-weight:400;font-size:21px;line-height:1.3;margin-bottom:10px;">${it.text}</h3>
+        <p style="font-size:14px;color:var(--text-muted);margin-bottom:16px;line-height:1.55;">${it.context}</p>
         <div class="binary-options">
-          <button class="binary-btn imp-btn" data-idx="${idx}" data-val="no" style="${val === false ? 'border-color: var(--gold);' : ''}">No</button>
-          <button class="binary-btn imp-btn" data-idx="${idx}" data-val="yes" style="${val === true ? 'border-color: var(--gold);' : ''}">Sí</button>
+          <button class="binary-btn imp-btn ${val===false?'selected':''}" data-idx="${idx}" data-val="no">${it.no}</button>
+          <button class="binary-btn imp-btn ${val===true?'selected':''}" data-idx="${idx}" data-val="yes">${it.yes}</button>
         </div>
-      </div>
-    `;
+      </div>`;
   }).join('');
-
   app.innerHTML = `
     <section class="fade-in">
-      <div class="section-intro" style="padding: 0 0 32px;">
+      <div class="section-intro" style="padding:0 0 32px;">
         <div class="sec-num">El momento de verdad</div>
         <h2>¿Y todo esto, <em>funciona?</em></h2>
         <p>Puedes tener técnica y aún así no lograr lo que buscas. Estas tres preguntas no miden lo que haces, miden lo que consigues. Respóndelas rápido, con lo primero que sientas.</p>
@@ -1076,76 +915,89 @@ function renderImpactStep(step) {
         <button class="back-btn" id="back">← Volver</button>
         <button class="continue-btn" id="continue">Ver mi diagnóstico <span>→</span></button>
       </div>
-    </section>
-  `;
-
+    </section>`;
   document.querySelectorAll('.imp-btn').forEach(btn => {
-    btn.onclick = () => {
-      const idx = parseInt(btn.dataset.idx);
-      state.impact[idx] = btn.dataset.val === 'yes';
-      renderImpactStep(step);
-    };
+    btn.onclick = () => { state.impact[parseInt(btn.dataset.idx)] = btn.dataset.val === 'yes'; renderImpactStep(); };
   });
   document.getElementById('continue').onclick = () => {
-    if (Object.keys(state.impact).length < IMPACT_ITEMS.length) {
-      alert('Contesta las tres antes de continuar — son las que más revelan.');
-      return;
-    }
+    if (Object.keys(state.impact).length < BASE_IMPACT.length) { alert('Contesta las tres antes de continuar — son las que más revelan.'); return; }
     advance();
   };
   document.getElementById('back').onclick = () => goBack();
 }
 
-function advance() {
-  state.stepIdx++;
-  if (state.stepIdx >= STEPS.length) {
-    state.phase = 'results';
-  }
-  render();
-}
-
+// ============================================================
+// NAV
+// ============================================================
+function advance() { state.stepIdx++; if (state.stepIdx >= STEPS.length) state.phase = 'results'; render(); }
 function goBack() {
-  if (state.stepIdx > 0) {
-    state.stepIdx--;
-    render();
-  }
+  if (state.stepIdx > 0) { state.stepIdx--; render(); }
+  else { state.phase = 'intro'; state.branch = null; render(); }
 }
-
-function countBinaryDone() {
-  let c = 0;
-  ITEMS.forEach((it, idx) => {
-    const a = state.answers[idx];
-    if (a && a.l1 !== null && (a.l1 === false || a.l2 !== null)) c++;
+function flowProgress() {
+  // fraction of binary items answered across current branch
+  const isLead = state.branch === 'lead';
+  const items = isLead ? LEAD_ITEMS : BASE_ITEMS;
+  let done = 0;
+  items.forEach((it, i) => {
+    const a = state.answers[keyOf(isLead, i)];
+    if (a && a.l1 !== null && (a.l1 === false || a.l2 !== null)) done++;
   });
-  return c;
+  return (done / items.length) * 100;
 }
 
-// ============================================
-// SCORING
-// ============================================
-function computeScores() {
+// ============================================================
+// SCORING — BASE
+// ============================================================
+function baseScores() {
   const result = {};
-  ['AUTO', 'EST', 'INF'].forEach(pk => {
-    const items = ITEMS.map((it, idx) => ({ it, idx })).filter(x => x.it.pillar === pk);
+  ['AUTO','EST','INF'].forEach(pk => {
+    const idxs = []; BASE_ITEMS.forEach((it,i)=>{ if(it.pillar===pk) idxs.push(i); });
     let score = 0;
-    const maxPer = 2;
-    const lines = items.map(({ it, idx }) => {
-      const a = state.answers[idx] || { l1: false, l2: false };
+    const lines = idxs.map(i => {
+      const a = state.answers['B'+i] || { l1:false, l2:false };
       let status, pts;
-      if (a.l1 && a.l2) { status = 'solid'; pts = 2; }
-      else if (a.l1 && !a.l2) { status = 'partial'; pts = 1; }
-      else { status = 'missing'; pts = 0; }
+      if (a.l1 && a.l2) { status='solid'; pts=2; }
+      else if (a.l1 && !a.l2) { status='partial'; pts=1; }
+      else { status='missing'; pts=0; }
       score += pts;
-      return { label: it.label, status };
+      return { label: BASE_ITEMS[i].label, status };
     });
-    const max = items.length * maxPer;
-    result[pk] = { score, max, pct: Math.round((score / max) * 100), lines };
+    const max = idxs.length*2;
+    result[pk] = { score, max, pct: Math.round(score/max*100), lines };
   });
   return result;
 }
 
-function pillarVerdict(pk, pct) {
-  const verdicts = {
+// ============================================================
+// SCORING — LEAD (dual state per competency)
+// ============================================================
+function leadScores() {
+  const result = {};
+  Object.keys(LEAD_COMPS).forEach(ck => {
+    const natIdx = [], preIdx = [];
+    LEAD_ITEMS.forEach((it,i)=>{ if(it.comp===ck){ (it.state==='nat'?natIdx:preIdx).push(i); } });
+    const scoreState = (idxs) => {
+      let s = 0;
+      idxs.forEach(i => {
+        const a = state.answers['L'+i] || { l1:false, l2:false };
+        if (a.l1 && a.l2) s += 2; else if (a.l1 && !a.l2) s += 1;
+      });
+      return { score: s, max: idxs.length*2, pct: idxs.length ? Math.round(s/(idxs.length*2)*100) : 0 };
+    };
+    const nat = scoreState(natIdx);
+    const pre = scoreState(preIdx);
+    const gap = nat.pct - pre.pct; // positive = drops under pressure
+    result[ck] = { nat, pre, gap, weight: LEAD_COMPS[ck].weight };
+  });
+  return result;
+}
+
+// ============================================================
+// RESULTS — BASE branch
+// ============================================================
+function basePillarVerdict(pk, pct) {
+  const v = {
     AUTO: {
       high: 'Tienes una base sólida de autoconciencia. Sabes quién eres cuando comunicas, y eso te da presencia sin esfuerzo. El siguiente nivel no es conocerte más — es afinar cómo usas lo que ya sabes según cada público.',
       mid: 'Te conoces a medias. Reconoces algunas cosas de ti pero otras te siguen operando sin que las operes. Ese punto ciego es justo lo que hace que a veces conectes increíble y otras veces no sepas por qué no prendió.',
@@ -1154,327 +1006,418 @@ function pillarVerdict(pk, pct) {
     EST: {
       high: 'Sabes construir mensajes que se sostienen. No dependes de la inspiración, tienes método. Tu reto ahora es que la estructura no te vuelva rígido — que siga al servicio de la emoción, no al revés.',
       mid: 'Ordenas tus ideas, pero más por intuición que por método. Eso te funciona a veces y te falla otras, sin que sepas bien por qué. Tienes cosas valiosas que decir que se están perdiendo en la ejecución.',
-      low: 'Aquí es donde tus mejores ideas viajan a media potencia. Probablemente comunicas mejor de lo que la gente recuerda al día siguiente, porque falta la arquitectura que hace que un mensaje se quede. La materia prima está — falta el diseño.'
+      low: 'Aquí es donde tus mejores ideas viajan a media potencia. Probablemente comunicas mejor de lo que la gente recuerda al día siguiente, porque falta la arquitectura que hace que un mensaje se quede.'
     },
     INF: {
-      high: 'Manejas la influencia como oficio. Tu voz, tu cuerpo y tu propósito trabajan juntos. Cuando terminas de hablar, la gente no solo escuchó — sintió algo y salió con ganas de moverse. Cuida que la técnica nunca tape tu autenticidad.',
+      high: 'Manejas la influencia como oficio. Tu voz, tu cuerpo y tu propósito trabajan juntos. Cuando terminas de hablar, la gente no solo escuchó — sintió algo y salió con ganas de moverse.',
       mid: 'Tienes recursos de influencia pero los usas de forma intermitente. A veces tu presencia acompaña el mensaje, a veces se queda corta. Ese "a veces" es la diferencia entre alguien que expone y alguien que persuade.',
       low: 'Aquí está el gap entre lo que sabes y lo que logras que otros hagan. Puedes tener el mejor contenido del cuarto y aún así no mover a nadie, porque comunicar no es influir. Voz, cuerpo y propósito no son cosmética — son el vehículo de todo lo demás.'
     }
   };
   const band = pct >= 67 ? 'high' : pct >= 34 ? 'mid' : 'low';
-  return verdicts[pk][band];
+  return v[pk][band];
 }
 
-function impactVerdict() {
+function baseImpactVerdict() {
   const yeses = Object.values(state.impact).filter(v => v === true).length;
-  if (yeses === 3) {
-    return {
-      headline: 'Comunicas con impacto — ahora el reto es sistematizarlo.',
-      text: 'Sientes que conectas, que te comprenden y que lo haces desde tu autenticidad. Eso te pone adelante de la mayoría. Pero "sentir" que funciona y "saber por qué" funciona son cosas distintas. Lo que hoy haces por instinto, si lo vuelves método, deja de depender de tu buen día y empieza a ser replicable — incluso enseñable.'
-    };
-  } else if (yeses === 0) {
-    return {
-      headline: 'Sabes cosas valiosas que no están llegando.',
-      text: 'Las tres respuestas apuntan al mismo lugar: hay una distancia entre lo que tienes dentro y lo que tu público recibe. No es que no tengas nada que decir — es que el mensaje se está perdiendo en el camino entre tu cabeza y su comprensión. Esa distancia tiene nombre, tiene causa y tiene solución. Y casi nunca está donde uno cree.'
-    };
-  } else {
-    return {
-      headline: 'Hay una grieta entre lo que haces y lo que consigues.',
-      text: 'Algunas cosas te funcionan y otras no, y probablemente no tienes claro por qué. Esa inconsistencia es la señal más honesta de todo este scanner: significa que tu comunicación depende de factores que aún no controlas del todo. La buena noticia es que eso es entrenable. Lo que hoy es intermitente puede volverse consistente cuando sabes qué palanca mover.'
-    };
-  }
+  if (yeses === 3) return { headline: 'Comunicas con impacto — ahora el reto es sistematizarlo.', text: 'Sientes que conectas, que te comprenden y que lo haces desde tu autenticidad. Eso te pone adelante de la mayoría. Pero "sentir" que funciona y "saber por qué" funciona son cosas distintas. Lo que hoy haces por instinto, si lo vuelves método, deja de depender de tu buen día y empieza a ser replicable — incluso enseñable.' };
+  if (yeses === 0) return { headline: 'Sabes cosas valiosas que no están llegando.', text: 'Las tres respuestas apuntan al mismo lugar: hay una distancia entre lo que tienes dentro y lo que tu público recibe. No es que no tengas nada que decir — es que el mensaje se está perdiendo en el camino entre tu cabeza y su comprensión. Esa distancia tiene nombre, tiene causa y tiene solución.' };
+  return { headline: 'Hay una grieta entre lo que haces y lo que consigues.', text: 'Algunas cosas te funcionan y otras no, y probablemente no tienes claro por qué. Esa inconsistencia es la señal más honesta de todo este scanner: significa que tu comunicación depende de factores que aún no controlas del todo. La buena noticia es que eso es entrenable.' };
 }
 
-function globalNarrative(scores) {
-  const entries = [['AUTO', scores.AUTO.pct], ['EST', scores.EST.pct], ['INF', scores.INF.pct]];
-  entries.sort((a, b) => a[1] - b[1]);
-  const weakest = PILLARS[entries[0][0]].name;
-  const strongest = PILLARS[entries[2][0]].name;
-  return `Tu pilar más firme es ${strongest} y donde más terreno tienes por ganar es ${weakest}. Pero el dato importante no es el número — es que ninguno de los tres funciona solo. Autoconciencia sin estructura es introspección que no comunica. Estructura sin influencia es un buen documento que nadie recuerda. Influencia sin autoconciencia es técnica que no se sostiene. Tu impacto real vive en cómo se sostienen los tres juntos.`;
+function baseNarrative(scores) {
+  const e = [['AUTO',scores.AUTO.pct],['EST',scores.EST.pct],['INF',scores.INF.pct]].sort((a,b)=>a[1]-b[1]);
+  const weak = BASE_PILLARS[e[0][0]].name, strong = BASE_PILLARS[e[2][0]].name;
+  return `Tu pilar más firme es ${strong} y donde más terreno tienes por ganar es ${weak}. Pero el dato importante no es el número — es que ninguno de los tres funciona solo. Autoconciencia sin estructura es introspección que no comunica. Estructura sin influencia es un buen documento que nadie recuerda. Influencia sin autoconciencia es técnica que no se sostiene. Tu impacto real vive en cómo se sostienen los tres juntos.`;
 }
 
-function renderResults() {
-  const scores = computeScores();
-  const impact = impactVerdict();
-
-  const pillarsHtml = ['AUTO', 'EST', 'INF'].map(pk => {
-    const s = scores[pk];
-    const p = PILLARS[pk];
-    const linesHtml = s.lines.map(l => {
-      const statusText = l.status === 'solid' ? 'Sólido' : l.status === 'partial' ? 'A medias' : 'Ausente';
-      return `
-        <div class="gap-line">
-          <span class="gap-status ${l.status}">${statusText}</span>
-          <span class="gap-label">${l.label}</span>
-        </div>
-      `;
+function renderBaseResults() {
+  const scores = baseScores();
+  const impact = baseImpactVerdict();
+  const firstName = state.userName ? state.userName.split(' ')[0] : '';
+  const titleName = firstName ? `, ${firstName}` : '';
+  const pillarsHtml = ['AUTO','EST','INF'].map(pk => {
+    const s = scores[pk], p = BASE_PILLARS[pk];
+    const lines = s.lines.map(l => {
+      const t = l.status==='solid'?'Sólido':l.status==='partial'?'A medias':'Ausente';
+      return `<div class="gap-line"><span class="gap-status ${l.status}">${t}</span><span class="gap-label">${l.label}</span></div>`;
     }).join('');
     return `
       <div class="pillar-result">
         <div class="pillar-result-head">
-          <div class="pillar-result-top">
-            <span class="pillar-result-name">${p.name}</span>
-            <span class="pillar-result-pct">${s.score}/${s.max} · ${s.pct}%</span>
-          </div>
-          <div class="gap-track"><div class="gap-fill" style="width: ${s.pct}%"></div></div>
+          <div class="pillar-result-top"><span class="pillar-result-name">${p.name}</span><span class="pillar-result-pct">${s.score}/${s.max} · ${s.pct}%</span></div>
+          <div class="gap-track"><div class="gap-fill" style="width:${s.pct}%"></div></div>
         </div>
-        <div class="pillar-result-body">
-          <p class="pillar-verdict">${pillarVerdict(pk, s.pct)}</p>
-          <div class="gap-items">${linesHtml}</div>
-        </div>
-      </div>
-    `;
+        <div class="pillar-result-body"><p class="pillar-verdict">${basePillarVerdict(pk,s.pct)}</p><div class="gap-items">${lines}</div></div>
+      </div>`;
   }).join('');
-
-  const firstName = state.userName ? state.userName.split(' ')[0] : '';
-  const titleName = firstName ? `, ${firstName}` : '';
-
   return `
     <section class="fade-in">
       <div class="results-eyebrow">Scanner CORE — El diagnóstico de ${state.userName || 'tu comunicación'}</div>
       <h1 class="results-title">Esto es lo que <em>realmente</em> pasa cuando comunicas${titleName}.</h1>
-      <p class="results-intro-text">${globalNarrative(scores)}</p>
-
+      <p class="results-intro-text">${baseNarrative(scores)}</p>
       ${pillarsHtml}
-
       <div class="impact-block">
         <div class="impact-label">El resultado real</div>
         <div class="impact-headline">${impact.headline}</div>
         <p class="impact-text">${impact.text}</p>
       </div>
-
-      <div class="cta-block">
-        <div class="cta-headline">Guarda tu diagnóstico y <em>léelo conmigo.</em></div>
-        <p class="cta-sub">Descarga tu scanner completo en PDF. Después, lleva ese diagnóstico a una sesión de lectura personal donde vemos juntos qué significan tus resultados y qué camino tiene sentido para ti — sin costo.</p>
-        <div class="cta-buttons">
-          <button class="cta-btn pdf" id="pdf-btn">↓ Descargar mi diagnóstico (PDF)</button>
-          <a class="cta-btn wa" id="wa-btn" href="${WHATSAPP_URL}" target="_blank" rel="noopener">Agendar mi sesión de lectura →</a>
-        </div>
-        <div class="cta-note" id="cta-note">Primero descarga tu PDF, luego agenda tu sesión.</div>
-      </div>
-
-      <div class="restart-row">
-        <button class="restart-btn" id="restart">Reiniciar scanner</button>
-      </div>
-    </section>
-  `;
+      ${ctaBlock()}
+      <div class="restart-row"><button class="restart-btn" id="restart">Reiniciar scanner</button></div>
+    </section>`;
 }
 
+// ============================================================
+// RESULTS — LEAD branch (4-element report + verdict)
+// ============================================================
+function leadCompVerdict(ck, sc) {
+  const name = LEAD_COMPS[ck].name;
+  const gap = sc.gap;
+  const natHigh = sc.nat.pct >= 67, natMid = sc.nat.pct >= 34;
+  let gapClass, gapTag, gapLine;
+  if (gap <= 15) { gapClass='stable'; gapTag='Estable bajo presión'; gapLine='Sostienes esta competencia aunque suba la temperatura — lo que haces en calma lo haces también cuando aprieta.'; }
+  else if (gap <= 40) { gapClass='cracks'; gapTag='Se agrieta bajo presión'; gapLine='En calma funcionas, pero cuando hay presión pierdes terreno. Ese bache es justo donde el liderazgo se nota, porque los momentos que definen suelen ser los de presión.'; }
+  else { gapClass='collapse'; gapTag='Se cae bajo presión'; gapLine='La diferencia entre tu versión tranquila y tu versión bajo presión es grande. Pareces sólido cuando todo fluye, pero te desarmas justo cuando más te necesitan firme. Ese es el patrón más caro en un líder.'; }
+  const base = natHigh ? `Tienes buen dominio natural de ${name.toLowerCase()}.` : natMid ? `Tu ${name.toLowerCase()} en el día a día es intermedia.` : `${name} es de tus zonas más flojas, incluso en calma.`;
+  return { gapClass, gapTag, text: `${base} ${gapLine}` };
+}
+
+function leadReport(scores) {
+  // Weighted overall (comunicación pesa 2). Combine nat+pre per comp.
+  let totalW = 0, gotW = 0;
+  Object.keys(scores).forEach(ck => {
+    const sc = scores[ck];
+    const combined = (sc.nat.pct + sc.pre.pct) / 2;
+    const w = sc.weight;
+    totalW += w * 100; gotW += w * combined;
+  });
+  const overall = Math.round(gotW / totalW * 100);
+
+  // Rank by combined
+  const ranked = Object.keys(scores).map(ck => ({
+    ck, combined: (scores[ck].nat.pct + scores[ck].pre.pct)/2, gap: scores[ck].gap
+  })).sort((a,b)=>a.combined-b.combined);
+  const weakest = ranked[0], strongest = ranked[ranked.length-1];
+  const biggestGap = [...Object.keys(scores)].map(ck=>({ck,gap:scores[ck].gap})).sort((a,b)=>b.gap-a.gap)[0];
+
+  // ELEMENT 1 — nivel actual
+  const el1 = `En calma, tu perfil más firme es <strong>${LEAD_COMPS[strongest.ck].name}</strong> y el más flojo es <strong>${LEAD_COMPS[weakest.ck].name}</strong>. Pero el liderazgo real no se juega en calma. Por eso lo que más importa de este diagnóstico no es cada número solo, sino la distancia entre cómo lideras normalmente y cómo lideras cuando aprieta.`;
+
+  // ELEMENT 2 — gap vs lo que el rol exige
+  const gapComp = LEAD_COMPS[biggestGap.ck].name;
+  let el2;
+  if (biggestGap.gap <= 15) {
+    el2 = `Tu mayor caída bajo presión está en <strong>${gapComp}</strong>, pero es moderada. En general sostienes tu nivel cuando sube la temperatura — eso ya te pone por encima del líder promedio, que se desarma justo cuando el equipo más lo observa. El rol te exige mantener esa consistencia conforme crezca la presión y el tamaño de lo que diriges.`;
+  } else {
+    el2 = `Donde más se abre el gap es en <strong>${gapComp}</strong>: la distancia entre tu versión tranquila y tu versión bajo presión es la señal más importante de este scanner. Un rol de liderazgo no te paga por cómo actúas en los días buenos — te paga por cómo respondes cuando hay conflicto, urgencia o algo en juego. Ahí es donde hoy tienes la brecha más cara entre lo que el puesto exige y lo que entregas.`;
+  }
+
+  // ELEMENT 3 — desarrollable + riesgos
+  const criticalGaps = Object.keys(scores).filter(ck => scores[ck].gap > 40).length;
+  const lowNaturals = Object.keys(scores).filter(ck => scores[ck].nat.pct < 34).length;
+  let el3, verdict;
+  if (overall >= 55 && criticalGaps <= 1) {
+    el3 = `<strong>Sí, es claramente desarrollable.</strong> Tienes base natural en varias competencias, así que el trabajo no es construir de cero — es blindar lo que ya tienes para que aguante presión. Ese tipo de desarrollo es el más rápido y el de mejor retorno, porque partes de material sólido. <br><br>El riesgo principal en tu caso no es la capacidad, es la constancia: como ya funcionas bien en calma, es fácil creer que no necesitas trabajar los momentos de presión hasta que uno de esos momentos te cuesta caro.`;
+    verdict = { color: 'var(--green-soft)', label: 'Veredicto de viabilidad', headline: 'Entrenable, con retorno alto.', text: 'Este perfil vale la pena desarrollar. Hay base sólida y los gaps son cerrables con trabajo enfocado en el desempeño bajo presión. Es el tipo de líder donde una intervención bien dirigida rinde resultados visibles rápido.' };
+  } else if (overall >= 35 || (overall >= 30 && criticalGaps <= 2)) {
+    el3 = `<strong>Sí es desarrollable, pero requiere trabajo real y sostenido.</strong> Hay competencias donde tu base natural es delgada y otras donde la presión te desarma. No es un caso de pulir — es de construir en algunas zonas y blindar en otras. <br><br>El riesgo a vigilar: ${lowNaturals >= 2 ? 'tienes varias competencias flojas incluso en calma, lo que significa que el desarrollo tiene que empezar por los cimientos antes de tocar el desempeño bajo presión. Saltarse ese orden es la causa más común de que el entrenamiento no pegue.' : 'los gaps bajo presión son marcados, así que el trabajo tiene que incluir práctica en condiciones reales de tensión, no solo teoría en un salón. Un desarrollo puramente conceptual aquí no va a mover la aguja donde importa.'}`;
+    verdict = { color: 'var(--gold)', label: 'Veredicto de viabilidad', headline: 'Entrenable, con trabajo enfocado.', text: 'Este perfil se puede desarrollar, pero no con un curso genérico. Necesita un plan que ataque el orden correcto — cimientos primero, presión después — y práctica en condiciones reales. Con eso, el potencial está. Sin eso, el esfuerzo se diluye.' };
+  } else {
+    el3 = `<strong>Es desarrollable en teoría, pero con reservas honestas.</strong> El nivel natural es bajo en varias competencias y la presión desarma casi todo. Eso no significa que la persona no sirva — significa que el desarrollo sería largo, costoso, y con un retorno incierto que depende mucho de qué tan dispuesta esté a un trabajo profundo y sostenido. <br><br>El riesgo mayor es invertir tiempo y recursos esperando un cambio rápido que este perfil no va a dar. Si el rol necesita a alguien firme bajo presión pronto, el desarrollo quizá no llegue a tiempo.`;
+    verdict = { color: 'var(--red-soft)', label: 'Veredicto de viabilidad', headline: 'Desarrollable, pero evalúa el costo-tiempo.', text: 'Antes de invertir en desarrollar este perfil, vale la pena una conversación honesta sobre expectativas y plazos. El cambio es posible pero lento, y si el rol exige solidez bajo presión en el corto plazo, quizá tenga más sentido combinar el desarrollo con apoyo externo — o revisar si esta es la persona para este asiento en este momento.' };
+  }
+
+  // ELEMENT 4 — qué de CORE ya domina
+  const dominates = [];
+  const needs = [];
+  Object.keys(scores).forEach(ck => {
+    const combined = (scores[ck].nat.pct + scores[ck].pre.pct)/2;
+    if (combined >= 60) dominates.push(LEAD_COMPS[ck].name);
+    else if (combined < 40) needs.push(LEAD_COMPS[ck].name);
+  });
+  let el4;
+  if (dominates.length) {
+    el4 = `Ya dominas <strong>${listWords(dominates)}</strong>. Eso significa que un buen desarrollo no debería gastar tiempo re-enseñándote esto — sería venderte teoría que no necesitas. `;
+  } else {
+    el4 = `No hay ninguna competencia que domines completa (natural y bajo presión), así que el desarrollo tiene margen amplio para trabajar. `;
+  }
+  if (needs.length) {
+    el4 += `Donde el trabajo rinde más es en <strong>${listWords(needs)}</strong> — ahí está el terreno por ganar. Un programa que arranque por ahí, en vez de por lo genérico, es el que te movería la aguja.`;
+  } else {
+    el4 += `El resto son competencias intermedias: no partes de cero, pero tampoco están blindadas. El trabajo fino está en llevarlas de "funciona a veces" a "aguanta siempre".`;
+  }
+
+  return { overall, el1, el2, el3, el4, verdict };
+}
+
+function listWords(arr) {
+  if (arr.length === 1) return arr[0];
+  if (arr.length === 2) return arr[0] + ' y ' + arr[1];
+  return arr.slice(0,-1).join(', ') + ' y ' + arr[arr.length-1];
+}
+
+function renderLeadResults() {
+  const scores = leadScores();
+  const rep = leadReport(scores);
+  const firstName = state.userName ? state.userName.split(' ')[0] : '';
+  const order = ['COM','EMO','DEC','AUT','ADA'];
+
+  const compsHtml = order.map(ck => {
+    const sc = scores[ck], c = LEAD_COMPS[ck];
+    const v = leadCompVerdict(ck, sc);
+    return `
+      <div class="comp-result">
+        <div class="comp-head">
+          <div class="comp-name">${c.name}${c.weight>1?' <span style="font-family:monospace;font-size:11px;color:var(--gold);letter-spacing:0.08em;">· MAYOR PESO</span>':''}</div>
+          <div class="dual-bars">
+            <div class="dual-row">
+              <div class="dual-row-top"><span class="dual-state-label natural">En el día a día</span><span class="dual-pct">${sc.nat.pct}%</span></div>
+              <div class="dual-track"><div class="dual-fill natural" style="width:${sc.nat.pct}%"></div></div>
+            </div>
+            <div class="dual-row">
+              <div class="dual-row-top"><span class="dual-state-label pressure">Bajo presión</span><span class="dual-pct">${sc.pre.pct}%</span></div>
+              <div class="dual-track"><div class="dual-fill pressure" style="width:${sc.pre.pct}%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="comp-body">
+          <div class="comp-gap-tag ${v.gapClass}">${v.gapTag}</div>
+          <p class="comp-verdict">${v.text}</p>
+        </div>
+      </div>`;
+  }).join('');
+
+  return `
+    <section class="fade-in">
+      <div class="results-eyebrow">CORE Leading — El diagnóstico de ${state.userName || 'tu liderazgo'}</div>
+      <h1 class="results-title">Cómo lideras${firstName?', '+firstName:''} — <em>en calma y cuando aprieta.</em></h1>
+      <p class="results-intro-text">Cada competencia medida en dos estados. El número no es lo importante — lo revelador es la distancia entre tu versión tranquila y tu versión bajo presión. Ahí se ve el líder real.</p>
+
+      ${compsHtml}
+
+      <div class="report-section">
+        <div class="report-section-title">El diagnóstico completo · 4 elementos</div>
+        <div class="report-block"><div class="report-block-label">01 · Nivel actual</div><div class="report-block-title">Dónde estás hoy</div><p class="report-block-text">${rep.el1}</p></div>
+        <div class="report-block"><div class="report-block-label">02 · El gap</div><div class="report-block-title">Lo que tienes vs. lo que el rol exige</div><p class="report-block-text">${rep.el2}</p></div>
+        <div class="report-block"><div class="report-block-label">03 · Desarrollo y riesgos</div><div class="report-block-title">¿Se puede entrenar?</div><p class="report-block-text">${rep.el3}</p></div>
+        <div class="report-block"><div class="report-block-label">04 · Lo que ya dominas</div><div class="report-block-title">Para no venderte teoría que no necesitas</div><p class="report-block-text">${rep.el4}</p></div>
+      </div>
+
+      <div class="verdict-block" style="--verdict-color:${rep.verdict.color};">
+        <div class="verdict-label">${rep.verdict.label}</div>
+        <div class="verdict-headline">${rep.verdict.headline}</div>
+        <p class="verdict-text">${rep.verdict.text}</p>
+      </div>
+
+      ${ctaBlock()}
+      <div class="restart-row"><button class="restart-btn" id="restart">Reiniciar scanner</button></div>
+    </section>`;
+}
+
+// ============================================================
+// CTA (shared, now → Calendar)
+// ============================================================
+function ctaBlock() {
+  const isLead = state.branch === 'lead';
+  const headline = isLead ? 'Guarda tu diagnóstico y <em>léelo conmigo.</em>' : 'Guarda tu diagnóstico y <em>léelo conmigo.</em>';
+  const sub = isLead
+    ? 'Descarga tu reporte completo en PDF. Después, agenda una sesión de discovery donde revisamos juntos tu diagnóstico y definimos si el desarrollo tiene sentido para ti — y cómo se vería.'
+    : 'Descarga tu scanner completo en PDF. Después, agenda una sesión de discovery donde vemos juntos qué significan tus resultados y qué camino tiene sentido para ti.';
+  return `
+    <div class="cta-block">
+      <div class="cta-headline">${headline}</div>
+      <p class="cta-sub">${sub}</p>
+      <div class="cta-buttons">
+        <button class="cta-btn pdf" id="pdf-btn">↓ Descargar mi diagnóstico (PDF)</button>
+        <a class="cta-btn cal" id="cal-btn" href="${CALENDAR_URL}" target="_blank" rel="noopener">Agendar mi sesión de discovery →</a>
+      </div>
+      <div class="cta-note" id="cta-note">Primero descarga tu PDF, luego agenda tu sesión.</div>
+    </div>`;
+}
+
+// ============================================================
+// WIRING
+// ============================================================
 function wireResults() {
-  document.getElementById('pdf-btn').onclick = generatePDF;
+  document.getElementById('pdf-btn').onclick = () => state.branch==='base' ? generateBasePDF() : generateLeadPDF();
   document.getElementById('restart').onclick = () => {
-    state = { phase: 'intro', stepIdx: 0, binaryLayer: 1, userName: '', answers: {}, impact: {}, open: {}, pdfDone: false };
+    state = { phase:'intro', branch:null, stepIdx:0, userName:'', answers:{}, impact:{}, open:{}, pdfDone:false };
     render();
   };
-  // animate gap fills
   requestAnimationFrame(() => {
-    document.querySelectorAll('.gap-fill').forEach(el => {
-      const w = el.style.width;
-      el.style.width = '0';
-      requestAnimationFrame(() => { el.style.width = w; });
+    document.querySelectorAll('.gap-fill, .dual-fill').forEach(el => {
+      const w = el.style.width; el.style.width='0'; requestAnimationFrame(()=>{ el.style.width=w; });
     });
   });
 }
 
-// ============================================
-// PDF GENERATION
-// ============================================
-function generatePDF() {
-  const scores = computeScores();
-  const impact = impactVerdict();
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-
-  const W = doc.internal.pageSize.getWidth();
-  const H = doc.internal.pageSize.getHeight();
-  const M = 48;
-  let y = 0;
-
-  // colors
-  const gold = [245, 197, 24];
-  const dark = [26, 23, 19];
-  const muted = [110, 105, 96];
-  const black = [20, 18, 16];
-
-  function checkPage(needed) {
-    if (y + needed > H - M) { doc.addPage(); y = M; }
-  }
-
-  // HEADER BAND
-  doc.setFillColor(...dark);
-  doc.rect(0, 0, W, 90, 'F');
-  doc.setFillColor(...gold);
-  doc.rect(0, 90, W, 3, 'F');
-  doc.setTextColor(245, 241, 232);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(22);
+// ============================================================
+// PDF — shared helpers
+// ============================================================
+function pdfHeader(doc, W, M, subtitle) {
+  const gold=[245,197,24], dark=[26,23,19];
+  doc.setFillColor(...dark); doc.rect(0,0,W,90,'F');
+  doc.setFillColor(...gold); doc.rect(0,90,W,3,'F');
+  doc.setTextColor(245,241,232); doc.setFont('helvetica','bold'); doc.setFontSize(22);
   doc.text('Scanner CORE', M, 46);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(11);
-  doc.setTextColor(...gold);
-  doc.text('Diagnóstico de Comunicación e Influencia', M, 66);
-  y = 125;
+  doc.setFont('helvetica','normal'); doc.setFontSize(11); doc.setTextColor(...gold);
+  doc.text(subtitle, M, 66);
+}
 
-  // NAME + DATE LINE
-  if (state.userName) {
-    doc.setTextColor(...black);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(16);
-    doc.text(state.userName, M, y);
-    y += 20;
-  }
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  const dateStr = new Date().toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' });
-  doc.setTextColor(...muted);
-  doc.text('Generado el ' + dateStr, M, y);
-  y += 28;
+function generateBasePDF() {
+  const scores = baseScores();
+  const impact = baseImpactVerdict();
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'pt', format:'a4' });
+  const W=doc.internal.pageSize.getWidth(), H=doc.internal.pageSize.getHeight(), M=48;
+  let y=0;
+  const gold=[245,197,24], dark=[26,23,19], muted=[110,105,96], black=[20,18,16];
+  const cp = n => { if (y+n > H-M) { doc.addPage(); y=M; } };
 
-  // CONTEXT (open answer)
-  if (state.open.context) {
-    doc.setTextColor(...gold);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(9);
-    doc.text('CONTEXTO', M, y);
-    y += 16;
-    doc.setTextColor(...black);
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(10);
-    const ctxLines = doc.splitTextToSize(state.open.context, W - M * 2);
-    doc.text(ctxLines, M, y);
-    y += ctxLines.length * 14 + 20;
-  }
+  pdfHeader(doc, W, M, 'Comunicación e Influencia');
+  y=125;
+  if (state.userName) { doc.setTextColor(...black); doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.text(state.userName, M, y); y+=20; }
+  doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(...muted);
+  doc.text('Generado el '+new Date().toLocaleDateString('es-MX',{day:'numeric',month:'long',year:'numeric'}), M, y); y+=28;
 
-  // PILLARS
-  ['AUTO', 'EST', 'INF'].forEach(pk => {
-    const s = scores[pk];
-    const p = PILLARS[pk];
-    checkPage(140);
+  if (state.open.context) { doc.setTextColor(...gold); doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.text('CONTEXTO', M, y); y+=16;
+    doc.setTextColor(...black); doc.setFont('helvetica','normal'); doc.setFontSize(10);
+    const l=doc.splitTextToSize(state.open.context, W-M*2); doc.text(l,M,y); y+=l.length*14+20; }
 
-    doc.setDrawColor(...gold);
-    doc.setLineWidth(2);
-    doc.line(M, y, M + 24, y);
-    y += 18;
+  ['AUTO','EST','INF'].forEach(pk => {
+    const s=scores[pk], p=BASE_PILLARS[pk]; cp(140);
+    doc.setDrawColor(...gold); doc.setLineWidth(2); doc.line(M,y,M+24,y); y+=18;
+    doc.setTextColor(...black); doc.setFont('helvetica','bold'); doc.setFontSize(15); doc.text(p.name,M,y);
+    doc.setTextColor(...gold); doc.setFontSize(12); doc.text(`${s.score}/${s.max} · ${s.pct}%`, W-M, y, {align:'right'}); y+=10;
+    doc.setFillColor(230,226,218); doc.rect(M,y,W-M*2,6,'F'); doc.setFillColor(...gold); doc.rect(M,y,(W-M*2)*(s.pct/100),6,'F'); y+=22;
+    doc.setTextColor(60,56,50); doc.setFont('helvetica','normal'); doc.setFontSize(9.5);
+    const vl=doc.splitTextToSize(basePillarVerdict(pk,s.pct), W-M*2); doc.text(vl,M,y); y+=vl.length*12+12;
+    s.lines.forEach(l=>{ cp(20); const t=l.status==='solid'?'SOLIDO':l.status==='partial'?'A MEDIAS':'AUSENTE';
+      const col=l.status==='solid'?gold:l.status==='partial'?[196,85,61]:muted;
+      doc.setFillColor(...col); doc.rect(M,y-8,4,11,'F');
+      doc.setTextColor(...col); doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.text(t,M+10,y);
+      doc.setTextColor(...black); doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.text(l.label,M+68,y); y+=18; });
+    y+=16;
+  });
 
-    doc.setTextColor(...black);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(15);
-    doc.text(p.name, M, y);
-    doc.setTextColor(...gold);
-    doc.setFontSize(12);
-    doc.text(`${s.score}/${s.max} · ${s.pct}%`, W - M, y, { align: 'right' });
-    y += 10;
+  cp(120); doc.setFillColor(...dark); doc.rect(M,y,W-M*2,4,'F'); y+=22;
+  doc.setTextColor(...gold); doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.text('EL RESULTADO REAL',M,y); y+=18;
+  doc.setTextColor(...black); doc.setFont('helvetica','bold'); doc.setFontSize(12);
+  const hl=doc.splitTextToSize(impact.headline, W-M*2); doc.text(hl,M,y); y+=hl.length*15+8;
+  doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(60,56,50);
+  const il=doc.splitTextToSize(impact.text, W-M*2); doc.text(il,M,y); y+=il.length*12+24;
 
-    // bar
-    doc.setFillColor(230, 226, 218);
-    doc.rect(M, y, W - M * 2, 6, 'F');
-    doc.setFillColor(...gold);
-    doc.rect(M, y, (W - M * 2) * (s.pct / 100), 6, 'F');
-    y += 22;
+  [['struggle','CON QUE BATALLO'],['tried','QUE HE INTENTADO ANTES']].forEach(([k,lab])=>{
+    if (state.open[k]) { cp(60); doc.setTextColor(...gold); doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.text(lab,M,y); y+=15;
+      doc.setTextColor(...black); doc.setFont('helvetica','italic'); doc.setFontSize(10);
+      const rl=doc.splitTextToSize('"'+state.open[k]+'"', W-M*2); doc.text(rl,M,y); y+=rl.length*13+18; }
+  });
 
+  pdfFooter(doc, W, H, M, y);
+  savePDF(doc);
+  markPdfDone();
+}
+
+function generateLeadPDF() {
+  const scores = leadScores();
+  const rep = leadReport(scores);
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'pt', format:'a4' });
+  const W=doc.internal.pageSize.getWidth(), H=doc.internal.pageSize.getHeight(), M=48;
+  let y=0;
+  const gold=[245,197,24], dark=[26,23,19], muted=[110,105,96], black=[20,18,16], green=[111,168,92], red=[196,85,61];
+  const cp = n => { if (y+n > H-M) { doc.addPage(); y=M; } };
+  const order=['COM','EMO','DEC','AUT','ADA'];
+
+  pdfHeader(doc, W, M, 'CORE Leading — Diagnóstico de Liderazgo');
+  y=125;
+  if (state.userName) { doc.setTextColor(...black); doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.text(state.userName, M, y); y+=20; }
+  doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(...muted);
+  doc.text('Generado el '+new Date().toLocaleDateString('es-MX',{day:'numeric',month:'long',year:'numeric'}), M, y); y+=16;
+  doc.setTextColor(...gold); doc.setFont('helvetica','bold'); doc.setFontSize(11);
+  doc.text('Índice general de liderazgo: '+rep.overall+'%', M, y+16); y+=40;
+
+  if (state.open.context) { doc.setTextColor(...gold); doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.text('QUE LIDERA', M, y); y+=15;
+    doc.setTextColor(...black); doc.setFont('helvetica','normal'); doc.setFontSize(10);
+    const l=doc.splitTextToSize(state.open.context, W-M*2); doc.text(l,M,y); y+=l.length*14+20; }
+
+  // Competencies with dual bars
+  order.forEach(ck=>{
+    const sc=scores[ck], c=LEAD_COMPS[ck], v=leadCompVerdict(ck,sc); cp(150);
+    doc.setDrawColor(...gold); doc.setLineWidth(2); doc.line(M,y,M+24,y); y+=18;
+    doc.setTextColor(...black); doc.setFont('helvetica','bold'); doc.setFontSize(15);
+    doc.text(c.name + (c.weight>1?'  (mayor peso)':''), M, y); y+=16;
+    // natural bar
+    doc.setTextColor(...green); doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.text('EN EL DIA A DIA', M, y);
+    doc.setTextColor(...muted); doc.text(sc.nat.pct+'%', M+130, y); y+=6;
+    doc.setFillColor(230,226,218); doc.rect(M,y,W-M*2,5,'F'); doc.setFillColor(...green); doc.rect(M,y,(W-M*2)*(sc.nat.pct/100),5,'F'); y+=16;
+    // pressure bar
+    doc.setTextColor(...red); doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.text('BAJO PRESION', M, y);
+    doc.setTextColor(...muted); doc.text(sc.pre.pct+'%', M+130, y); y+=6;
+    doc.setFillColor(230,226,218); doc.rect(M,y,W-M*2,5,'F'); doc.setFillColor(...red); doc.rect(M,y,(W-M*2)*(sc.pre.pct/100),5,'F'); y+=18;
     // verdict
-    doc.setTextColor(60, 56, 50);
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(9.5);
-    const vLines = doc.splitTextToSize(pillarVerdict(pk, s.pct), W - M * 2);
-    doc.text(vLines, M, y);
-    y += vLines.length * 12 + 12;
-
-    // gap lines
-    s.lines.forEach(l => {
-      checkPage(20);
-      const statusText = l.status === 'solid' ? 'SOLIDO' : l.status === 'partial' ? 'A MEDIAS' : 'AUSENTE';
-      const col = l.status === 'solid' ? gold : l.status === 'partial' ? [196, 85, 61] : muted;
-      doc.setFillColor(...col);
-      doc.rect(M, y - 8, 4, 11, 'F');
-      doc.setTextColor(...col);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(8);
-      doc.text(statusText, M + 10, y);
-      doc.setTextColor(...black);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(9.5);
-      doc.text(l.label, M + 68, y);
-      y += 18;
-    });
-    y += 16;
+    doc.setTextColor(60,56,50); doc.setFont('helvetica','normal'); doc.setFontSize(9.5);
+    const vl=doc.splitTextToSize(v.gapTag+'. '+v.text, W-M*2); doc.text(vl,M,y); y+=vl.length*12+18;
   });
 
-  // IMPACT
-  checkPage(120);
-  doc.setFillColor(...dark);
-  doc.rect(M, y, W - M * 2, 4, 'F');
-  y += 22;
-  doc.setTextColor(...gold);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9);
-  doc.text('EL RESULTADO REAL', M, y);
-  y += 18;
-  doc.setTextColor(...black);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(12);
-  const hLines = doc.splitTextToSize(impact.headline, W - M * 2);
-  doc.text(hLines, M, y);
-  y += hLines.length * 15 + 8;
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(9.5);
-  doc.setTextColor(60, 56, 50);
-  const iLines = doc.splitTextToSize(impact.text, W - M * 2);
-  doc.text(iLines, M, y);
-  y += iLines.length * 12 + 24;
+  // 4 elements
+  cp(40); doc.setFillColor(...dark); doc.rect(M,y,W-M*2,4,'F'); y+=20;
+  doc.setTextColor(...gold); doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.text('EL DIAGNOSTICO COMPLETO — 4 ELEMENTOS',M,y); y+=20;
+  const els=[['01 · Nivel actual', rep.el1],['02 · El gap', rep.el2],['03 · Desarrollo y riesgos', rep.el3],['04 · Lo que ya dominas', rep.el4]];
+  els.forEach(([lab,txt])=>{ cp(70);
+    doc.setTextColor(...gold); doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.text(lab.toUpperCase(),M,y); y+=14;
+    doc.setTextColor(...black); doc.setFont('helvetica','normal'); doc.setFontSize(9.5);
+    const clean=txt.replace(/<\/?strong>/g,'').replace(/<br><br>/g,'\n\n').replace(/<br>/g,'\n');
+    const tl=doc.splitTextToSize(clean, W-M*2); doc.text(tl,M,y); y+=tl.length*12+16; });
 
-  // OPEN REFLECTIONS
-  const reflections = [
-    { key: 'struggle', label: 'CON QUÉ BATALLO' },
-    { key: 'tried', label: 'QUÉ HE INTENTADO ANTES' }
-  ];
-  reflections.forEach(r => {
-    if (state.open[r.key]) {
-      checkPage(60);
-      doc.setTextColor(...gold);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(9);
-      doc.text(r.label, M, y);
-      y += 15;
-      doc.setTextColor(...black);
-      doc.setFont('helvetica', 'italic');
-      doc.setFontSize(10);
-      const rLines = doc.splitTextToSize('"' + state.open[r.key] + '"', W - M * 2);
-      doc.text(rLines, M, y);
-      y += rLines.length * 13 + 18;
-    }
+  // verdict box
+  cp(90);
+  const vcol = rep.verdict.color.includes('green')?green:rep.verdict.color.includes('red')?red:gold;
+  doc.setFillColor(...dark); doc.rect(M,y,W-M*2,4,'F'); y+=18;
+  doc.setTextColor(...vcol); doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.text('VEREDICTO DE VIABILIDAD',M,y); y+=16;
+  doc.setTextColor(...black); doc.setFont('helvetica','bold'); doc.setFontSize(13);
+  const vh=doc.splitTextToSize(rep.verdict.headline, W-M*2); doc.text(vh,M,y); y+=vh.length*15+8;
+  doc.setTextColor(60,56,50); doc.setFont('helvetica','normal'); doc.setFontSize(9.5);
+  const vt=doc.splitTextToSize(rep.verdict.text, W-M*2); doc.text(vt,M,y); y+=vt.length*12+22;
+
+  [['challenge','MAYOR RETO LIDERANDO'],['tried','QUE HA INTENTADO']].forEach(([k,lab])=>{
+    if (state.open[k]) { cp(60); doc.setTextColor(...gold); doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.text(lab,M,y); y+=15;
+      doc.setTextColor(...black); doc.setFont('helvetica','italic'); doc.setFontSize(10);
+      const rl=doc.splitTextToSize('"'+state.open[k]+'"', W-M*2); doc.text(rl,M,y); y+=rl.length*13+18; }
   });
 
-  // FOOTER CTA
-  checkPage(80);
-  doc.setFillColor(...dark);
-  doc.rect(M, y, W - M * 2, 60, 'F');
-  doc.setFillColor(...gold);
-  doc.rect(M, y, 3, 60, 'F');
-  doc.setTextColor(245, 241, 232);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(11);
-  doc.text('Lleva este diagnóstico a tu sesión de lectura personal.', M + 18, y + 26);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(9);
-  doc.setTextColor(...gold);
-  doc.text('Método CORE · Orlando Muñoz', M + 18, y + 44);
+  pdfFooter(doc, W, H, M, y);
+  savePDF(doc);
+  markPdfDone();
+}
 
-  const safeName = state.userName ? state.userName.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]/g, '').replace(/\s+/g, '-') : '';
-  doc.save(safeName ? `Scanner-CORE-${safeName}.pdf` : 'Scanner-CORE-Diagnostico.pdf');
+function pdfFooter(doc, W, H, M, y) {
+  const dark=[26,23,19], gold=[245,197,24];
+  if (y+70 > H-M) { doc.addPage(); y=M; }
+  doc.setFillColor(...dark); doc.rect(M,y,W-M*2,60,'F');
+  doc.setFillColor(...gold); doc.rect(M,y,3,60,'F');
+  doc.setTextColor(245,241,232); doc.setFont('helvetica','bold'); doc.setFontSize(11);
+  doc.text('Lleva este diagnóstico a tu sesión de discovery.', M+18, y+26);
+  doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(...gold);
+  doc.text('Método CORE · Orlando Muñoz', M+18, y+44);
+}
 
-  // update UI state
+function savePDF(doc) {
+  const safe = state.userName ? state.userName.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]/g,'').replace(/\s+/g,'-') : '';
+  const prefix = state.branch==='lead' ? 'CORE-Leading' : 'Scanner-CORE';
+  doc.save(safe ? `${prefix}-${safe}.pdf` : `${prefix}-Diagnostico.pdf`);
+}
+
+function markPdfDone() {
   state.pdfDone = true;
-  const pdfBtn = document.getElementById('pdf-btn');
-  const waBtn = document.getElementById('wa-btn');
-  const note = document.getElementById('cta-note');
-  if (pdfBtn) { pdfBtn.classList.add('done'); pdfBtn.innerHTML = '✓ Diagnóstico descargado'; }
-  if (waBtn) { waBtn.classList.add('highlight'); }
-  if (note) { note.textContent = 'Listo. Ahora agenda tu sesión para leerlo juntos →'; }
+  const p=document.getElementById('pdf-btn'), c=document.getElementById('cal-btn'), n=document.getElementById('cta-note');
+  if (p) { p.classList.add('done'); p.innerHTML='✓ Diagnóstico descargado'; }
+  if (c) c.classList.add('highlight');
+  if (n) n.textContent='Listo. Ahora agenda tu sesión de discovery →';
 }
 
 render();
+
 </script>
 </body>
 </html>
